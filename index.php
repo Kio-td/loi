@@ -1,5 +1,4 @@
-<?php
-require('./base/head.php'); ?>
+<?php require('./base/head.php'); ?>
             <a class="nav-link active" href="#">Home</a>
             <a class="nav-link" href="game/">Play</a>
             <a class="nav-link" href="wiki/">Wiki</a>
@@ -14,4 +13,4 @@ require('./base/head.php'); ?>
           <a href="game/" class="btn btn-lg btn-secondary">Play now</a>
         </p>
 
-<?php require('base/feet.php'); ?>
+<?php requre('./base/feet.php'); ?>
