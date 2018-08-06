@@ -13,4 +13,4 @@
           <a href="game/" class="btn btn-lg btn-secondary">Play now</a>
         </p>
 
-<?php requre('./base/feet.php'); ?>
+<?php require('./base/feet.php'); ?>
