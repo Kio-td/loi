@@ -5,12 +5,9 @@
     <meta name="author" content="">
 
     <title>Legend of Ikaros</title>
-
-    <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
-
-    <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet">
+    <link rel="author" href="humans.txt" />
   <style>#content > #right > .dose > .dosesingle,
 #content > #center > .dose > .dosesingle
 {display:none !important;}</style></head>
@@ -23,8 +20,8 @@
           <h3 class="masthead-brand">Legend of Ikaros</h3>
           <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link active" href="#">Home</a>
-            <a class="nav-link" href="#">Play</a>
-            <a class="nav-link" href="#">Wiki</a>
+            <a class="nav-link" href="game/">Play</a>
+            <a class="nav-link" href="wiki/">Wiki</a>
           </nav>
         </div>
       </header>
@@ -33,7 +30,7 @@
         <h1 class="cover-heading">Are you a true hero?</h1>
         <p class="lead">A unique twist to online adult games that already exist. Play as a hero fighting to save - and fuck - the ill goddess.</p>
         <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary">Play now</a>
+          <a href="game/" class="btn btn-lg btn-secondary">Play now</a>
         </p>
       </main>
 
