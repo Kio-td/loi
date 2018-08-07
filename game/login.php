@@ -22,8 +22,11 @@ if (isset($_GET["reg"])) {
   </header>
 
   <main role="main" class="inner cover">
-  <h1 class="cover-heading">You're not logged in.</h1>
-  <p class="lead">Use the links up top if you'd like to continue your quest.</p>
+  <h1 class="cover-heading">Registration</h1>
+  <p class="lead">Register your existance with the department.</p>
+  <form action="?auth&register" method="post">
+    <input type="text" name="un" placeholder="Username">
+  </form>
 
 
   <?php
