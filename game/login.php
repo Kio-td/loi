@@ -7,7 +7,7 @@ if (isset($_GET["auth"])) {
       header("Location: login.php?reg&x=3");
     }
     if (strlen($_POST["un"]) > 30) {
-      header("Location: login.php?reg&x=5")
+      header("Location: login.php?reg&x=5");
     }
     $upl = array(
       "username" => $_POST["un"],
