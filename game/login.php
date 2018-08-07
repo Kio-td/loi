@@ -46,7 +46,7 @@ if (isset($_GET["reg"])) {
 </header>
 <main role="main" class="inner cover">
 <h1 class="cover-heading">Login</h1>
-<p class="lead">Log back in to continue your adventure.</p>
+<p class="lead">Welcome back. Login to continue your adventure.</p>
 
 <?php
 
