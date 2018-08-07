@@ -15,7 +15,7 @@ if (isset($_GET["auth"])) {
     if(in_array(strtolower($upl["username"]), $blacklist)) {
       header("Location: login.php?reg&x=1");
     }
-    if(strlen($upl["password"] < 8)) {
+    if(strlen($upl["password"] > 8)) {
       header("Location: login.php?reg&x=2");
     }
     if($conn->query("select username from users where username = '" . $upl["username"] . "'")->num_rows) {header("localtion: login.php?reg&x=4");}
