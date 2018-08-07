@@ -44,6 +44,9 @@ if (isset($_GET["reg"])) {
 </nav>
 </div>
 </header>
+<main role="main" class="inner cover">
+<h1 class="cover-heading">Login</h1>
+<p class="lead">Log back in to continue your quest.</p>
 
 <?php
 
