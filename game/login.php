@@ -15,6 +15,9 @@ if (isset($_GET["auth"])) {
     if(in_array(strtolower($upl["username"]), $blacklist)) {
       header("Location: login.php?reg&x=1");
     }
+    if(strlen($upl["password"] < 8)) {
+      header("Location: login.php?reg&x=2");
+    }
 
 
   }
@@ -23,27 +26,30 @@ if (isset($_GET["auth"])) {
 }
 echo "<style>input{color: white !important;}</style>";
 require('../base/head.php');
-  ?>
-  <a class="nav-link" href="login.php">Login</a>
-  <a class="nav-link active" href="login.php?reg">Register</a>
-  </nav>
-  </div>
-  </header>
-  <main role="main" class="inner cover">
-
-    <?php
     if (isset($_GET["reg"])) {
+      ?>
+      <a class="nav-link" href="login.php">Login</a>
+      <a class="nav-link active" href="login.php?reg">Register</a>
+      </nav>
+      </div>
+      </header>
+      <main role="main" class="inner cover">
+      <?php
       if(isset($_GET["x"])) {
         echo '<div class="alert alert-danger" role="alert">';
         switch ($_GET["x"]) {
           case '1':
           echo "You attempted to use a blacklisted username.";
             break;
+          case '2':
+          echo "Your password is not long enough.";
+            break;
         }
               echo "</div>";
       }
 
      ?>
+
   <h1 class="cover-heading">Registration</h1>
   <p class="lead">Register your existance with the department.</p>
   <form id="reg" action="?auth&register" method="post">
