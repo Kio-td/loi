@@ -39,8 +39,8 @@ if (isset($_GET["reg"])) {
 
 } else {
 ?>
-<a class="nav-link active" href="login.php">Login</a>
-<a class="nav-link" href="login.php?reg">Register</a>
+<a class="nav-link" href="login.php">Login</a>
+<a class="nav-link active" href="login.php?reg">Register</a>
 </nav>
 </div>
 </header>
