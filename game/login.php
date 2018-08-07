@@ -5,6 +5,8 @@ if (isset($_GET["auth"])) {
   if (isset($_GET["register"])) {
 
 
+  } else {
+
   }
 
 
@@ -27,9 +29,9 @@ if (isset($_GET["reg"])) {
   <p class="lead">Register your existance with the department.</p>
   <form action="?auth&register" method="post">
     <input class="form-control" name="un" placeholder="Username" required="" type="text"><br>
-    <input class="form-control" type="password" name="pw" required placeholder="Password"><br><br>
-    <input class="form-control" type="email" name="em" required placeholder="Email">
-    <input class="btn btn-lg btn-secondary" type="submit" value="Register">
+    <input class="form-control" type="password" name="pw" required placeholder="Password"><br>
+    <input class="form-control" type="email" name="em" required placeholder="Email"><br>
+    <input class="btn btn-secondary" type="submit" value="Register">
   </form>
 
 
