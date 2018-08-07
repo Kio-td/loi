@@ -37,7 +37,7 @@ require('../base/head.php');
         echo '<div class="alert alert-danger" role="alert">';
         switch ($_GET["x"]) {
           case '1':
-          echo ""
+          echo "You attempted to use a blacklisted username.";
             break;
 
           default:
