@@ -6,6 +6,9 @@ if (isset($_GET["auth"])) {
     if(!isset($_POST["un"]) || !isset($_POST["pw"]) || !isset($_POST["em"])) {
       header("Location: login.php?reg&x=3");
     }
+    if (strlen($_POST["un"]) > 30) {
+      header("Location: login.php?reg&x=5")
+    }
     $upl = array(
       "username" => $_POST["un"],
       "password" => password_hash($_POST["pw"]),
@@ -20,6 +23,7 @@ if (isset($_GET["auth"])) {
     }
     if($conn->query("select username from users where username = '" . $upl["username"] . "'")->num_rows) {header("localtion: login.php?reg&x=4");}
 
+    $conn->query("INSERT INTO `users`(`username`, `password`, `email`) VALUES ('".."','".."','".."')")
 
 
   } else {
@@ -52,6 +56,9 @@ require('../base/head.php');
             break;
           case '4':
           echo "The username chosen is not available.";
+            break;
+          case '5':
+          echo "The username is beyond 30 characters.";
         }
               echo "</div>";
       }
