@@ -25,7 +25,8 @@ if (isset($_GET["reg"])) {
   <h1 class="cover-heading">Registration</h1>
   <p class="lead">Register your existance with the department.</p>
   <form action="?auth&register" method="post">
-    <input type="text" name="un" placeholder="Username">&emsp;<input type="password" name="pw" placeholder="Password">
+    <input type="text" name="un" placeholder="Username">&emsp;<input type="password" name="pw" placeholder="Password"><br>
+    <input type="email" name="em" placeholder="Email">
   </form>
 
 
