@@ -11,9 +11,9 @@ if (isset($_GET["auth"])) {
 
 
 }
-
-require('../base/head.php');
 echo "<style>input{color: white !important;}</style>";
+require('../base/head.php');
+
 
 if (isset($_GET["reg"])) {
 
@@ -46,7 +46,7 @@ if (isset($_GET["reg"])) {
 </header>
 <main role="main" class="inner cover">
 <h1 class="cover-heading">Login</h1>
-<p class="lead">Log back in to continue your quest.</p>
+<p class="lead">Log back in to continue your adventure.</p>
 
 <?php
 
