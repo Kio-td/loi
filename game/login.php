@@ -6,7 +6,8 @@ if (isset($_GET["auth"])) {
   if (isset($_GET["register"])) {
 
 
-  } else {
+  }
+} else {
     if(!isset($_POST["un"]) || !isset($_POST["pw"]) || !isset($_POST["em"])) {
       header("Location: login.php?reg&x=3");
     }
