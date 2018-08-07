@@ -33,7 +33,6 @@ if (isset($_GET["reg"])) {
     <input class="form-control" type="email" name="em" required placeholder="Email"><br>
     <input type="hidden" name="salt">
     <input type="hidden" name="iv">
-    <input class="btn btn-secondary" type="submit" value="Register">
     <button onclick="register()" class="btn btn-secondary">register</button>
   </form>
 
