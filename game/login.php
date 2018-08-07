@@ -39,10 +39,6 @@ require('../base/head.php');
           case '1':
           echo "You attempted to use a blacklisted username.";
             break;
-
-          default:
-            // code...
-            break;
         }
       }
       echo "</div>";
