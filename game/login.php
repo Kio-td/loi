@@ -2,12 +2,7 @@
 
 if (isset($_GET["auth"])) {
     require('/var/www/no-access/loi/config.php');
-    die("h");
   if (isset($_GET["register"])) {
-
-
-  }
-} else {
     if(!isset($_POST["un"]) || !isset($_POST["pw"]) || !isset($_POST["em"])) {
       header("Location: login.php?reg&x=3");
     }
@@ -26,10 +21,12 @@ if (isset($_GET["auth"])) {
     if($conn->query("select username from users where username = '" . $upl["username"] . "'")->num_rows) {header("localtion: login.php?reg&x=4");}
 
 
+
+  } else {
+
   }
 
-
-}
+} else {
 echo "<style>input{color: white !important;}</style>";
 require('../base/head.php');
     if (isset($_GET["reg"])) {
@@ -91,5 +88,5 @@ require('../base/head.php');
 }
 
 require('../base/feet.php');
-
+}
  ?>
