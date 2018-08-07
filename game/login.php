@@ -6,6 +6,9 @@ if (isset($_GET["auth"])) {
 
 
   } else {
+    if(!isset($_POST["un"]) || !isset($_POST["pw"]) || !isset($_POST["em"])) {
+      header("Location: login.php?reg&x=3")
+    }
     $upl = array(
       "username" => $_POST["un"],
       "password" => password_hash($_POST["pw"]),
@@ -44,6 +47,8 @@ require('../base/head.php');
           case '2':
           echo "Your password is not long enough.";
             break;
+          case '3':
+          echo "require is there for a reason.";
         }
               echo "</div>";
       }
