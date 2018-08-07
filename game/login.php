@@ -2,6 +2,7 @@
 
 if (isset($_GET["auth"])) {
     require('/var/www/no-access/loi/config.php');
+    die("h");
   if (isset($_GET["register"])) {
 
 
