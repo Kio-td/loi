@@ -21,6 +21,7 @@ if (isset($_GET["auth"])) {
     if(strlen($upl["password"] < 8)) {
       header("Location: login.php?reg&x=2");
     }
+    if($conn->query("select username from users where username = '" . $upl["username"] . "'")->num_rows) {header("localtion: login.php?reg&x=4")}
 
 
   }
@@ -48,7 +49,10 @@ require('../base/head.php');
           echo "Your password is not long enough.";
             break;
           case '3':
-          echo "require is there for a reason.";
+          echo "Require is there for a reason.";
+            break;
+          case '4':
+          echo "The username chosen is not available.";
         }
               echo "</div>";
       }
