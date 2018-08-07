@@ -11,7 +11,7 @@ if (isset($_GET["auth"])) {
 }
 
 require('../base/head.php');
-echo "<style>input{color: white;}</style>";
+echo "<style>input{color: white !important;}</style>";
 
 if (isset($_GET["reg"])) {
 
