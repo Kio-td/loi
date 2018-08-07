@@ -7,7 +7,7 @@ if (isset($_GET["auth"])) {
 
   } else {
     if(!isset($_POST["un"]) || !isset($_POST["pw"]) || !isset($_POST["em"])) {
-      header("Location: login.php?reg&x=3")
+      header("Location: login.php?reg&x=3");
     }
     $upl = array(
       "username" => $_POST["un"],
