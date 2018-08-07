@@ -40,8 +40,9 @@ require('../base/head.php');
           echo "You attempted to use a blacklisted username.";
             break;
         }
+              echo "</div>";
       }
-      echo "</div>";
+
      ?>
   <h1 class="cover-heading">Registration</h1>
   <p class="lead">Register your existance with the department.</p>
