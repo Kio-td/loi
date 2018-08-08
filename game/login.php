@@ -77,7 +77,7 @@ elseif (isset($_GET["auth"])) {
 
     } else {
       //logging in
-      if(!isset($_POST["un"]) || !isset($_POST["pw"])) {
+      if(isset($_POST["un"]) && isset($_POST["pw"])) {
         //Username and password are present
         require("/var/www/no-access/loi/config.php");
         $u = $conn->escape_string(strtolower($_POST["un"]));
