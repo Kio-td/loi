@@ -44,7 +44,7 @@ elseif (isset($_GET["auth"])) {
             "username" => strtolower($_POST["un"]),
             "password" => password_hash($_POST["pw"], PASSWORD_DEFAULT),
             "email" => strtolower($_POST["em"]),
-            "token" => password_hash(rand(), PASSWORD_DEFAULT),
+            "token" => password_hash(md5(rand()), PASSWORD_DEFAULT),
             "cfe" => md5(rand())
         );
         $blacklist = array("ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc"
@@ -77,7 +77,42 @@ elseif (isset($_GET["auth"])) {
 
     } else {
       //logging in
+      if(!isset($_POST["un"]) || !isset($_POST["pw"])) {
+        //Username and password are present
+        require("/var/www/no-access/loi/config.php");
+        $u = $conn->escape_string(strtolower($_POST["un"]));
+        $p = $conn->escape_string($_POST["pw"]);
+        $n = $conn->query("SELECT password, ce, token from users where username = '".$u."'");
+        if ($n->num_rows) {
+          //User is present
+          $r = $n->fetch_assoc();
+          if (password_verify($p, $r["password"])) {
+            if (r["ce"] == "0") {
+              //User can be fully authenticated
+              setcookie("token", $r["token"]);
+              require('../base/head.php');
+              ?>
+              
+              <?php
+              require('../base/feet.php');
+            } else {
+              //User has uncomfirmed email
+              header("Location: login.php?x=2");
+            }
+          } else {
+            //Password is false
+            header("Location: login.php?x=1");
+          }
+        } else {
+          //User is not present
+          header("Location: login.php?x=1");
+        }
 
+      } else {
+        //Username and password are not present
+        header("Location: login.php?x=1");
+        die();
+      }
 
     }
 
@@ -139,7 +174,13 @@ elseif (isset($_GET["auth"])) {
   if(isset($_GET["x"])) {
   switch ($_GET["x"]) {
     case '0':
-    echo "<div class='alert alert-success' role='alert'>Your account has been activated.</div>";
+      echo "<div class='alert alert-success' role='alert'>Your account has been activated.</div>";
+      break;
+    case '1':
+      echo "<div class='alert alert-danger' role='alert'>The information provided didn't match our records.</div>";
+      break;
+    case '2':
+      echo "<div class='alert alert-danger' role='alert'>Please confirm your email.</div>";
       break;
   }
 }
