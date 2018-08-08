@@ -16,7 +16,8 @@ if (isset($_GET["auth"])) {
       "username" => $_POST["un"],
       "password" => password_hash($_POST["pw"], PASSWORD_DEFAULT),
       "email" => $_POST["em"],
-      "token" => password_hash(rand(), PASSWORD_DEFAULT)
+      "token" => password_hash(rand(), PASSWORD_DEFAULT),
+      "cfe" => md5(rand())
     );
     $blacklist = array("ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc");
     if(in_array(strtolower($upl["username"]), $blacklist)) {
@@ -24,7 +25,15 @@ if (isset($_GET["auth"])) {
     }
     if($conn->query("select username from users where username = '" . $upl["username"] . "'")->num_rows) {header("localtion: login.php?reg&x=4");}
 
-    $conn->query("INSERT INTO `users`(`username`, `password`, `email`, `token`) VALUES ('".$upl["username"]."','".$upl["password"]."','".$upl["email"]."', '".$upl["token"]."')");
+    $conn->query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`) VALUES ('".$upl["username"]."','".$upl["password"]."','".$upl["email"]."', '".$upl["token"]."', '".$upl["cfe"]."')");
+    require('../base/head.php');
+    ?>
+  </nav>
+  </div>
+  </header>
+  <main role="main" class="inner cover">
+    <?php
+    require('../base/feet.php');
 
 
   } else {
