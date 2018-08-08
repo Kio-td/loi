@@ -87,7 +87,7 @@ elseif (isset($_GET["auth"])) {
           //User is present
           $r = $n->fetch_assoc();
           if (password_verify($p, $r["password"])) {
-            if (r["ce"] == "0") {
+            if ($r["ce"] == "0") {
               //User can be fully authenticated
               setcookie("token", $r["token"]);
               require('../base/head.php');
