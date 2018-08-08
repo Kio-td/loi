@@ -1,7 +1,31 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-if (isset($_GET["auth"])) {
+if (isset($_GET["confirm"])) {
+  if(!isset($_GET["username"] || !isset($_GET["confirm"]))) {
+    header("location: login.php");
+    die();
+  } else {
+    require('/var/www/no-access/loi/config.php');
+    $un = $conn->escape_string($_GET["username"]);
+    $token = $conn->escape_string($_GET["confirm"]);
+    $x = $conn->query("SELECT ce FROM users where username = '".$un."' and ce = '".$token."'");
+    if($x->num_rows) {
+      //if exists
+      $conn->query("UPDATE `users` SET `ce`=0 WHERE username = '".$un."'");
+      header("Location: login.php?x=0");
+      die();
+    } else {
+      //if doesnt exist
+      header('Location: login.php');
+      die();
+    }
+  }
+
+
+}
+
+elseif (isset($_GET["auth"])) {
     require('/var/www/no-access/loi/config.php');
     if (isset($_GET["register"])) {
         if (!isset($_POST["un"]) || !isset($_POST["pw"]) || !isset($_POST["em"])) {
@@ -52,6 +76,8 @@ if (isset($_GET["auth"])) {
 
 
     } else {
+      //logging in
+
 
     }
 
@@ -109,6 +135,15 @@ if (isset($_GET["auth"])) {
 </div>
 </header>
 <main role="main" class="inner cover">
+  <?php
+  if(isset($_GET["x"])) {
+  switch ($_GET["x"]) {
+    case '0':
+    echo "<div class='alert alert-success' role='alert'>Your account has been activated.</div>";
+      break;
+  }
+}
+   ?>
   <h1 class="cover-heading">Login</h1>
   <p class="lead">Welcome back. Login to continue your adventure.</p>
   <form id="log" action="?auth" method="post">
