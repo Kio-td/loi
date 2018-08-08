@@ -98,7 +98,7 @@ elseif (isset($_GET["auth"])) {
           </header>
           <main role="main" class="inner cover">
             <h1 class="cover-heading">Logged in</h1>
-            <p class="lead">You are now being redirected...</p>
+            <p class="lead">You are now being redirected back to the game...</p>
               <?php
               require('../base/feet.php');
             } else {
