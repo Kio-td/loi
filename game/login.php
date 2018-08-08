@@ -15,7 +15,8 @@ if (isset($_GET["auth"])) {
     $upl = array(
       "username" => $_POST["un"],
       "password" => password_hash($_POST["pw"], PASSWORD_DEFAULT),
-      "email" => $_POST["em"]
+      "email" => $_POST["em"],
+      "token" => password_hash(rand(), PASSWORD_DEFAULT)
     );
     $blacklist = array("ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc");
     if(in_array(strtolower($upl["username"]), $blacklist)) {
@@ -23,7 +24,7 @@ if (isset($_GET["auth"])) {
     }
     if($conn->query("select username from users where username = '" . $upl["username"] . "'")->num_rows) {header("localtion: login.php?reg&x=4");}
 
-    $conn->query("INSERT INTO `users`(`username`, `password`, `email`) VALUES ('".$upl["username"]."','".$upl["password"]."','".$upl["email"]."')");
+    $conn->query("INSERT INTO `users`(`username`, `password`, `email`, `token`) VALUES ('".$upl["username"]."','".$upl["password"]."','".$upl["email"]."', '".$upl["token"]."')");
 
 
   } else {
