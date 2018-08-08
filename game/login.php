@@ -24,7 +24,7 @@ if (isset($_GET["auth"])) {
     }
     if($conn->query("select username from users where username = '" . $upl["username"] . "'")->num_rows) {header("localtion: login.php?reg&x=4");}
 
-    $conn->query("INSERT INTO `users`(`username`, `password`, `email`) VALUES ('".."','".."','".."')")
+    $conn->query("INSERT INTO `users`(`username`, `password`, `email`) VALUES ('".$upl["username"]."','".$upl["password"]."','".$upl["email"]."')");
 
 
   } else {
