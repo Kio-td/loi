@@ -92,7 +92,12 @@ elseif (isset($_GET["auth"])) {
               setcookie("token", $r["token"]);
               require('../base/head.php');
               ?>
-
+            </nav>
+          </div>
+          </header>
+          <main role="main" class="inner cover">
+            <h1 class="cover-heading">Logged in</h1>
+            <p class="lead">You are now being redirected...</p>
               <?php
               require('../base/feet.php');
             } else {
