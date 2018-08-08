@@ -23,7 +23,8 @@ if (isset($_GET["auth"])) {
     if(in_array(strtolower($upl["username"]), $blacklist)) {
       header("Location: login.php?reg&x=1");
     }
-    die($conn->query("select username from users where username = '" . $upl["username"] . "'")->num_rows);
+    $x = $conn->query("select username from users where username = '" . $upl["username"] . "'");
+    die($x->num_rows);
     if($conn->query("select username from users where username = '" . $upl["username"] . "'")->num_rows) {header("localtion: login.php?reg&x=4");}
 
     $conn->query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`) VALUES ('".$upl["username"]."','".$upl["password"]."','".$upl["email"]."', '".$upl["token"]."', '".$upl["cfe"]."')");
