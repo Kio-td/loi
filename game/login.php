@@ -30,8 +30,11 @@ if (isset($_GET["auth"])) {
     if($x->num_rows) {header("Location: login.php?reg&x=4"); die();}
 
     $conn->query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`) VALUES ('".$upl["username"]."','".$upl["password"]."','".$upl["email"]."', '".$upl["token"]."', '".$upl["cfe"]."')");
-    mail($upl["email"], "LOI>> Confirm your Email.", "Hello, ".$upl["username"].".\n\nThis is the Department of life and birth.\nTo completely be born as a citizen of Arven, please click the following link:\nhttps://".$_SERVER['HTTP_HOST']."/game/login.php?confirm&username=".$upl["username"]."&confirm=".$upl["cfe"]."\n\nThank you,\nLOI Development team");
+
+//    mail($upl["email"], "LOI>> Confirm your Email.", "Hello, ".$upl["username"].".\n\nThis is the Department of life and birth.\nTo completely be born as a citizen of Arven, please click the following link:\nhttps://".$_SERVER['HTTP_HOST']."/game/login.php?confirm&username=".$upl["username"]."&confirm=".$upl["cfe"]."\n\nThank you,\nLOI Development team");
+
     require('../base/head.php');
+    sendmail("LOI>> Confirm your Email.", $upl["email"], $upl["username"], "Hello, ".$upl["username"].".\n\nThis is the Department of life and birth.\nTo completely be born as a citizen of Arven, please click the following link:\nhttps://".$_SERVER['HTTP_HOST']."/game/login.php?confirm&username=".$upl["username"]."&confirm=".$upl["cfe"]."\n\nThank you,\nLOI Development team");
     ?>
   </nav>
   </div>
