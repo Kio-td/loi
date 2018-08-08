@@ -1,5 +1,18 @@
 <?php
-require('../base/head.php'); ?>
+require('../base/head.php');
+if (isset($_COOKIE["token"])) {
+  require("/var/www/no-access/loi/config.php");
+  
+}
+?>
+
+
+
+
+
+<?php
+
+?>
 <a class="nav-link" href="login.php">Login</a>
 <a class="nav-link" href="login.php?reg">Register</a>
 </nav>
