@@ -35,8 +35,8 @@ echo "<style>input{color: white !important;}</style>";
 require('../base/head.php');
     if (isset($_GET["reg"])) {
       ?>
-      <a class="nav-link" href="login.php">Login</a>
-      <a class="nav-link active" href="login.php?reg">Register</a>
+      <h1 class="cover-heading">Welcome Home.</h1>
+      <p class="lead">Please check your email to confirm your account.</p>
       </nav>
       </div>
       </header>
