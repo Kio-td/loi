@@ -9,6 +9,9 @@ if (isset($_GET["auth"])) {
     if (strlen($_POST["un"]) > 30) {
       header("Location: login.php?reg&x=5");
     }
+    if(strlen($_POST["pw"])) {
+      header("Location: login.php?reg&x=2");
+    }
     $upl = array(
       "username" => $_POST["un"],
       "password" => password_hash($_POST["pw"], PASSWORD_DEFAULT),
@@ -17,10 +20,6 @@ if (isset($_GET["auth"])) {
     $blacklist = array("ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc");
     if(in_array(strtolower($upl["username"]), $blacklist)) {
       header("Location: login.php?reg&x=1");
-    }
-    echo(strlen($upl["password"]));
-    if(strlen($upl["password"] > 8)) {
-      header("Location: login.php?reg&x=2");
     }
     if($conn->query("select username from users where username = '" . $upl["username"] . "'")->num_rows) {header("localtion: login.php?reg&x=4");}
 
