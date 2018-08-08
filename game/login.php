@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 if (isset($_GET["confirm"])) {
+  die("h");
   if(!isset($_GET["username"]) || !isset($_GET["confirm"])) {
     header("location: login.php");
     die();
