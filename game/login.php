@@ -5,12 +5,15 @@ if (isset($_GET["auth"])) {
   if (isset($_GET["register"])) {
     if(!isset($_POST["un"]) || !isset($_POST["pw"]) || !isset($_POST["em"])) {
       header("Location: login.php?reg&x=3");
+       die();
     }
     if (strlen($_POST["un"]) > 30) {
       header("Location: login.php?reg&x=5");
+       die();
     }
     if(strlen($_POST["pw"]) < 8) {
       header("Location: login.php?reg&x=2");
+       die();
     }
     $upl = array(
       "username" => $_POST["un"],
@@ -21,10 +24,10 @@ if (isset($_GET["auth"])) {
     );
     $blacklist = array("ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc");
     if(in_array(strtolower($upl["username"]), $blacklist)) {
-      header("Location: login.php?reg&x=1");
+      header("Location: login.php?reg&x=1");  die();
     }
     $x = $conn->query("select username from users where username = '" . $upl["username"] . "'");
-    if($x->num_rows) {header("Location: login.php?reg&x=4");}
+    if($x->num_rows) {header("Location: login.php?reg&x=4"); die();}
 
     $conn->query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`) VALUES ('".$upl["username"]."','".$upl["password"]."','".$upl["email"]."', '".$upl["token"]."', '".$upl["cfe"]."')");
     require('../base/head.php');
