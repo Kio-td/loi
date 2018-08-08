@@ -31,15 +31,15 @@ if (isset($_GET["auth"])) {
 
     $conn->query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`) VALUES ('".$upl["username"]."','".$upl["password"]."','".$upl["email"]."', '".$upl["token"]."', '".$upl["cfe"]."')");
 
-//    mail($upl["email"], "LOI>> Confirm your Email.", "Hello, ".$upl["username"].".\n\nThis is the Department of life and birth.\nTo completely be born as a citizen of Arven, please click the following link:\nhttps://".$_SERVER['HTTP_HOST']."/game/login.php?confirm&username=".$upl["username"]."&confirm=".$upl["cfe"]."\n\nThank you,\nLOI Development team");
-
     require('../base/head.php');
-    sendmail("LOI>> Confirm your Email.", $upl["email"], $upl["username"], "Hello, ".$upl["username"].".\n\nThis is the Department of life and birth.\nTo completely be born as a citizen of Arven, please click the following link:\nhttps://".$_SERVER['HTTP_HOST']."/game/login.php?confirm&username=".$upl["username"]."&confirm=".$upl["cfe"]."\n\nThank you,\nLOI Development team");
+    sendmail("LOI>> Confirm your Email.", $upl["email"], $upl["username"], "Hello, ".$upl["username"].".\n\nThis is the Department of life and birth.\nTo completely be born as a citizen of Arven, please click the following link:\nhttps://".$_SERVER['HTTP_HOST']."/game/login.php?confirm&username=".$upl["username"]."&confirm=".$upl["cfe"]."\n\nThank you,\nArven DOLB");
     ?>
   </nav>
   </div>
   </header>
   <main role="main" class="inner cover">
+    <h1 class="cover-heading">Verify your email.</h1>
+    <p class="lead">Your new life is awaiting. Please verify your email.</p>
     <?php
     require('../base/feet.php');
 

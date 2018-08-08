@@ -9,11 +9,8 @@ $email->addContent("text/plain", $body);
 $sendgrid = new \SendGrid("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");
 try {
     $response = $sendgrid->send($email);
-    print $response->statusCode() . "<br>";
-    print_r($response->headers());
-    print $response->body() . "<br>";
 } catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage(), "<br>";
+    echo 'We were unable to send your email. Please, notify Kio.';
 }
 }
 ?>
