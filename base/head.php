@@ -20,8 +20,7 @@ if (isset($_COOKIE["token"])) {
   $c = $conn->query("SELECT token, user from users where token = '".$n."'");
   if (!$c->num_rows) {
     $na = array("index.php", "login.php");
-    die(var_dump(basename($_SERVER['PHP_SELF'])));
-    if(!in_array(basename($_SERVER['PHP_SELF'], $na))) {header("Location: index.php");}
+    if(in_array(basename($_SERVER['PHP_SELF'], $na))) {header("Location: index.php");}
 }
 }
 
