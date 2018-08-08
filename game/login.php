@@ -11,7 +11,7 @@ if (isset($_GET["auth"])) {
     }
     $upl = array(
       "username" => $_POST["un"],
-      "password" => password_hash($_POST["pw"]),
+      "password" => password_hash($_POST["pw"], PASSWORD_DEFAULT),
       "email" => $_POST["em"]
     );
     $blacklist = array("ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc");
@@ -23,7 +23,7 @@ if (isset($_GET["auth"])) {
     }
     if($conn->query("select username from users where username = '" . $upl["username"] . "'")->num_rows) {header("localtion: login.php?reg&x=4");}
 
-    $conn->query("INSERT INTO `users`(`username`, `password`, `email`, `cemail`) VALUES ('".$upl["username"]."','".$upl["password"]."','".$upl["email"]."', 0)");
+    $conn->query("INSERT INTO `users`(`username`, `password`, `email`) VALUES ('".."','".."','".."')")
 
 
   } else {
@@ -71,7 +71,6 @@ require('../base/head.php');
     <input class="form-control" name="un" placeholder="Username" required="" type="text"><br>
     <input class="form-control" id="pw" type="password" name="pw" required placeholder="Password"><br>
     <input class="form-control" type="email" name="em" required placeholder="Email"><br>
-    <input type="checkbox" class="form-control" required>I'm over 18.<br><br>
     <button class="btn btn-secondary">register</button>
   </form>
 
