@@ -23,20 +23,7 @@ if (isset($_GET["auth"])) {
             "token" => password_hash(rand(), PASSWORD_DEFAULT),
             "cfe" => md5(rand())
         );
-        $blacklist = array(
-            "ikaros",
-            "admin",
-            "console",
-            "sysadmin",
-            "owner",
-            "dev",
-            "developer",
-            "support",
-            "superuser",
-            "root",
-            "system",
-            "bot",
-            "npc"
+        $blacklist = array("ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc"
         );
         if (in_array(strtolower($upl["username"]), $blacklist)) {
             header("Location: login.php?reg&x=1");
