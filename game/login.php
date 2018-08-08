@@ -92,6 +92,7 @@ elseif (isset($_GET["auth"])) {
               setcookie("token", $r["token"]);
               require('../base/head.php');
               ?>
+              <a class="nav-link" href="index.php">Home</a>
             </nav>
           </div>
           </header>
@@ -106,16 +107,16 @@ elseif (isset($_GET["auth"])) {
             }
           } else {
             //Password is false
-            header("Location: login.php?x=6");
+            header("Location: login.php?x=1");
           }
         } else {
           //User is not present
-          header("Location: login.php?x=5");
+          header("Location: login.php?x=1");
         }
 
       } else {
         //Username and password are not present
-        header("Location: login.php?x=4");
+        header("Location: login.php?x=1");
         die();
       }
 
