@@ -1,18 +1,9 @@
 <?php
-
-
-?>
-
-
-
-
-
-<?php
 if($auth) {
 
+die("Awoowoo");
 
-
-}else {
+} else {
   require('../base/head.php');
 ?>
 <a class="nav-link" href="login.php">Login</a>
