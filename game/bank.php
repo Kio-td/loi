@@ -10,3 +10,6 @@ require("../base/head.php");
  <main role="main" class="inner cover">
    <h1 class="cover-heading">Good day, <?php echo ucfirst($username); ?></h1>
    <p class="lead">Current account balance: <?php ?></p>
+
+<?php
+require("../base/feet.php");?>
