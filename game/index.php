@@ -1,10 +1,11 @@
 <?php
+require('../base/head.php');
 if($auth) {
 
 die("Awoowoo");
 
 } else {
-  require('../base/head.php');
+
 ?>
 <a class="nav-link" href="login.php">Login</a>
 <a class="nav-link" href="login.php?reg">Register</a>
