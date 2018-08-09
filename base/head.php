@@ -16,8 +16,9 @@ try {
 
 if (isset($_COOKIE["token"])) {
   require("/var/www/no-access/loi/config.php");
-  $n = $conn->escape_string($_COOKIE["token"]);
+  $n = $conn->escape_string(base64_decode($_COOKIE["token"]));
   $c = $conn->query("SELECT token, user from users where token = '".$n."'");
+  die($conn->error);
   if (!$c->num_rows) {
     $na = array("index.php", "login.php");
     if(in_array(basename($_SERVER['PHP_SELF'], $na))) {header("Location: index.php");}
@@ -32,7 +33,6 @@ if (isset($_COOKIE["token"])) {
     <meta name="author" content="">
 
     <title>Legend of Ikaros</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/aes-min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
     <link href="/cover.css" rel="stylesheet">
     <link rel="author" href="humans.txt" />

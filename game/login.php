@@ -90,6 +90,7 @@ elseif (isset($_GET["auth"])) {
             if ($r["ce"] == "0") {
               //User can be fully authenticated
               setcookie("token", base64_encode($r["token"]));
+              header("Location: index.php");
               require('../base/head.php');
               ?>
               <a class="nav-link" href="index.php">Home</a>
