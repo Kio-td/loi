@@ -8,7 +8,9 @@ require('../base/head.php');
 
 
 <?php
+if($auth) {
 
+}else {
 ?>
 <a class="nav-link" href="login.php">Login</a>
 <a class="nav-link" href="login.php?reg">Register</a>
@@ -20,4 +22,4 @@ require('../base/head.php');
 <h1 class="cover-heading">You're not logged in.</h1>
 <p class="lead">Use the links up top if you'd like to continue your quest.</p>
 
-<?php require('../base/feet.php'); ?>
+<?php require('../base/feet.php'); }?>
