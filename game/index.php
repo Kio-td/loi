@@ -2,8 +2,8 @@
 require('../base/head.php');
 if($auth) {
   ?>
-  <a class="nav-link active" href="index">home</a>
-  <a class="nac-link" href="login?lo">Logout</a>
+  <a class="nav-link active" href="index">Home</a>
+  <a class="nav-link" href="login?lo">Logout</a>
   </nav>
   </div>
   </header>
