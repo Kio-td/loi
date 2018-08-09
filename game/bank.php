@@ -9,7 +9,7 @@ require("../base/head.php");
 
  <main role="main" class="inner cover">
    <h1 class="cover-heading">Good day, <?php echo ucfirst($username); ?>.</h1>
-   <p class="lead">Current account balance: <?php echo $bal; ?>Tn.</p>
+   <p class="lead">Welcome to the bank. Your current account balance: <?php echo $bal; ?>Tn.</p>
 
 <?php
 require("../base/feet.php");?>
