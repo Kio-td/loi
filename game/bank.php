@@ -27,7 +27,7 @@ if (isset($_GET["transfer"])) {
         </form>
       <?php
     }
-    if($no > $bal || $no < 0) {
+    elseif($no > $bal || $no < 0) {
       ?>
       <main role="main" class="inner cover">
         <div class="alert alert-danger" role="alert">We have limits for a reason.</div>
@@ -41,7 +41,7 @@ if (isset($_GET["transfer"])) {
 
       <?php
     }
-    if(!$n->num_rows) {
+    elseif(!$n->num_rows) {
       ?>
       <main role="main" class="inner cover">
         <div class="alert alert-danger" role="alert">That user doesn't exist.</div>
@@ -54,6 +54,19 @@ if (isset($_GET["transfer"])) {
         </form>
 
       <?php
+    } else {
+      if(isset($_POST["confirm"])) {
+
+      } else {
+        ?>
+          <h1 class="cover-heading">Confirm</h1>
+          <p class="lead">Are you sre you would like to send <?php echo $no . "Tn. to " . $x . "?";?></p>
+          <p class="lead">Service charge: <?php echo ceil($no * 0.15); ?></p>
+          <form method="post">
+            <input type="hidden" name="un" value="<?php echo $x; ?>"><input type="hidden" name="amnt" value="<?php echo $no; ?>"><input class="btn btn-info" type="submit"><a href="bank" class="btn btn-success">Cancel</a>
+          </form>
+        <?php
+      }
     }
 
   } else {
