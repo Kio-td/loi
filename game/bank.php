@@ -64,7 +64,7 @@ if (isset($_GET["transfer"])) {
           <h1 class="cover-heading">Sent</h1>
           <p class="lead">A charge of <?php echo $no + ceil($no * 0.15); ?>Tn. was deducted from your account, and <?php echo $no; ?>Tn. has been sent to <?php echo $x; ?>.</p>
           <p class="lead">Transaction ID: <?php echo $ticket; ?></p>
-          <a class="btn btn-info" href="info">Home</a>
+          <a class="btn btn-info" href="/game">Home</a>
         <?php
       } else {
         ?>
