@@ -8,8 +8,8 @@ if($auth) {
   </header>
 
   <main role="main" class="inner cover">
-  <h1 class="cover-heading">You're not logged in.</h1>
-  <p class="lead">Use the links up top if you'd like to continue your quest.</p>
+    <h1 class="cover-heading">Welcome home, <?php echo $username; ?></h1>
+    <p class="lead">Please choose an option.</p>
 <?php
 } else {
 
