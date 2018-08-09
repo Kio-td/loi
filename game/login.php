@@ -25,7 +25,7 @@ if (isset($_GET["confirm"])) {
 
 }
 elseif (isset($_GET["lo"])) {
-  unset($_COOKIE["token"]);
+  setcookie("token", '' , time() - 3600);
   header("Location: index");
 }
 elseif (isset($_GET["auth"])) {
