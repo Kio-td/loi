@@ -24,7 +24,10 @@ if (isset($_GET["confirm"])) {
 
 
 }
-
+elseif (isset($_GET["lo"])) {
+  unset($_COOKIE["token"]);
+  header("Location: index");
+}
 elseif (isset($_GET["auth"])) {
     require('/var/www/no-access/loi/config.php');
     if (isset($_GET["register"])) {
