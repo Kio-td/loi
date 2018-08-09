@@ -15,7 +15,7 @@ if (isset($_GET["transfer"])) {
    <h1 class="cover-heading">Transaction info-</h1>
    <form method="post">
      <input type="text" class="form-control" name="un" placeholder="Username"><br>
-     <input type="text" class="form-control" min="1" max="<?php echo $bal; ?>" placeholder="Amount"><br>
+     <input type="number" class="form-control" min="1" max="<?php echo $bal; ?>" placeholder="Amount"><br>
      <input type="submit" class="btn btn-secondary" value="Send">
    </form>
 <?php
