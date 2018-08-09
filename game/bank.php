@@ -18,6 +18,7 @@ if (isset($_GET["transfer"])) {
      <input type="number" min="1" max="<?php echo $bal; ?>" placeholder="Amount"><br>
      <input type="submit" class="btn btn-secondary" value="Send">
    </form>
+<?php
 } else {
 
 
