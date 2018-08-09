@@ -11,6 +11,7 @@ if($auth) {
   <main role="main" class="inner cover">
     <h1 class="cover-heading">Welcome home, <?php echo ucfirst($username); ?></h1>
     <p class="lead">Please choose an option.</p>
+    <p class="lead"><a href="bank">Bank</a>&emsp;Lorem&emsp;Ipsum</p>
 <?php
 } else {
 
