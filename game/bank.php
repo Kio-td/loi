@@ -8,7 +8,7 @@ require("../base/head.php");
  </header>
 
  <main role="main" class="inner cover">
-   <h1 class="cover-heading">Good day, <?php echo ucfirst($username); ?></h1>
+   <h1 class="cover-heading">Good day, <?php echo ucfirst($username); ?>.</h1>
    <p class="lead">Current account balance: <?php echo $bal; ?>Tn.</p>
 
 <?php
