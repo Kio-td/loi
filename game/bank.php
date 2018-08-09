@@ -10,12 +10,47 @@ require("../base/head.php");
 
 <?php
 if (isset($_GET["transfer"])) {
+  if(isset($_POST["amnt"]) && isset($_POST["un"])) {
+    $no = (int) $_POST["amnt"];
+    $x = $conn->escape_string(strtolower($_POST["un"]));
+    $n = $conn->query("Select username from users where username = '".$x."'");
+    if($no > $bal || $no < 0) {
+      ?>
+      <main role="main" class="inner cover">
+        <div class="alert alert-danger" role="alert">We have limits for a reason.</div>
+        <h1 class="cover-heading">Transaction info-</h1>
+        <p class="lead">Give some money to another user on our system.</p>
+        <form method="post">
+          <input type="text" required class="form-control" name="un" placeholder="Username"><br>
+          <input type="number" required class="form-control" name="amnt" min="1" max="<?php echo $bal; ?>" placeholder="Amount"><br>
+          <input type="submit" class="btn btn-secondary" value="Send">
+        </form>
+
+      <?php
+    }
+    if(!$n->num_rows) {
+      ?>
+      <main role="main" class="inner cover">
+        <div class="alert alert-danger" role="alert">That user doesn't exist.</div>
+        <h1 class="cover-heading">Transaction info-</h1>
+        <p class="lead">Give some money to another user on our system.</p>
+        <form method="post">
+          <input type="text" required class="form-control" name="un" placeholder="Username"><br>
+          <input type="number" required class="form-control" name="amnt" min="1" max="<?php echo $bal; ?>" placeholder="Amount"><br>
+          <input type="submit" class="btn btn-secondary" value="Send">
+        </form>
+
+      <?php
+    }
+
+  }
   ?>
  <main role="main" class="inner cover">
    <h1 class="cover-heading">Transaction info-</h1>
+   <p class="lead">Give some money to another user on our system.</p>
    <form method="post">
-     <input type="text" class="form-control" name="un" placeholder="Username"><br>
-     <input type="number" class="form-control" min="1" max="<?php echo $bal; ?>" placeholder="Amount"><br>
+     <input type="text" required class="form-control" name="un" placeholder="Username"><br>
+     <input type="number" required class="form-control" name="amnt" min="1" max="<?php echo $bal; ?>" placeholder="Amount"><br>
      <input type="submit" class="btn btn-secondary" value="Send">
    </form>
 <?php
