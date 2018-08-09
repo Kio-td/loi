@@ -1,9 +1,16 @@
 <?php
 require('../base/head.php');
 if($auth) {
+  ?>
+  <a class="nav-link" href="index.php">home</a>
+  </nav>
+  </div>
+  </header>
 
-die("Awoowoo");
-
+  <main role="main" class="inner cover">
+    <h1 class="cover-heading">Welcome home, <?php echo $username; ?></h1>
+    <p class="lead">Please choose an option.</p>
+<?php
 } else {
 
 ?>

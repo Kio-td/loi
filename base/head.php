@@ -23,6 +23,8 @@ if (isset($_COOKIE["token"])) {
     if(in_array(basename($_SERVER['PHP_SELF'], $na))) {header("Location: index.php");}
 } else {
   $auth = true;
+  $c = $c->fetch_assoc();
+  $username = $c["username"];
 }
 }
 
