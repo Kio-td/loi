@@ -2,7 +2,8 @@
 require('../base/head.php');
 if($auth) {
   ?>
-  <a class="nav-link" href="index.php">home</a>
+  <a class="nav-link active" href="index">home</a>
+  <a class="nac-link" href="login?lo">Logout</a>
   </nav>
   </div>
   </header>
@@ -14,8 +15,8 @@ if($auth) {
 } else {
 
 ?>
-<a class="nav-link" href="login.php">Login</a>
-<a class="nav-link" href="login.php?reg">Register</a>
+<a class="nav-link" href="login">Login</a>
+<a class="nav-link" href="login?reg">Register</a>
 </nav>
 </div>
 </header>
