@@ -61,9 +61,9 @@ if (isset($_GET["transfer"])) {
         ?>
           <h1 class="cover-heading">Confirm</h1>
           <p class="lead">Are you sre you would like to send <?php echo $no . "Tn. to " . $x . "?";?></p>
-          <p class="lead">Service charge: <?php echo ceil($no * 0.15); ?></p>
+          <p class="lead">Service charge: <?php echo ceil($no * 0.15); ?>Tn.</p>
           <form method="post">
-            <input type="hidden" name="un" value="<?php echo $x; ?>"><input type="hidden" name="amnt" value="<?php echo $no; ?>"><input class="btn btn-info" type="submit"><a href="bank" class="btn btn-success">Cancel</a>
+            <input type="hidden" name="un" value="<?php echo $x; ?>"><input type="hidden" name="amnt" value="<?php echo $no; ?>"><input class="btn btn-info" type="submit" value="Charge"><a href="bank" class="btn btn-success">Cancel</a>
           </form>
         <?php
       }
