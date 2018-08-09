@@ -8,8 +8,8 @@ require("../base/head.php");
  </header>
 
 
-<?
-if (1) {
+<?php
+if (isset($_GET["transfer"])) {
   ?>
  <main role="main" class="inner cover">
    <h1 class="cover-heading">Transaction info-</h1>
