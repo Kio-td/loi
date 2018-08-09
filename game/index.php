@@ -24,4 +24,4 @@ if($auth) {
 <h1 class="cover-heading">You're not logged in.</h1>
 <p class="lead">Use the links up top if you'd like to continue your quest.</p>
 
-<?php require('../base/feet.php'); }?>
+<?php } require('../base/feet.php');?>
