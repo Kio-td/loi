@@ -57,8 +57,8 @@ if (isset($_GET["transfer"])) {
     } else {
       if(isset($_POST["confirm"])) {
         $ticket = uniqid("tfr_");
-        $conn->query("UPDATE `users` SET `bal`=`".$bal - ($no + ceil($no * 0.15))."` WHERE username = '".$username."'");
-        $conn->query("UPDATE `users` SET `bal`=`".$bal + $no."` WHERE username = '".$x."'");
+        $conn->query("UPDATE `users` SET `bal`=`".$bal - ($no + ceil($no * 0.15))."` WHERE `username` = '".$username."'");
+        $conn->query("UPDATE `users` SET `bal`=`".$bal + $no."` WHERE `username` = '".$x."'");
         die($conn->error);
         $conn->query("INSERT INTO `ticket`(`tid`, `ufrom`, `uto`, `amnt`) VALUES ('$ticket', '$username', '$x', '$no')");
         ?>
