@@ -14,7 +14,7 @@ if (isset($_GET["transfer"])) {
     $no = (int) $_POST["amnt"];
     $x = $conn->escape_string(strtolower($_POST["un"]));
     $n = $conn->query("Select username from users where username = '".$x."'");
-    if($user === $x) {
+    if($username === $x) {
       ?>
       <main role="main" class="inner cover">
         <div class="alert alert-danger" role="alert">Please don't send money to yourself.</div>
