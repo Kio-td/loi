@@ -1,1 +1,4 @@
 wiki/
+sendgrid.env
+composer.lock
+vendor
