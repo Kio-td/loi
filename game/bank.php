@@ -14,6 +14,19 @@ if (isset($_GET["transfer"])) {
     $no = (int) $_POST["amnt"];
     $x = $conn->escape_string(strtolower($_POST["un"]));
     $n = $conn->query("Select username from users where username = '".$x."'");
+    if($user === $x) {
+      ?>
+      <main role="main" class="inner cover">
+        <div class="alert alert-danger" role="alert">Please don't send money to yourself.</div>
+        <h1 class="cover-heading">Transaction info-</h1>
+        <p class="lead">Give some money to another user on our system.</p>
+        <form method="post">
+          <input type="text" required class="form-control" name="un" placeholder="Username"><br>
+          <input type="number" required class="form-control" name="amnt" min="1" max="<?php echo $bal; ?>" placeholder="Amount"><br>
+          <input type="submit" class="btn btn-secondary" value="Send">
+        </form>
+      <?php
+    }
     if($no > $bal || $no < 0) {
       ?>
       <main role="main" class="inner cover">
@@ -43,7 +56,7 @@ if (isset($_GET["transfer"])) {
       <?php
     }
 
-  }
+  } else {
   ?>
  <main role="main" class="inner cover">
    <h1 class="cover-heading">Transaction info-</h1>
@@ -54,6 +67,7 @@ if (isset($_GET["transfer"])) {
      <input type="submit" class="btn btn-secondary" value="Send">
    </form>
 <?php
+}
 } else {
 
 
