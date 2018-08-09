@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 if (isset($_GET["confirm"])) {
   if(!isset($_GET["username"]) || !isset($_GET["confirm"])) {
-    header("location: login.php");
+    header("location: login");
     die();
   } else {
     require('/var/www/no-access/loi/config.php');
@@ -13,11 +13,11 @@ if (isset($_GET["confirm"])) {
     if($x->num_rows) {
       //if exists
       $conn->query("UPDATE `users` SET `ce`=0 WHERE username = '".$un."'");
-      header("Location: login.php?x=0");
+      header("Location: login?x=0");
       die();
     } else {
       //if doesnt exist
-      header('Location: login.php');
+      header('Location: login');
       die();
     }
   }
@@ -29,15 +29,15 @@ elseif (isset($_GET["auth"])) {
     require('/var/www/no-access/loi/config.php');
     if (isset($_GET["register"])) {
         if (!isset($_POST["un"]) || !isset($_POST["pw"]) || !isset($_POST["em"])) {
-            header("Location: login.php?reg&x=3");
+            header("Location: login?reg&x=3");
             die();
         }
         if (strlen($_POST["un"]) > 30) {
-            header("Location: login.php?reg&x=5");
+            header("Location: login?reg&x=5");
             die();
         }
         if (strlen($_POST["pw"]) < 8) {
-            header("Location: login.php?reg&x=2");
+            header("Location: login?reg&x=2");
             die();
         }
         $upl       = array(
@@ -50,21 +50,21 @@ elseif (isset($_GET["auth"])) {
         $blacklist = array("ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc"
         );
         if (in_array(strtolower($upl["username"]), $blacklist)) {
-            header("Location: login.php?reg&x=1");
+            header("Location: login?reg&x=1");
             die();
         }
         $x = $conn->query("select username from users where username = '" . $upl["username"] . "'");
         if ($x->num_rows) {
-            header("Location: login.php?reg&x=4");
+            header("Location: login?reg&x=4");
             die();
         }
 
         $conn->query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`) VALUES ('" . $upl["username"] . "','" . $upl["password"] . "','" . $upl["email"] . "', '" . $upl["token"] . "', '" . $upl["cfe"] . "')");
 
-        require('../base/head.php');
-        sendmail("LOI>> Confirm your Email.", $upl["email"], $upl["username"], "Hello, " . $upl["username"] . ".\n\nThis is the Department of life and birth.\nTo completely be born as a citizen of Arven, please click the following link:\nhttps://" . $_SERVER['HTTP_HOST'] . "/game/login.php?confirm&username=" . $upl["username"] . "&confirm=" . $upl["cfe"] . "\n\nThank you,\nArven DOLB");
+        require('../base/head');
+        sendmail("LOI>> Confirm your Email.", $upl["email"], $upl["username"], "Hello, " . $upl["username"] . ".\n\nThis is the Department of life and birth.\nTo completely be born as a citizen of Arven, please click the following link:\nhttps://" . $_SERVER['HTTP_HOST'] . "/game/login?confirm&username=" . $upl["username"] . "&confirm=" . $upl["cfe"] . "\n\nThank you,\nArven DOLB");
 ?>
-     <a class="nav-link" href="login.php">Login</a>
+     <a class="nav-link" href="login">Login</a>
     </nav>
   </div>
 </header>
@@ -72,7 +72,7 @@ elseif (isset($_GET["auth"])) {
   <h1 class="cover-heading">Verify your email.</h1>
   <p class="lead">Your new life is awaiting. Please verify your email.</p>
   <?php
-        require('../base/feet.php');
+        require('../base/feet');
 
 
     } else {
@@ -90,10 +90,10 @@ elseif (isset($_GET["auth"])) {
             if ($r["ce"] == "0") {
               //User can be fully authenticated
               setcookie("token", base64_encode($r["token"]));
-              header("Location: index.php");
+              header("Location: index");
               require('../base/head.php');
               ?>
-              <a class="nav-link" href="index.php">Home</a>
+              <a class="nav-link" href="index">Home</a>
             </nav>
           </div>
           </header>
@@ -104,20 +104,20 @@ elseif (isset($_GET["auth"])) {
               require('../base/feet.php');
             } else {
               //User has uncomfirmed email
-              header("Location: login.php?x=2");
+              header("Location: login?x=2");
             }
           } else {
             //Password is false
-            header("Location: login.php?x=1");
+            header("Location: login?x=1");
           }
         } else {
           //User is not present
-          header("Location: login.php?x=1");
+          header("Location: login?x=1");
         }
 
       } else {
         //Username and password are not present
-        header("Location: login.php?x=1");
+        header("Location: login?x=1");
         die();
       }
 
