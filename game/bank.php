@@ -59,7 +59,7 @@ if (isset($_GET["transfer"])) {
         $ticket = uniqid("tfr_");
         $conn->query("UPDATE `users` SET `bal`=".$bal - ($no + ceil($no * 0.15))." WHERE username = '".$username."'");
         $conn->query("UPDATE `users` SET `bal`=".$bal + $no." WHERE username = '".$x."'");
-        $conn->query("INSERT INTO `ticket`(`tid`, `ufrom`, `uto`, `amnt`) VALUES ()");
+        $conn->query("INSERT INTO `ticket`(`tid`, `ufrom`, `uto`, `amnt`) VALUES ('$ticket', '$username', '$x', '$no')");
         ?>
           <h1 class="cover-heading">Sent</h1>
           <p class="lead">A charge of <?php echo $no + ceil($no * 0.15); ?>Tn. was deducted from your account, and <?php echo $no; ?>Tn. has been sent to <?php echo $x; ?>.</p>
