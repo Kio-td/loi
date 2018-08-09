@@ -56,7 +56,11 @@ if (isset($_GET["transfer"])) {
       <?php
     } else {
       if(isset($_POST["confirm"])) {
-
+        ?>
+          <h1 class="cover-heading">Sent</h1>
+          <p class="lead">A charge of <?php $no + ceil($no * 0.15); ?>Tn. was deducted from your account, and <?php echo $no; ?>Tn. has been sent to <?php echo $x; ?>.</p>
+          <a class="btn btn-info" href="info">Home</a>
+        <?php
       } else {
         ?>
           <h1 class="cover-heading">Confirm</h1>
