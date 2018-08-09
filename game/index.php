@@ -1,9 +1,6 @@
 <?php
 require('../base/head.php');
-if (isset($_COOKIE["token"])) {
-  require("/var/www/no-access/loi/config.php");
-  
-}
+
 ?>
 
 

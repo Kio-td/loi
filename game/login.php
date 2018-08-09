@@ -89,7 +89,7 @@ elseif (isset($_GET["auth"])) {
           if (password_verify($p, $r["password"])) {
             if ($r["ce"] == "0") {
               //User can be fully authenticated
-              setcookie("token", $r["token"]);
+              setcookie("token", base64_encode($r["token"]));
               require('../base/head.php');
               ?>
               <a class="nav-link" href="index.php">Home</a>
