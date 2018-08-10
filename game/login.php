@@ -126,7 +126,7 @@ elseif (isset($_GET["auth"])) {
 
     }
 
-} else {
+} elseif(isset($_GET["reg"])) {
     echo "<style>input{color: white !important;}</style>";
     require('../base/head.php');
     if (isset($_GET["reg"])) {
