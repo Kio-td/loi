@@ -130,7 +130,6 @@ elseif (isset($_GET["auth"])) {
     echo "<style>input{color: white !important;}</style>";
     require('../base/head.php');
     if (isset($_GET["reg"])) {
-<<<<<<< HEAD
       ?>
       <h1 class="cover-heading">Welcome Home.</h1>
       <p class="lead">Please check your email to confirm your account.</p>
