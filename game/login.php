@@ -138,6 +138,7 @@ elseif (isset($_GET["auth"])) {
       </header>
       <main role="main" class="inner cover">
       <?php
+    }
       if(isset($_GET["x"])) {
         echo '<div class="alert alert-danger" role="alert">';
         switch ($_GET["x"]) {
