@@ -201,6 +201,7 @@ elseif (isset($_GET["auth"])) {
     <input class="form-control" name="un" placeholder="Username" required type="text"><br>
     <input class="form-control" name="pw" placeholder="Password" required type="password"><br>
     <button class="btn btn-secondary">Login</button>
+    <p class="lead"><a href="reset">Reset Password</p>
   </form>
     <?php
 
