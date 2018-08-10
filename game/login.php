@@ -155,7 +155,6 @@ elseif (isset($_GET["auth"])) {
             break;
           case '5':
           echo "The username is beyond 30 characters.";
-=======
 ?>
    <a class="nav-link" href="login.php">Login</a>
     <a class="nav-link active" href="login.php?reg">Register</a>
