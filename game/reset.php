@@ -21,5 +21,8 @@ if($auth) {
 <main role="main" class="inner cover">
 <h1 class="cover-heading">Reset Password</h1>
 <p class="lead">Please put your email below and we will send you a link to reset your account.</p>
-
+<form method="post">
+  <input class="form-control" name="eml" type="email" required>
+  <input type="submit" class="btn btn-secondary" value="Reset">
+</form>
 <?php } require('../base/feet.php');?>
