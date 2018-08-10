@@ -10,7 +10,6 @@ require("../base/head.php");
  </div>
  </header>
 
-
 <?php
 if (isset($_GET["transfer"])) {
   if(isset($_POST["amnt"]) && isset($_POST["un"])) {
