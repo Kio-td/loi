@@ -8,10 +8,6 @@ if($auth) {
   </div>
   </header>
 
-  <main role="main" class="inner cover">
-    <h1 class="cover-heading">Welcome home, <?php echo ucfirst($username); ?>.</h1>
-    <p class="lead">Please choose an option.</p>
-    <p class="lead"><a href="bank">Bank</a>&emsp;Lorem&emsp;Ipsum</p>
 <?php
 } else {
 
@@ -23,7 +19,7 @@ if($auth) {
 </header>
 
 <main role="main" class="inner cover">
-<h1 class="cover-heading">You're not logged in.</h1>
-<p class="lead">Use the links up top if you'd like to continue your quest.</p>
+<h1 class="cover-heading">Reset Password</h1>
+<p class="lead">Please put your email below and we will send you a link to reset your account.</p>
 
 <?php } require('../base/feet.php');?>
