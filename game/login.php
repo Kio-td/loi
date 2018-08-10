@@ -197,7 +197,7 @@ elseif (isset($_GET["auth"])) {
    ?>
   <h1 class="cover-heading">Login</h1>
   <p class="lead">Welcome back. Login to continue your adventure. </p>
-  <a href="reset">Reset Password>
+  <a href="reset">Reset Password </a>
   <form id="log" action="?auth" method="post">
     <input class="form-control" name="un" placeholder="Username" required type="text"><br>
     <input class="form-control" name="pw" placeholder="Password" required type="password"><br>
