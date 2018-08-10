@@ -182,7 +182,6 @@ elseif (isset($_GET["auth"])) {
                     echo "The username is beyond 30 characters.";
             }
             echo "</div>";
->>>>>>> 78f7c0b9312ca73dbd28af4d99632a24a36114ca
         }
 
 ?>
