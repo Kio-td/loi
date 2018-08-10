@@ -29,7 +29,7 @@ if (isset($_GET["transfer"])) {
         </form>
       <?php
     }
-    elseif($no + ciel($no * 0.15) > $bal || $no < 0) {
+    elseif($no + ceil($no * 0.15) > $bal || $no < 0) {
       ?>
       <main role="main" class="inner cover">
         <div class="alert alert-danger" role="alert">You're too poor to afford that.</div>
