@@ -126,38 +126,10 @@ elseif (isset($_GET["auth"])) {
 
     }
 
-} elseif(isset($_GET["reg"])) {
+} else {
     echo "<style>input{color: white !important;}</style>";
     require('../base/head.php');
     if (isset($_GET["reg"])) {
-      ?>
-      <h1 class="cover-heading">Welcome Home.</h1>
-      <p class="lead">Please check your email to confirm your account.</p>
-      </nav>
-      </div>
-      </header>
-      <main role="main" class="inner cover">
-      <?php
-    }
-      if(isset($_GET["x"])) {
-        echo '<div class="alert alert-danger" role="alert">';
-        switch ($_GET["x"]) {
-          case '1':
-          echo "You attempted to use a blacklisted username.";
-            break;
-          case '2':
-          echo "Your password is not long enough.";
-            break;
-          case '3':
-          echo "Require is there for a reason.";
-            break;
-          case '4':
-          echo "The username chosen is not available.";
-            break;
-          case '5':
-          echo "The username is beyond 30 characters.";
-        }
-      }
 ?>
    <a class="nav-link" href="login.php">Login</a>
     <a class="nav-link active" href="login.php?reg">Register</a>
@@ -231,8 +203,9 @@ elseif (isset($_GET["auth"])) {
     <button class="btn btn-secondary">Login</button>
   </form>
     <?php
-        require('../base/feet.php');
+
     }
 
-
+    require('../base/feet.php');
+}
 ?>
