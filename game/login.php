@@ -75,7 +75,7 @@ elseif (isset($_GET["auth"])) {
   <h1 class="cover-heading">Verify your email.</h1>
   <p class="lead">Your new life is awaiting. Please verify your email.</p>
   <?php
-        require('../base/feet');
+        require('../base/feet.php');
 
 
     } else {
