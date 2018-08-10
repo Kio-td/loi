@@ -231,9 +231,8 @@ elseif (isset($_GET["auth"])) {
     <button class="btn btn-secondary">Login</button>
   </form>
     <?php
-
+        require('../base/feet.php');
     }
 
-    require('../base/feet.php');
-}
+
 ?>
