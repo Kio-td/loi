@@ -187,7 +187,8 @@ elseif (isset($_GET["auth"])) {
       echo "<div class='alert alert-success' role='alert'>Your account has been activated.</div>";
       break;
     case '1':
-      echo "<div class='alert alert-danger' role='alert'>The information provided didn't match our records.</div>";
+      echo "<div class='alert alert-danger' role='alert'>The information provided didn't match our records.<br>
+  Need a <a href='reset'>reset</a>?</div>";
       break;
     case '2':
       echo "<div class='alert alert-danger' role='alert'>Please confirm your email.</div>";
@@ -197,7 +198,6 @@ elseif (isset($_GET["auth"])) {
    ?>
   <h1 class="cover-heading">Login</h1>
   <p class="lead">Welcome back. Login to continue your adventure. </p>
-  <a href="reset">Reset Password </a>
   <form id="log" action="?auth" method="post">
     <input class="form-control" name="un" placeholder="Username" required type="text"><br>
     <input class="form-control" name="pw" placeholder="Password" required type="password"><br>
