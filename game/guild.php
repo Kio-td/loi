@@ -13,13 +13,15 @@ if($p["guild"] == 0 ) {
   if(isset($_GET["c"])) {
     if ($bal >= $mg) {
 
+
+    die();
     } else {
-    $n = 1;
+      
     }
   }
   ?>
   <main role="main" class="inner cover">
-    <?php if (!$n == undefined) {  echo "<div class='alert alert-danger'>You need ". $mg - $bal . "Tn. more to create a guild.</div>";}?>
+    <?php if (isset($_GET["c"])) {  echo "<div class='alert alert-danger'>You need ". $mg - $bal . "Tn. more to create a guild.</div>";}?>
     <h1 class="cover-heading">Guildmaster's home</h1>
     <p class="lead">Please choose an option.</p>
     <p class="lead"><a href="?c">Register a Guild</a>&emsp;<a href="?j">Join a Guild</a></p>
