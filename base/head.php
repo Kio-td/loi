@@ -28,7 +28,7 @@ if (isset($_COOKIE["token"])) {
   $bal = $c["bal"];
 }
 }
-
+$x = false;
 ?>
 <html lang="en"><head>
     <meta charset="utf-8">
