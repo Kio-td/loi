@@ -1,6 +1,6 @@
 <?php require('../base/head.php');
 //Set the price of making a guild
-$mg = 2550;
+$mg = 5250;
 ?>
 <a class="nav-link" href="index">Home</a>
 <a class="nav-link" href="login?lo">Logout</a>
