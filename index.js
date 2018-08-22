@@ -7,14 +7,22 @@ const url = require('url');
 const cfg = new cfg1("./config/local.json");
 const g = cfg.get('int.websock');
 const fs = require('fs');
-const ind = require('util');
 const server = http.createServer();
 const serve = new WebSocket.Server(g);
 const chat = new WebSocket.Server(g);
 const admin = new WebSocket.Server(g);
 const battle = new WebSocket.Server(g);
 
+function isconnected(req, ws) {
+	var ip = req.connection.remoteAddress;
+	var uid = ip.replace(/\./g, '');
+	if (cfg.get("user." + uid + ".token") == undefined) {
+		ws.close(1013);
+	}
+}
+
 var con = msql.createConnection(cfg.get("int.mysql"));
+
 con.connect(function(err) {
 	if (err) throw err;
 	console.log("Connected to MySQL.");
@@ -75,6 +83,7 @@ con.connect(function(err) {
 						con.query("SELECT username, bal from users where token = ?", [x["atoken"]], function asdf(a, b) {
 							if (b.length == 1) {
 								cfg.put("user." + uid + ".token", x["atoken"]);
+								cfg.put("user." + uid + ".un", x["username"]);
 								console.log(ip + " identified as " + b[0].username + ".");
 								ws.send(json.stringify({ ok: true, msg: "I_THOUGHT_I_REMEMBERED_YOU_OWO", code: 5 }));
 							} else ws.close(1013);
@@ -87,19 +96,37 @@ con.connect(function(err) {
 		}
 	});
 	chat.on('connection', function connection(ws, req) {
-		var ip = req.connection.remoteAddress;
-		var uid = ip.replace(/\./g, '');
+		isconnected(req, ws);
+		ws.on('message', function msg(data) {
+			ds = 0
+			data = data.split(/\r?\n|\r/g)[0];
+			if (data.length >= 80) {
+				ws.send(json.stringify({ ok: false, display: "*Your voice falls on deaf ears. (Too many characters.)", color: "red" }));
+				ds = 1
+			}
+			if (data.split(" ")[0] == "!s") {
+				//Use shout
+			} else if (data.split(" ")[0] == "!g") {
+				//Guilds
+			} else if (data.split(" ")[0] == "!f") {
+				//Friends
+				if (data.split(" ")[1] == "all") {
+					//Send message to all friends.
+				} else {
+					//Check for online friend and check if online.
+				}
+			} else if (data.split(" ")[0] == "!p") {
+				//Party
+			}
 
+		});
 	});
 	admin.on('connection', function connection(ws, req) {
-		var ip = req.connection.remoteAddress;
-		var uid = ip.replace(/\./g, '');
+		isconnected(req, ws);
 
 	});
 	battle.on('connection', function connection(ws, req) {
-		var ip = req.connection.remoteAddress;
-		var uid = ip.replace(/\./g, '');
-
+		isconnected(req, ws);
 		//authencticate user
 		if (true) {
 			//Select a monster
