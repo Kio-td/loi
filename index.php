@@ -13,4 +13,9 @@
           <a href="game/" class="btn btn-lg btn-secondary">Play now</a>
         </p>
 
+        <footer class="mastfoot mt-auto">
+          <div class="inner">WARNING: This game contains material that will scar you for life.<br>Please read the full <a href="18.php">18+ service</a>.</div>
+        </footer>
+        </div>
+
 <?php require('./base/feet.php'); ?>
