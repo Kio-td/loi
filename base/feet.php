@@ -1,6 +1,7 @@
-</main>
+
 <?php if (!$x) {
 ?>
+</main>
 <footer class="mastfoot mt-auto">
   <div class="inner">
   </div>
