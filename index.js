@@ -1,5 +1,5 @@
 const cfg1 = require('node-storage');
-const http = require('http');
+const http = require('https');
 const WebSocket = require('ws');
 const msql = require('mysql2');
 const json = require('json5')
@@ -7,31 +7,33 @@ const url = require('url');
 const cfg = new cfg1("./config/local.json");
 const g = cfg.get('int.websock');
 const fs = require('fs');
-const server = http.createServer();
+const server = http.createServer({
+	cert: fs.readFileSync('config/cert.pem'),
+	key: fs.readFileSync('config/key.pem')
+});
 const serve = new WebSocket.Server(g);
 const chat = new WebSocket.Server(g);
 const admin = new WebSocket.Server(g);
 const battle = new WebSocket.Server(g);
 
 function isconnected(req, ws) {
-	var ip = req.connection.remoteAddress;
-	var uid = ip.replace(/\./g, '');
+	let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
+	let uid = ip.replace(/\./g, '');
 	if (cfg.get("user." + uid + ".token") == undefined) {
 		ws.close(1013);
 	}
 }
 
-var con = msql.createConnection(cfg.get("int.mysql"));
+let con = msql.createConnection(cfg.get("int.mysql"));
 
 con.connect(function(err) {
 	if (err) throw err;
-	console.log("Connected to MySQL.");
+	console.log("Connected to MySQL, and server is running.");
 
 
 	serve.on('connection', function connection(ws, req) {
-		var ip = req.connection.remoteAddress;
-		var ip = ip.replace(/::ffff:/g, '');
-		var uid = ip.replace(/\./g, '');
+		let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
+		let uid = ip.replace(/\./g, '');
 		console.log(ip + " has connected.");
 		if (cfg.get("user." + uid + ".ddm")) {
 			console.log(ip + " has been recognized.");
@@ -47,7 +49,6 @@ con.connect(function(err) {
 			ws.send('{code:1}');
 			ws.on('message', function incoming(data) {
 				//user is authenticated
-				console.log(cfg.get("user." + uid))
 				if (typeof cfg.get("user." + uid) !== "undefined") {
 					try {
 						x = json.parse(data);
@@ -79,11 +80,11 @@ con.connect(function(err) {
 					try { x = json.parse(data); } catch (e) { ws.close(1013); return; }
 					if (x["atoken"] == undefined) ws.close(1013)
 					else {
-						var rows = 0
+						let rows = 0
 						con.query("SELECT username, bal from users where token = ?", [x["atoken"]], function asdf(a, b) {
 							if (b.length == 1) {
 								cfg.put("user." + uid + ".token", x["atoken"]);
-								cfg.put("user." + uid + ".un", x["username"]);
+								cfg.put("user." + uid + ".un", b[0].username);
 								console.log(ip + " identified as " + b[0].username + ".");
 								ws.send(json.stringify({ ok: true, msg: "I_THOUGHT_I_REMEMBERED_YOU_OWO", code: 5 }));
 							} else ws.close(1013);
@@ -95,6 +96,7 @@ con.connect(function(err) {
 			ws.send('{"code":2}');
 		}
 	});
+
 	chat.on('connection', function connection(ws, req) {
 		isconnected(req, ws);
 		ws.on('message', function msg(data) {
@@ -106,6 +108,7 @@ con.connect(function(err) {
 			}
 			if (data.split(" ")[0] == "!s") {
 				//Use shout
+				ws.send(json.stringify({ ok: false, display: "*Shouts are not setup yet.", color: "red" }));
 			} else if (data.split(" ")[0] == "!g") {
 				//Guilds
 			} else if (data.split(" ")[0] == "!f") {
@@ -117,6 +120,15 @@ con.connect(function(err) {
 				}
 			} else if (data.split(" ")[0] == "!p") {
 				//Party
+			} else {
+				chat.clients.forEach(function each(client) {
+					if (client.readyState === WebSocket.OPEN) {
+						con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
+							uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
+							if (b.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data })); }
+						});
+					}
+				});
 			}
 
 		});
@@ -130,7 +142,7 @@ con.connect(function(err) {
 		//authencticate user
 		if (true) {
 			//Select a monster
-			var mdb = [
+			let mdb = [
 				1, //Wolf
 				2, //Hatter
 				3 //Xavier
