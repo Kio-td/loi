@@ -37,7 +37,7 @@ con.connect(function(err) {
 		console.log(ip + " has connected.");
 		if (cfg.get("user." + uid + ".ddm")) {
 			console.log(ip + " has been recognized.");
-			cfg.delete("user." + uid + ".ddm");
+			cfg.remove("user." + uid + ".ddm");
 		}
 		ws.on('close', function dc(code, reason) {
 			console.log(ip + " has disconnected.");
