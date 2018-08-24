@@ -100,7 +100,7 @@ con.connect(function(err) {
 		isconnected(req, ws);
 		ws.on('message', function msg(data) {
 			ds = 0
-			data = data.split(/\r?\n|\r/g)[0].replace(/\</g, '').replace(/\>/g, '');
+			data = data.split(/\r?\n|\r/g)[0].replace(/\</g, '&lt;').replace(/\>/g, '&rt;');
 			if (data.length >= 80) {
 				ws.send(json.stringify({ ok: false, display: "*Your voice falls on deaf ears. (Too many characters.)", color: "red" }));
 				ds = 1
@@ -112,9 +112,11 @@ con.connect(function(err) {
 				} else if (data.split(" ")[0] == "!g") {
 					//Guilds
 				} else if (data.split(" ")[0] == "!f") {
-					//Friends
 					if (data.split(" ")[1] == "all") {
-						//Send message to all friends.
+						con.query("select uid from users where token = ?", [cfg.get("user." + uid + )])
+						con.query("select * from users where `uid` in (SELECT ut from friends) or `uid` in (SELECT uf from friends) and USERID not in (select uf from friends)", function(a, b {
+
+						}));
 					} else {
 						//Check for online friend and check if online.
 					}
