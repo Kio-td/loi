@@ -13,7 +13,6 @@ const server = http.createServer({
 });
 const serve = new WebSocket.Server(g);
 const chat = new WebSocket.Server(g);
-const admin = new WebSocket.Server(g);
 const battle = new WebSocket.Server(g);
 
 function isconnected(req, ws) {
@@ -105,6 +104,7 @@ con.connect(function(err) {
 			if (data.length >= 80) {
 				ws.send(json.stringify({ ok: false, display: "*Your voice falls on deaf ears. (Too many characters.)", color: "red" }));
 				ds = 1
+				return;
 			}
 			if (data.split(" ")[0] == "!s") {
 				//Use shout
@@ -133,10 +133,7 @@ con.connect(function(err) {
 
 		});
 	});
-	admin.on('connection', function connection(ws, req) {
-		isconnected(req, ws);
 
-	});
 	battle.on('connection', function connection(ws, req) {
 		isconnected(req, ws);
 		//authencticate user
@@ -162,10 +159,6 @@ con.connect(function(err) {
 		} else if (pathname === '/ccon') {
 			chat.handleUpgrade(request, socket, head, function done(ws) {
 				chat.emit('connection', ws, request);
-			});
-		} else if (pathname === '/adm') {
-			admin.handleUpgrade(request, socket, head, function done(ws) {
-				admin.emit('connection', ws, request);
 			});
 		} else if (pathname === '/btl') {
 			battle.handleUpgrade(request, socket, head, function done(ws) {
