@@ -97,80 +97,80 @@ con.connect(function(err) {
 	});
 
 	chat.on('connection', function connection(ws, req) {
-			isconnected(req, ws);
-			ws.on('message', function msg(data) {
-					ds = 0
-					data = data.split(/\r?\n|\r/g)[0].replace(/\</g, '&lt;').replace(/\>/g, '&rt;');
-					if (data.length >= 80) {
-						ws.send(json.stringify({ ok: false, display: "*Your voice falls on deaf ears. (Too many characters.)", color: "red" }));
-						ds = 1
-					}
-					if (ds == 0) {
-						if (data.split(" ")[0] == "!s") {
-							//Use shout
-							ws.send(json.stringify({ ok: false, display: "*Shouts are not setup yet.", color: "red" }));
-						} else if (data.split(" ")[0] == "!g") {
-							//Guilds
-						} else if (data.split(" ")[0] == "!f") {
-							if (data.split(" ")[1] == "all") {
-								con.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")]);
-								con.query("select * from users where `uid` in (SELECT ut from friends) or `uid` in (SELECT uf from friends) and USERID not in (select uf from friends)", function(a, b) {
+		isconnected(req, ws);
+		ws.on('message', function msg(data) {
+			ds = 0
+			data = data.split(/\r?\n|\r/g)[0].replace(/\</g, '&lt;').replace(/\>/g, '&rt;');
+			if (data.length >= 80) {
+				ws.send(json.stringify({ ok: false, display: "*Your voice falls on deaf ears. (Too many characters.)", color: "red" }));
+				ds = 1
+			}
+			if (ds == 0) {
+				if (data.split(" ")[0] == "!s") {
+					//Use shout
+					ws.send(json.stringify({ ok: false, display: "*Shouts are not setup yet.", color: "red" }));
+				} else if (data.split(" ")[0] == "!g") {
+					//Guilds
+				} else if (data.split(" ")[0] == "!f") {
+					if (data.split(" ")[1] == "all") {
+						con.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")]);
+						con.query("select * from users where `uid` in (SELECT ut from friends) or `uid` in (SELECT uf from friends) and USERID not in (select uf from friends)", function(a, b) {
 
-								}));
-						} else {
-							//Check for online friend and check if online.
-						}
-					} else if (data.split(" ")[0] == "!p") {
-						//Party
-					} else {
-						chat.clients.forEach(function each(client) {
-							if (client.readyState === WebSocket.OPEN) {
-								con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
-									uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
-									if (b.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data })); }
-								});
-							}
 						});
+					} else {
+						//Check for online friend and check if online.
 					}
+				} else if (data.split(" ")[0] == "!p") {
+					//Party
+				} else {
+					chat.clients.forEach(function each(client) {
+						if (client.readyState === WebSocket.OPEN) {
+							con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
+								uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
+								if (b.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data })); }
+							});
+						}
+					});
 				}
+			}
 
-			});
+		});
 	});
 
-battle.on('connection', function connection(ws, req) {
-	isconnected(req, ws);
-	//authencticate user
-	if (true) {
-		//Select a monster
-		let mdb = [
-			1, //Wolf
-			2, //Hatter
-			3 //Xavier
-		]
+	battle.on('connection', function connection(ws, req) {
+		isconnected(req, ws);
+		//authencticate user
+		if (true) {
+			//Select a monster
+			let mdb = [
+				1, //Wolf
+				2, //Hatter
+				3 //Xavier
+			]
 
-	} else ws.close(1013);
+		} else ws.close(1013);
 
-});
+	});
 
-server.on('upgrade', function upgrade(request, socket, head) {
-	const pathname = url.parse(request.url).pathname;
+	server.on('upgrade', function upgrade(request, socket, head) {
+		const pathname = url.parse(request.url).pathname;
 
-	if (pathname === '/main') {
-		serve.handleUpgrade(request, socket, head, function done(ws) {
-			serve.emit('connection', ws, request);
-		});
-	} else if (pathname === '/ccon') {
-		chat.handleUpgrade(request, socket, head, function done(ws) {
-			chat.emit('connection', ws, request);
-		});
-	} else if (pathname === '/btl') {
-		battle.handleUpgrade(request, socket, head, function done(ws) {
-			battle.emit('connection', ws, request);
-		});
-	} else {
-		socket.destroy();
-	}
-});
+		if (pathname === '/main') {
+			serve.handleUpgrade(request, socket, head, function done(ws) {
+				serve.emit('connection', ws, request);
+			});
+		} else if (pathname === '/ccon') {
+			chat.handleUpgrade(request, socket, head, function done(ws) {
+				chat.emit('connection', ws, request);
+			});
+		} else if (pathname === '/btl') {
+			battle.handleUpgrade(request, socket, head, function done(ws) {
+				battle.emit('connection', ws, request);
+			});
+		} else {
+			socket.destroy();
+		}
+	});
 
-server.listen(8096);
+	server.listen(8096);
 });
