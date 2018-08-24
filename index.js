@@ -104,31 +104,32 @@ con.connect(function(err) {
 			if (data.length >= 80) {
 				ws.send(json.stringify({ ok: false, display: "*Your voice falls on deaf ears. (Too many characters.)", color: "red" }));
 				ds = 1
-				return;
 			}
-			if (data.split(" ")[0] == "!s") {
-				//Use shout
-				ws.send(json.stringify({ ok: false, display: "*Shouts are not setup yet.", color: "red" }));
-			} else if (data.split(" ")[0] == "!g") {
-				//Guilds
-			} else if (data.split(" ")[0] == "!f") {
-				//Friends
-				if (data.split(" ")[1] == "all") {
-					//Send message to all friends.
-				} else {
-					//Check for online friend and check if online.
-				}
-			} else if (data.split(" ")[0] == "!p") {
-				//Party
-			} else {
-				chat.clients.forEach(function each(client) {
-					if (client.readyState === WebSocket.OPEN) {
-						con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
-							uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
-							if (b.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data })); }
-						});
+			if (ds == 0) {
+				if (data.split(" ")[0] == "!s") {
+					//Use shout
+					ws.send(json.stringify({ ok: false, display: "*Shouts are not setup yet.", color: "red" }));
+				} else if (data.split(" ")[0] == "!g") {
+					//Guilds
+				} else if (data.split(" ")[0] == "!f") {
+					//Friends
+					if (data.split(" ")[1] == "all") {
+						//Send message to all friends.
+					} else {
+						//Check for online friend and check if online.
 					}
-				});
+				} else if (data.split(" ")[0] == "!p") {
+					//Party
+				} else {
+					chat.clients.forEach(function each(client) {
+						if (client.readyState === WebSocket.OPEN) {
+							con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
+								uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
+								if (b.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data })); }
+							});
+						}
+					});
+				}
 			}
 
 		});
