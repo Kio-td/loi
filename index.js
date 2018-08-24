@@ -113,7 +113,7 @@ con.connect(function(err) {
 					//Guilds
 				} else if (data.split(" ")[0] == "!f") {
 					if (data.split(" ")[1] == "all") {
-						con.query("select uid from users where token = ?", [cfg.get("user." + uid + )])
+						con.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")]);
 						con.query("select * from users where `uid` in (SELECT ut from friends) or `uid` in (SELECT uf from friends) and USERID not in (select uf from friends)", function(a, b {
 
 						}));
