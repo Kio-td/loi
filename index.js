@@ -100,7 +100,7 @@ con.connect(function(err) {
 		isconnected(req, ws);
 		ws.on('message', function msg(data) {
 			ds = 0
-			data = data.split(/\r?\n|\r/g)[0];
+			data = data.split(/\r?\n|\r/g)[0].replace( < , '').replace( > , '');
 			if (data.length >= 80) {
 				ws.send(json.stringify({ ok: false, display: "*Your voice falls on deaf ears. (Too many characters.)", color: "red" }));
 				ds = 1
