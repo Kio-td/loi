@@ -127,6 +127,7 @@ con.connect(function(err) {
 						if (client.readyState === WebSocket.OPEN) {
 							con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
 								uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
+								if (a) throw a;
 								if (b.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data })); }
 							});
 						}
