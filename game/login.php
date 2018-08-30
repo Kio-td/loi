@@ -131,8 +131,8 @@ elseif (isset($_GET["auth"])) {
     require('../base/head.php');
     if (isset($_GET["reg"])) {
 ?>
-   <a class="nav-link" href="login.php">Login</a>
-    <a class="nav-link active" href="login.php?reg">Register</a>
+   <a class="nav-link" href="login">Login</a>
+    <a class="nav-link active" href="login?reg">Register</a>
   </nav>
 </div>
 </header>
@@ -174,8 +174,8 @@ elseif (isset($_GET["auth"])) {
 
     } else {
 ?>
- <a class="nav-link active" href="login.php">Login</a>
-  <a class="nav-link" href="login.php?reg">Register</a>
+ <a class="nav-link active" href="login">Login</a>
+  <a class="nav-link" href="login?reg">Register</a>
 </nav>
 </div>
 </header>
