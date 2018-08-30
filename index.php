@@ -1,7 +1,7 @@
 <?php require('./base/head.php'); $x = 1; ?>
             <a class="nav-link active" href="#">Home</a>
             <a class="nav-link" href="game/">Play</a>
-            <a class="nav-link" href="wiki/">Wiki</a>
+            <a class="nav-link" href="https://discord.gg/loi">Discord</a>
           </nav>
         </div>
       </header>
