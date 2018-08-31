@@ -15,6 +15,7 @@ if($p["guild"] == 0 ) {
       ?>
         <main role="main" class="inner cover">
           <h1 class="cover-heading">Create a Guild</h1>
+          <p class="lead">This will cost <?php echo $mg; ?>.</p>
 
       <?php
     require('../base/feet.php');
