@@ -15,7 +15,7 @@ if($p["guild"] == 0 ) {
       $conn->query("UPDATE users SET bal = bal - $mg where username = '".$username."'");
       $conn->query("INSERT INTO guild (gname, gtag, gbal) VALUES ('".$_POST["gid"]."', '".$_POST["gtag"]."', 1000)");
       $x = $conn->query("SELECT gid FROM guild where gtag = '".$_POST["gtag"]."'");
-      $conn->query("UPDATE users SET guild = " . $x->fetch_assoc()["guild"] . " WHERE username = '".$username."'");
+      $conn->query("UPDATE users SET guild = " . $x->fetch_assoc()["gid"] . " WHERE username = '".$username."'");
     }elseif ($bal >= $mg) {
       ?>
       <style>
