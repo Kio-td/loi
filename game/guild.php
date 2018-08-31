@@ -30,6 +30,7 @@ if($p["guild"] == 0 ) {
               } else {
               document.getElementById('tag').innerText = "[" + document.getElementById('tag1').value + "]";
             }
+          }
           </script>
       <?php
     require('../base/feet.php');
