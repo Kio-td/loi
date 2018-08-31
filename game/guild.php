@@ -16,6 +16,7 @@ if($p["guild"] == 0 ) {
       <style>
       .vg {
         position: fixed;
+        transform: translate(48vh,-20vh);
       }
       </style>
         <main role="main" class="inner cover">
