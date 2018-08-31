@@ -28,7 +28,9 @@ if($p["guild"] == 0 ) {
               if (document.getElementById('tag1').value == "") {
                 document.getElementById('tag').innerText = "";
               } else {
+                if (document.getElementById('tag1').value.length < 5) {
               document.getElementById('tag').innerText = "[" + document.getElementById('tag1').value + "]";
+            }
             }
           }
           </script>
