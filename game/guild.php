@@ -18,14 +18,14 @@ if($p["guild"] == 0 ) {
           <p class="lead">This will cost <?php echo $mg; ?>.</p>
           <form>
             <input type="text" name="gid" class="form-control" placeholder="Guild Name"><br>
-            <input type="text" id="tag" name="sg" class="form-control" oninput="tr()" placeholder="Guild tag (Max 4 Characters)">
+            <input type="text" id="tag1" name="sg" class="form-control" oninput="tr()" placeholder="Guild tag (Max 4 Characters)">
             <p class="vg">Your Guild tag will look like this:<br>
             <span id="tag"></span><?php echo $username; ?></p>
 
           </form>
           <script>
             function tr() {
-              document.getElementById('tag').value = "[" + document.getElementById('tag').value + "]";
+              document.getElementById('tag').value = "[" + document.getElementById('tag1').value + "]";
             }
           </script>
       <?php
