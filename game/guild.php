@@ -15,7 +15,7 @@ if($p["guild"] == 0 ) {
       ?>
         <main role="main" class="inner cover">
           <h1 class="cover-heading">Create a Guild</h1>
-          <p class="lead">This will cost <?php echo $mg; ?>.</p>
+          <p class="lead">This will cost <?php echo ucwords($mg); ?>Tn.</p>
           <form>
             <input type="text" name="gid" class="form-control" placeholder="Guild Name"><br>
             <input type="text" id="tag1" maxlength="4" name="sg" class="form-control" oninput="tr()" placeholder="Guild tag (Max 4 Characters)">
