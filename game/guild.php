@@ -27,7 +27,7 @@ if($p["guild"] == 0 ) {
             function tr() {
               if (document.getElementById('tag1').value == "") {
                 document.getElementById('tag').innerText = "";
-              }
+              } else {
               document.getElementById('tag').innerText = "[" + document.getElementById('tag1').value + "]";
             }
           </script>
