@@ -25,6 +25,9 @@ if($p["guild"] == 0 ) {
           </form>
           <script>
             function tr() {
+              if (document.getElementById('tag1').value == "") {
+                document.getElementById('tag').innerText = "";
+              }
               document.getElementById('tag').innerText = "[" + document.getElementById('tag1').value + "]";
             }
           </script>
