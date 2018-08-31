@@ -13,6 +13,11 @@ if($p["guild"] == 0 ) {
   if(isset($_GET["c"])) {
     if ($bal >= $mg) {
       ?>
+      <style>
+      .vg {
+        position: fixed;
+      }
+      </style>
         <main role="main" class="inner cover">
           <h1 class="cover-heading">Create a Guild</h1>
           <p class="lead">Creating a guild will cost <?php echo ucwords($mg); ?>Tn.</p>
