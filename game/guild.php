@@ -11,6 +11,12 @@ $p = $conn->query("select guild from users where username = '".$username."'");
 $p = $p->fetch_assoc();
 if($p["guild"] == 0 ) {
   if(isset($_GET["c"])) {
+    if(isset($_POST["gid"])) {
+      $conn->query("UPDATE users SET bal = bal - $mg where username = '".$username."'");
+      $conn->query("INSERT INTO guild (gname, gtag, gbal) VALUES ('".$_POST["gid"]."', '".$_POST["gtag"]."', 1000)");
+      $x = $conn->query("SELECT gid FROM guild where gtag = '".$_POST["gtag"]."'");
+      $conn->query("UPDATE users SET guild = " . $x->fetch_assoc()["guild"] . " WHERE username = '".$username."'");
+    }
     if ($bal >= $mg) {
       ?>
       <style>
@@ -20,9 +26,9 @@ if($p["guild"] == 0 ) {
         <main role="main" class="inner cover">
           <h1 class="cover-heading">Create a Guild</h1>
           <p class="lead">Creating a guild will cost <?php echo ucwords($mg); ?>Tn.</p>
-          <form>
+          <form method="post" action="?c">
             <input type="text" name="gid" class="form-control" placeholder="Guild Name"><br>
-            <input type="text" id="tag1" maxlength="4" name="sg" class="form-control" oninput="tr()" placeholder="Guild tag (Max 4 Characters)"><span class="vg">Your Guild tag will look like this:<br><span id="tag"></span><?php echo $username; ?></span><br><br>
+            <input type="text" name="gtag" id="tag1" maxlength="4" class="form-control" oninput="tr()" placeholder="Guild tag (Max 4 Characters)"><span class="vg">Your Guild tag will look like this:<br><span id="tag"></span><?php echo $username; ?></span><br><br>
             <input type="submit" value="Create Guild" class="btn btn-secondary">
           </form>
 
