@@ -10,15 +10,14 @@ $mg = 5250;
 $p = $conn->query("select guild from users where username = '".$username."'");
 $p = $p->fetch_assoc();
 if($p["guild"] == 0 ) {
-  echo "a";
   if(isset($_GET["c"])) {
-    echo "b";
     if ($bal >= $mg) {
       ?>
         <main role="main" class="inner cover">
           <h1 class="cover-heading">Create a Guild</h1>
 
       <?php
+    require('../base/feet.php');
     die();
   }
 }elseif (isset($_GET["j"])) {
