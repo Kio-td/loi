@@ -24,6 +24,7 @@ if($p["guild"] == 0 ) {
           <form>
             <input type="text" name="gid" class="form-control" placeholder="Guild Name"><br>
             <input type="text" id="tag1" maxlength="4" name="sg" class="form-control" oninput="tr()" placeholder="Guild tag (Max 4 Characters)">
+            <input type="submit" value="Create Guild">
           </form>
           <p class="vg">Your Guild tag will look like this:<br>
           <span id="tag"></span><?php echo $username; ?></p>
