@@ -62,7 +62,7 @@ if($p["guild"] == 0 ) {
 ?>
 Welcome home,
 
-<?
+<?php
   }
 
   require('../base/feet.php');
