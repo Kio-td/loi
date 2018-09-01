@@ -12,8 +12,7 @@ $p = $p->fetch_assoc();
 if($p["guild"] == 0 ) {
   if(isset($_GET["c"])) {
     if(isset($_POST["gid"])) {
-      $conn->query("UPDATE users SET bal = bal - $mg where username = '".$username."'");
-      $conn->query("INSERT INTO guild (gname, gtag, gbal) VALUES ('".$_POST["gid"]."', '".$_POST["gtag"]."', 1000)");
+      $conn->query("UPDATE users SET bal = bal - $mg where username = '".$username."'; INSERT INTO guild (gname, gtag, gbal) VALUES ('".$_POST["gid"]."', '".$_POST["gtag"]."', 1000);");
       $x = $conn->query("SELECT gid FROM guild where gtag = '".$_POST["gtag"]."'");
       $conn->query("UPDATE users SET guild = " . $x->fetch_assoc()["gid"] . " WHERE username = '".$username."'");
     }elseif ($bal >= $mg) {
@@ -58,8 +57,12 @@ if($p["guild"] == 0 ) {
     <p class="lead"><a href="?c">Register a Guild</a>&emsp;<a href="?j">Join a Guild</a></p>
     <?php
   } else {
+    $conn->query("SELECT gname from guilds where gid = " . $conn->query("SELECT guild from users where username = '".$username."'")->fetch_assoc()["guild"]);
 
+?>
+Welcome home,
 
+<?
   }
 
   require('../base/feet.php');
