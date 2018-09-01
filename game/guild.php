@@ -7,6 +7,7 @@ $mg = 5250;
 </nav>
 </div>
 </header> <?php
+require('/var/www/no-access/loi/config.php');
 $p = $conn->query("select guild from users where username = '".$username."'");
 $p = $p->fetch_assoc();
 if($p["guild"] == 0 ) {
