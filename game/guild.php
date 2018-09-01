@@ -8,7 +8,7 @@ $mg = 5250;
 </div>
 </header> <?php
 require('/var/www/no-access/loi/config.php');
-$bal = $conn->query("SELECT bal from users where username = '".$username."'")->fetch_assoc()["bal"];
+$bal = $conn->query("SELECT bal from users where username = '".$_COOKIE["token"]."'")->fetch_assoc()["bal"];
 die($bal);
 $p = $conn->query("select guild from users where username = '".$username."'");
 $p = $p->fetch_assoc();
