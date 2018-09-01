@@ -24,7 +24,7 @@ if (isset($_COOKIE["token"])) {
 } else {
   $auth = true;
   $c = $c->fetch_assoc();
-  $username = $c["username"];
+  $username = ucfirst($c["username"]);
   $bal = $c["bal"];
 }
 }
