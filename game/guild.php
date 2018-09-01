@@ -8,6 +8,7 @@ $mg = 5250;
 </div>
 </header> <?php
 require('/var/www/no-access/loi/config.php');
+$bal = $conn->query("SELECT bal from users where username = '".$username."'")->fetch_assoc()["bal"];
 $p = $conn->query("select guild from users where username = '".$username."'");
 $p = $p->fetch_assoc();
 if($p["guild"] == 0 ) {
@@ -16,7 +17,7 @@ if($p["guild"] == 0 ) {
       $conn->query("UPDATE users SET bal = bal - $mg where username = '".$username."'; INSERT INTO guild (gname, gtag, gbal) VALUES ('".$_POST["gid"]."', '".$_POST["gtag"]."', 1000);");
       $x = $conn->query("SELECT gid FROM guild where gtag = '".$_POST["gtag"]."'");
       $conn->query("UPDATE users SET guild = " . $x->fetch_assoc()["gid"] . " WHERE username = '".$username."'");
-    }elseif ($bal >= $mg) {
+    } elseif ($bal >= $mg) {
       ?>
       <style>
       .vg {
@@ -52,6 +53,7 @@ if($p["guild"] == 0 ) {
 }
   ?>
   <main role="main" class="inner cover">
+
     <?php if (isset($_GET["c"])) {  echo "<div class='alert alert-danger'>You need " . ($mg - $bal) . "Tn. more to create a guild.</div>";}?>
     <h1 class="cover-heading">Guildmaster's home</h1>
     <p class="lead">Please choose an option.</p>
