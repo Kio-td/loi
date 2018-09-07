@@ -131,6 +131,7 @@ con.connect(function(err) {
 										}
 									});
 								});
+								ws.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data, color: "pink" }));
 							});
 						});
 					} else {
@@ -150,6 +151,7 @@ con.connect(function(err) {
 								});
 							});
 						});
+						ws.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data, color: "pink" }));
 					}
 				} else if (data.split(" ")[0] == "!p") {
 					//Party
