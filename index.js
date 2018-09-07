@@ -116,7 +116,7 @@ con.connect(function(err) {
 				} else if (data.split(" ")[0] == "!f") {
 					if (data.split(" ")[1] == "all") {
 						con.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")], function(a, b) {
-							con.query("select token from users where uid in (select ut from friends where uf = ?) or uid in (select uf from friends where ut = ?) and ? != uid", [b[0].uid], function(c, d) {
+							con.query("select token from users where uid in (select ut from friends where uf = ?) or uid in (select uf from friends where ut = ?) and ? != uid", b[0].uid, function(c, d) {
 								if (c) throw c;
 								d.forEach(function(h) {
 									chat.clients.forEach(function each(client) {
