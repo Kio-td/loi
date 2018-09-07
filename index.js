@@ -118,7 +118,7 @@ con.connect(function(err) {
 						con.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")], function(a, b) {
 							con.query("select token from users where uid in (select ut from friends where uf = ?) or uid in (select uf from friends where ut = ?) and ? != uid", [b[0].uid], function(c, d) {
 								if (c) throw c;
-								for h in d {
+								d.forEach(function(h) {
 									chat.clients.forEach(function each(client) {
 										if (client.readyState === WebSocket.OPEN) {
 											if (cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token") == h.token) {
@@ -130,7 +130,7 @@ con.connect(function(err) {
 											}
 										}
 									});
-								}
+								});
 							});
 						});
 					} else {
