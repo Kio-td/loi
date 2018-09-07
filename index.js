@@ -113,9 +113,23 @@ con.connect(function(err) {
 					//Guilds
 				} else if (data.split(" ")[0] == "!f") {
 					if (data.split(" ")[1] == "all") {
-						con.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")]);
-						con.query("select * from users where `uid` in (SELECT ut from friends) or `uid` in (SELECT uf from friends) and USERID not in (select uf from friends)", function(a, b) {
-
+						con.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")], function(a, b) {
+							con.query("select token from users where uid in (select ut from friends where uf = ?) or uid in (select uf from friends where ut = ?) and ? != uid", [b[0].uid], function(c, d) {
+								if (c) throw c;
+								for h in d {
+									chat.clients.forEach(function each(client) {
+										if (client.readyState === WebSocket.OPEN) {
+											if (cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token") == h.token) {
+												con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(e, f) {
+													uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
+													if (e) throw e;
+													if (f.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data, color: "pink" })); }
+												});
+											}
+										}
+									});
+								}
+							});
 						});
 					} else {
 						//Check for online friend and check if online.
