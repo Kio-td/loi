@@ -139,16 +139,17 @@ con.connect(function(err) {
 
 						con.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")], function(f, g) {
 							con.query("select token from users where username = ? and uid in ( select ut from friends where uf = ? ) or uid in ( select uf from friends where ut = ? )", [fun, g[0].uid, g[0].uid], function(a, b) {
-								if (b.length == 0) { ws.send(json.stringify({ ok: false, display: fun + " is not a friend of yours. Are you sure you typed their name correctly?" })) }
-								chat.clients.forEach(function each(client) {
-									if (client.readyState === WebSocket.OPEN) {
-										con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
-											uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
-											if (a) throw a;
-											if (b.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" })); }
-										});
-									}
-								});
+								if (b.length == 0) { ws.send(json.stringify({ ok: false, display: fun + " is not a friend of yours. Are you sure you typed their name correctly?" })) } else {
+									chat.clients.forEach(function each(client) {
+										if (client.readyState === WebSocket.OPEN) {
+											con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, e) {
+												uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
+												if (a) throw a;
+												if (b.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" })); }
+											});
+										}
+									});
+								}
 							});
 						});
 						ws.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));
