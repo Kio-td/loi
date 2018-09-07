@@ -125,13 +125,13 @@ con.connect(function(err) {
 												con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(e, f) {
 													uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
 													if (e) throw e;
-													if (f.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data, color: "pink" })); }
+													if (f.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f all ", ""), color: "pink" })); }
 												});
 											}
 										}
 									});
 								});
-								ws.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data, color: "pink" }));
+								ws.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f all ", ""), color: "pink" }));
 							});
 						});
 					} else {
@@ -145,13 +145,13 @@ con.connect(function(err) {
 										con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
 											uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
 											if (a) throw a;
-											if (b.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f all ", ""), color: "pink" })); }
+											if (b.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" })); }
 										});
 									}
 								});
 							});
 						});
-						ws.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data, color: "pink" }));
+						ws.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));
 					}
 				} else if (data.split(" ")[0] == "!p") {
 					//Party
