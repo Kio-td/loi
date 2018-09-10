@@ -4,7 +4,8 @@ const WebSocket = require('ws');
 const msql = require('mysql2');
 const json = require('json5')
 const url = require('url');
-const cfg = new cfg1("./config/local.json");
+const cfg = new cfg1("./config/local.json"); //Configuration for Server, and for users
+const mcg = new cfg1("./config/hvw.json"); //HVW - High-Velocity Writing - This function will most likely be written to A LOT. It's important to make sure that the API will always be ready.
 const g = cfg.get('int.websock');
 const fs = require('fs');
 const server = http.createServer({
@@ -178,17 +179,10 @@ con.connect(function(err) {
 
 	battle.on('connection', function connection(ws, req) {
 		isconnected(req, ws);
-		//authencticate user
-		if (true) {
-			//Select a monster
-			let mdb = [
-				1, //Wolf
-				2, //Hatter
-				3 //Xavier
-			]
-
-		} else ws.close(1013);
-
+		if(cnf.get("user."+uid+"battleid")) {ws.send(json.stringify({ok:true, code:2, bid: cnf.get("user."+uid+"battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));}
+		else {
+			r = Math.random().toString(36).substring(7);
+		}
 	});
 
 	server.on('upgrade', function upgrade(request, socket, head) {
