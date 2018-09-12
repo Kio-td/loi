@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <!-- Based on http://codepen.io/lbebber/pen/ypgql -->
+  <title><?php echo http_response_code() ?> - LOI</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="http://necolas.github.io/normalize.css/3.0.2/normalize.css" rel='stylesheet'/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
