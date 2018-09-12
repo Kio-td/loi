@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title><?php echo http_response_code() ?> - LOI</title>
+  <title><?php echo $_GET["err"] ?> - LOI</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="http://necolas.github.io/normalize.css/3.0.2/normalize.css" rel='stylesheet'/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
@@ -194,7 +194,7 @@
   </style>
 </head>
 <body>
-    <div class="glitch" data-text="<?php echo http_response_code() . '">' . http_response_code(); ?></div>
+    <div class="glitch" data-text="<?php echo $_GET["err"] . '">' . $_GET["err"]; ?></div>
     <br><br>
     <center><p>The Ministry of information is not happy you're here.<br>
     Leave at once, or face the consequences.</p>
@@ -202,6 +202,6 @@
 
     <div class="footer">
       To prevent abuse, access to this page is logged.<br>
-      Err-ID: <?php $n = uniqid(http_response_code()."_"); echo $n; ?>&emsp;IP: <?php echo $_SERVER["HTTP_CF_CONNECTING_IP"]; ?>&emsp;Page: <?php echo $_SERVER['REQUEST_URI']; ?>
+      Err-ID: <?php $n = uniqid($_GET["err"]."_"); echo $n; ?>&emsp;IP: <?php echo $_SERVER["HTTP_CF_CONNECTING_IP"]; ?>&emsp;Page: <?php echo $_SERVER['REQUEST_URI']; ?>
 </body>
 </html>
