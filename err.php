@@ -198,7 +198,7 @@
     <br><br>
     <center><p>The Ministry of information is not happy you're here.<br>
     Leave at once, or face the consequences.</p>
-  <p><a href="//loi.nayami.party/">Home</a>&emsp;<a href="//loi.nayami.party/">Home (In-game)</a></center>
+  <p><a href="/">Home</a>&emsp;<a href="/game">Home (In-game)</a></center>
 
     <div class="footer">
       To prevent abuse, access to this page is logged.<br>
