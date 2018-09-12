@@ -1,5 +1,5 @@
 <?php
-require('./head/smail.php');
+require('/var/www/html/loi/base/head/smail.php');
 $auth = false;
 if (isset($_COOKIE["token"])) {
   require("/var/www/no-access/loi/config.php");
@@ -16,5 +16,5 @@ if (isset($_COOKIE["token"])) {
 }
 }
 $x = false;
-require('./head/temp.php');
+require('/var/www/html/loi/base/head/temp.php');
 ?>
