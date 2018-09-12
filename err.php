@@ -203,5 +203,9 @@
     <div class="footer">
       To prevent abuse, access to this page is logged.<br>
       Err-ID: <?php $n = uniqid($_GET["err"]."_"); echo $n; ?>&emsp;IP: <?php echo $_SERVER["HTTP_CF_CONNECTING_IP"]; ?>&emsp;Page: <?php echo $_SERVER['REQUEST_URI']; ?>
+      <?php
+      require("/var/www/no-access/loi/config.php");
+      $conn->query("INSERT INTO pagelog (eid, ip, page) VALUES ($n, $_SERVER['HTTP_CF_CONNECTING_IP'], $_SERVER['REQUEST_URI'])")
+      ?>
 </body>
 </html>
