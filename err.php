@@ -184,6 +184,13 @@
         clip: rect(38px, 9999px, 49px, 0);
       }
     }
+    .footer {
+      position: absolute;
+      bottom: 2vh;
+      text-align: center;
+      right: 0;
+      left: 0;
+    }
   </style>
 </head>
 <body>
@@ -192,5 +199,9 @@
     <center><p>The Ministry of information is not happy you're here.<br>
     Leave at once, or face the consequences.</p>
   <p><a href="//loi.nayami.party/">Home</a>&emsp;<a href="//loi.nayami.party/">Home (In-game)</a></center>
+
+    <div class="footer">
+      To prevent abuse, access to this page is logged.<br>
+      Err-ID: <?php $n = uniqid(http_response_code()."_"); echo $n; ?>&emsp;IP: <?php echo $_SERVER["HTTP_CF_CONNECTING_IP"]; ?>&emsp;Page: <?php echo $_SERVER['REQUEST_URI']; ?>
 </body>
 </html>
