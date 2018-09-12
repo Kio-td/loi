@@ -110,13 +110,11 @@ con.connect(function(err) {
 				ws.send(json.stringify({ok:false, code:-1, msg:"NO_CMD"}));
 				return;
 			} else if (d["cmd"] == "species") {
-				con.query("select * from spec", function(a,b)) {
+				con.query("select * from spec", function(a,b) {
 					if(a) throw a;
 					ws.send(json.stringify({ok:true, code:4, data:b}));
-				}
-
+				});
 			}
-
 		});
 	});
 
