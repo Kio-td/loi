@@ -15,6 +15,7 @@ const server = http.createServer({
 const serve = new WebSocket.Server(g);
 const chat = new WebSocket.Server(g);
 const battle = new WebSocket.Server(g);
+const anon = new WebSocket.Server(g);
 
 function isconnected(req, ws) {
 	let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
@@ -95,6 +96,28 @@ con.connect(function(err) {
 		} else {
 			ws.send('{"code":2}');
 		}
+	});
+
+  anon.on('connection', function(ws, req) {
+		ws.send(json.stringify({ok:true, code:3, msg:"HI_ANON"}));
+		ws.on('message', function(data) {
+			try {
+				d = json.parse(data);
+			} catch (e) {
+				ws.send(json.stringify({ok:false, code:-3, msg:"NOT_JSON5"}));
+			}
+			if (d["cmd"] == undefined) {
+				ws.send(json.stringify({ok:false, code:-1, msg:"NO_CMD"}));
+				return;
+			} else if (d["cmd"] == "species") {
+				con.query("select * from spec", function(a,b)) {
+					if(a) throw a;
+					ws.send(json.stringify({ok:true, code:4, data:b}));
+				}
+
+			}
+
+		});
 	});
 
 	chat.on('connection', function connection(ws, req) {
@@ -199,6 +222,10 @@ con.connect(function(err) {
 		} else if (pathname === '/btl') {
 			battle.handleUpgrade(request, socket, head, function done(ws) {
 				battle.emit('connection', ws, request);
+			});
+		} else if (pathname === '/anon') {
+			anon.handleUpgrade(request, socket, head, function done(ws) {
+				anon.emit('connection', ws, request);
 			});
 		} else {
 			socket.destroy();

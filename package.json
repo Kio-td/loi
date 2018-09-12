@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "The Legend of Ikaros WSS (Web Socket Service.) Helps transfer the info to the player.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kio-td/loi.git"
