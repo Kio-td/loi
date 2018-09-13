@@ -13,6 +13,9 @@ a:hover {
   display: block;
   right: 0;
   top: 0;
+  width: 20vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 active:hover {
