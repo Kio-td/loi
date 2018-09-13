@@ -203,7 +203,7 @@ i = 0
                s.onmessage = function (evt) {
                  data = json.parse(evt.data).data;
                  if (data == false) {
-                   malert("Your username is already used.")
+                   err("Your username is already used.");
                  }
                }
              }
