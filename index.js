@@ -31,6 +31,25 @@ con.connect(function(err) {
 	if (err) throw err;
 	console.log("Connected to MySQL, and server is running.");
 
+	anon.on('connection', function(ws, req) {
+			ws.send(json.stringify({ok:true, code:3, msg:"HI_ANON"}));
+			ws.on('message', function(data) {
+				try {
+					d = json.parse(data);
+				} catch (e) {
+					ws.send(json.stringify({ok:false, code:-3, msg:"NOT_JSON5"}));
+				}
+				if (d["cmd"] == undefined) {
+					ws.send(json.stringify({ok:false, code:-1, msg:"NO_CMD"}));
+					return;
+				} else if (d["cmd"] == "species") {
+					con.query("select * from spec", function(a,b) {
+						if(a) throw a;
+						ws.send(json.stringify({ok:true, code:4, data:b}));
+					});
+				}
+			});
+		});
 
 	serve.on('connection', function connection(ws, req) {
 		let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
@@ -96,26 +115,6 @@ con.connect(function(err) {
 		} else {
 			ws.send('{"code":2}');
 		}
-	});
-
-  anon.on('connection', function(ws, req) {
-		ws.send(json.stringify({ok:true, code:3, msg:"HI_ANON"}));
-		ws.on('message', function(data) {
-			try {
-				d = json.parse(data);
-			} catch (e) {
-				ws.send(json.stringify({ok:false, code:-3, msg:"NOT_JSON5"}));
-			}
-			if (d["cmd"] == undefined) {
-				ws.send(json.stringify({ok:false, code:-1, msg:"NO_CMD"}));
-				return;
-			} else if (d["cmd"] == "species") {
-				con.query("select * from spec", function(a,b) {
-					if(a) throw a;
-					ws.send(json.stringify({ok:true, code:4, data:b}));
-				});
-			}
-		});
 	});
 
 	chat.on('connection', function connection(ws, req) {
