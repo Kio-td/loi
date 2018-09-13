@@ -17,6 +17,7 @@ const chat = new WebSocket.Server(g);
 const battle = new WebSocket.Server(g);
 const anon = new WebSocket.Server(g);
 
+
 function isconnected(req, ws) {
 	let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
 	let uid = ip.replace(/\./g, '');
