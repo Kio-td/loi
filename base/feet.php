@@ -8,6 +8,7 @@
 </footer>
 </div>
 <div class="alert-pane">
+  &nbsp;
 </div>
 <?php
 }
