@@ -10,7 +10,6 @@ a:hover {
   background: red;
   position: fixed;
   z-index: 1000;
-  display: block;
   right: 0;
   top: 0;
   width: 20vw;
