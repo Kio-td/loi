@@ -40,6 +40,7 @@ $x = false;
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
     <link href="/cover.css" rel="stylesheet">
     <link rel="author" href="humans.txt" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/json5/0.5.1/json5.min.js"></script>
   <style>#content > #right > .dose > .dosesingle,
 #content > #center > .dose > .dosesingle
 {display:none !important;}</style></head>
