@@ -6,7 +6,7 @@ a:hover {
   transition: .5s;
 }
 
-.alert-pane {
+.ap {
   background: red;
   position: fixed;
   display: inline-block;
