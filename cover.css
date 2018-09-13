@@ -6,7 +6,7 @@ a:hover {
   transition: .5s;
 }
 
-.ap {
+#ap {
   position: fixed;
   display: inline-block;
   z-index: 1000;

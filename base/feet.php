@@ -7,7 +7,7 @@
   </div>
 </footer>
 </div>
-<div class="ap">
+<div id="ap">
   &nbsp;
 </div>
 <?php
