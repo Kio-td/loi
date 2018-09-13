@@ -167,17 +167,39 @@ elseif (isset($_GET["auth"])) {
     <input class="form-control" name="un" placeholder="Username" required="" type="text"><br>
     <input class="form-control" id="pw" type="password" name="pw" required placeholder="Password"><br>
     <input class="form-control" type="email" name="em" required placeholder="Email"><br>
-    <select>
-	<?php
-		require('/var/www/no-access/loi/config.php');
-		while($r = $conn->query("SELECT sid, sname from spec")->fetch_assoc()) {
-			echo "<option value='".$r["sid"]."'>".$r["sname"]."</option>";
-		}
-	?>
-    </select>
+    <select id="data" name="sp" required onchange="f(this)"></select>
     <button class="btn btn-secondary">register</button>&emsp;<a href="/game/reset">Reset Password</a>
   </form>
-
+<span id="info"></span>
+<script>
+json = JSON5;
+var s = new WebSocket("wss://loi.nayami.party:2053/anon");
+data = "";
+i = 0
+ s.onmessage = function (evt) {
+                if(json.parse(evt.data)["code"] == 3) {
+                  s.send("{cmd:'species'}");
+                } else {
+                  data = json.parse(evt.data).data;
+                  json.parse(evt.data).data.forEach(function(itm) {
+                    i++;
+                    x = document.getElementById('data');
+                    h = document.createElement("option");
+                    h.text = itm["sname"];
+                    h.value = itm["sid"];
+                    x.add(h);
+                    if (i == 1) document.getElementById('info').innerText = itm["description"]
+                  })
+                }
+             };
+             function f (id) {
+               data.forEach(function(itm) {
+                 if (itm["sid"] == id.value) {
+                   document.getElementById('info').innerText = itm["description"]
+                 }
+               });
+             }
+</script>
   <?php
 
     } else {
