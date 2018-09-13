@@ -181,7 +181,7 @@ i = 0
                   s.send("{cmd:'species'}");
                 } else {
                   data = json.parse(evt.data).data;
-                  json.parse(evt.data).data.forEach(function(itm) {
+                  data.forEach(function(itm) {
                     i++;
                     x = document.getElementById('data');
                     h = document.createElement("option");
@@ -198,6 +198,14 @@ i = 0
                    document.getElementById('info').innerText = itm["description"]
                  }
                });
+             }
+             function cun (id) {
+               s.onmessage = function (evt) {
+                 data = json.parse(evt.data).data;
+                 if (data == false) {
+                   malert("Your username is already used.")
+                 }
+               }
              }
 </script>
   <?php

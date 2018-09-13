@@ -7,7 +7,6 @@ a:hover {
 }
 
 .ap {
-  background: red;
   position: fixed;
   display: inline-block;
   z-index: 1000;
