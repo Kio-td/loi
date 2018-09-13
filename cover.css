@@ -9,6 +9,7 @@ a:hover {
 .alert-pane {
   background: red;
   position: fixed;
+  display: inline-block;
   z-index: 1000;
   right: 0;
   top: 0;
