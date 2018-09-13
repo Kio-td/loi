@@ -48,6 +48,16 @@ con.connect(function(err) {
 						if(a) throw a;
 						ws.send(json.stringify({ok:true, code:4, data:b}));
 					});
+				} else if (d["cmd"] == "cun") {
+					if(d["data"] == undefined) {
+						ws.send(json.stringify(ok:false, code:-3, msg:"NO_DATA_FOUND"));
+					} else {
+					con.query("select username from users where username = ?", [d["data"]], function (a, b) {
+						if (a) throw a;
+						if (b.length > 0) {ws.send(json.stringify(ok:true, code:4, data:false));}
+						else {ws.send(json.stringify(ok:true, code:4, data:true));}
+					});
+				}
 				}
 			});
 		});
