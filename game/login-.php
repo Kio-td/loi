@@ -167,7 +167,7 @@ elseif (isset($_GET["auth"])) {
     <input class="form-control" name="un" placeholder="Username" required="" type="text"><br>
     <input class="form-control" id="pw" type="password" name="pw" required placeholder="Password"><br>
     <input class="form-control" type="email" name="em" required placeholder="Email"><br>
-    <select id="data" name="sp" required onchange="f(this)"></select>
+    <select class="form-control" id="data" name="sp" required onchange="f(this)"></select><br>
     <button class="btn btn-secondary">register</button>&emsp;<a href="/game/reset">Reset Password</a>
   </form>
 <span id="info"></span>
