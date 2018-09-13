@@ -230,5 +230,5 @@ con.connect(function(err) {
 		}
 	});
 
-	server.listen(8096);
+	server.listen(2096);
 });
