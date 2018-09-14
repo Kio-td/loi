@@ -164,9 +164,9 @@ elseif (isset($_GET["auth"])) {
   <h1 class="cover-heading">Registration</h1>
   <p class="lead">Register your existance with the department.</p>
   <form id="reg" action="?auth&register" method="post">
-    <input class="form-control" name="un" placeholder="Username" required="" oninput="cun(this)" type="text"><br>
+    <input class="form-control" name="un" placeholder="Username" required="" onfocus="u()" oninput="cun(this)" type="text"><br>
     <input class="form-control" id="pw" type="password" name="pw" required placeholder="Password"><br>
-    <input class="form-control" type="email" name="em" required oniput="cem(this)" placeholder="Email"><br>
+    <input class="form-control" type="email" name="em" onfocus="e()" required oniput="cem(this)" placeholder="Email"><br>
     <select class="form-control" id="data" name="sp" required onchange="f(this)"></select><br>
     <button class="btn btn-secondary">register</button>&emsp;<a href="/game/reset">Reset Password</a>
   </form>
@@ -177,6 +177,8 @@ var s = new WebSocket("wss://loi.nayami.party:2053/anon");
 data = "";
 i = 0
 dx = 0
+e = 0
+u = 0
 nrk = "";
  s.onmessage = function (evt) {
                 if(json.parse(evt.data)["code"] == 3) {
@@ -202,9 +204,16 @@ nrk = "";
                  }
                });
              }
-
-             function cun (id) {
-               if(dx) {
+             function e() {
+               s.onmessage = function (evt) {
+                 data = json.parse(evt.data).data;
+                 console.log(data);
+                 if (data == false) {
+                   err("That email is already used.");
+                 }
+               }
+             }
+             function u() {
                s.onmessage = function (evt) {
                  data = json.parse(evt.data).data;
                  console.log(data);
@@ -214,19 +223,11 @@ nrk = "";
                    err("Your username is on the blacklist.");
                  }
                }
+             }
+             function cun (id) {
                s.send(json.stringify({cmd:"cun", data:id.value}))
              }
-             }
              function cem (id) {
-               if(dx) {
-               s.onmessage = function (evt) {
-                 data = json.parse(evt.data).data;
-                 console.log(data);
-                 if (data == false) {
-                   err("That email is already used.");
-                 }
-               }
-             }
                s.send(json.stringify({cmd:"cem", data:id.value}))
              }
 </script>
