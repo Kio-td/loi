@@ -164,9 +164,9 @@ elseif (isset($_GET["auth"])) {
   <h1 class="cover-heading">Registration</h1>
   <p class="lead">Register your existance with the department.</p>
   <form id="reg" action="?auth&register" method="post">
-    <input class="form-control" name="un" placeholder="Username" required="" onfocus="u()" oninput="cun(this)" type="text"><br>
+    <input class="form-control" name="un" placeholder="Username" required="" onfocus="us()" oninput="cun(this)" type="text"><br>
     <input class="form-control" id="pw" type="password" name="pw" required placeholder="Password"><br>
-    <input class="form-control" type="email" name="em" onfocus="e()" required oniput="cem(this)" placeholder="Email"><br>
+    <input class="form-control" type="email" name="em" onfocus="em()" required oniput="cem(this)" placeholder="Email"><br>
     <select class="form-control" id="data" name="sp" required onchange="f(this)"></select><br>
     <button class="btn btn-secondary">register</button>&emsp;<a href="/game/reset">Reset Password</a>
   </form>
@@ -204,7 +204,7 @@ nrk = "";
                  }
                });
              }
-             function e() {
+             function em() {
                s.onmessage = function (evt) {
                  data = json.parse(evt.data).data;
                  console.log(data);
@@ -213,7 +213,7 @@ nrk = "";
                  }
                }
              }
-             function u() {
+             function us() {
                s.onmessage = function (evt) {
                  data = json.parse(evt.data).data;
                  console.log(data);
