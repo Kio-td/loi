@@ -164,9 +164,9 @@ elseif (isset($_GET["auth"])) {
   <h1 class="cover-heading">Registration</h1>
   <p class="lead">Register your existance with the department.</p>
   <form id="reg" action="?auth&register" method="post">
-    <input class="form-control" name="un" placeholder="Username" required="" onchange="cun()" type="text"><br>
+    <input class="form-control" name="un" placeholder="Username" required="" onchange="cun(this)" type="text"><br>
     <input class="form-control" id="pw" type="password" name="pw" required placeholder="Password"><br>
-    <input class="form-control" type="email" name="em" required onchange="cem()" placeholder="Email"><br>
+    <input class="form-control" type="email" name="em" required onchange="cem(this)" placeholder="Email"><br>
     <select class="form-control" id="data" name="sp" required onchange="f(this)"></select><br>
     <button class="btn btn-secondary">register</button>&emsp;<a href="/game/reset">Reset Password</a>
   </form>
@@ -198,6 +198,15 @@ i = 0
                    document.getElementById('info').innerText = itm["description"]
                  }
                });
+             }
+             function cun (id) {
+               s.onmessage = function (evt) {
+                 data = json.parse(evt.data).data;
+                 if (data == false) {
+                   err("Your username is already used.");
+                 }
+               }
+               s.send(json.stringify({cmd:"cun", data:id.value}))
              }
              function cun (id) {
                s.onmessage = function (evt) {
