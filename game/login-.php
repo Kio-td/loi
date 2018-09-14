@@ -230,7 +230,8 @@ function us() {
                s.send(json.stringify({cmd:"cun", data:id.value}))
              }
              function cem (id) {
-               s.send(json.stringify({cmd:"cem", data:id.value}))
+               s.send(json.stringify({cmd:"cem", data:id.value}));
+               console.log(id.value);
              }
 </script>
   <?php
