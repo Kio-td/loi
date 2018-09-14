@@ -180,6 +180,26 @@ dx = 0
 e = 0
 u = 0
 nrk = "";
+function em() {
+  s.onmessage = function (evt) {
+    data = json.parse(evt.data).data;
+    console.log(data);
+    if (data == false) {
+      err("That email is already used.");
+    }
+  }
+}
+function us() {
+  s.onmessage = function (evt) {
+    data = json.parse(evt.data).data;
+    console.log(data);
+    if (data == "F") {
+      err("Your username is already used.");
+    } else if (data == "BL") {
+      err("Your username is on the blacklist.");
+    }
+  }
+}
  s.onmessage = function (evt) {
                 if(json.parse(evt.data)["code"] == 3) {
                   s.send("{cmd:'species'}");
@@ -203,26 +223,6 @@ nrk = "";
                    document.getElementById('info').innerText = itm["description"]
                  }
                });
-             }
-             function em() {
-               s.onmessage = function (evt) {
-                 data = json.parse(evt.data).data;
-                 console.log(data);
-                 if (data == false) {
-                   err("That email is already used.");
-                 }
-               }
-             }
-             function us() {
-               s.onmessage = function (evt) {
-                 data = json.parse(evt.data).data;
-                 console.log(data);
-                 if (data == "F") {
-                   err("Your username is already used.");
-                 } else if (data == "BL") {
-                   err("Your username is on the blacklist.");
-                 }
-               }
              }
              function cun (id) {
                s.send(json.stringify({cmd:"cun", data:id.value}))
