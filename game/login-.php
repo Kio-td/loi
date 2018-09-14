@@ -202,19 +202,22 @@ i = 0
              function cun (id) {
                s.onmessage = function (evt) {
                  data = json.parse(evt.data).data;
+                 console.log(data);
                  if (data == false) {
                    err("Your username is already used.");
                  }
                }
                s.send(json.stringify({cmd:"cun", data:id.value}))
              }
-             function cun (id) {
+             function cem (id) {
                s.onmessage = function (evt) {
                  data = json.parse(evt.data).data;
+                 console.log(data);
                  if (data == false) {
-                   err("Your username is already used.");
+                   err("That email is already used.");
                  }
                }
+               s.send(json.stringify({cmd:"cem", data:id.value}))
              }
 </script>
   <?php
