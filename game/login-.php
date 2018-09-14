@@ -188,6 +188,7 @@ function emai() {
       err("That email is already used.");
     }
   }
+  console.log("Switched to Email.");
 }
 function us() {
   s.onmessage = function (evt) {
@@ -199,6 +200,7 @@ function us() {
       err("Your username is on the blacklist.");
     }
   }
+  console.log("Switched to Username.");
 }
  s.onmessage = function (evt) {
                 if(json.parse(evt.data)["code"] == 3) {
