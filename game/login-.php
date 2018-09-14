@@ -176,12 +176,14 @@ json = JSON5;
 var s = new WebSocket("wss://loi.nayami.party:2053/anon");
 data = "";
 i = 0
+dx = 0
+nrk = "";
  s.onmessage = function (evt) {
                 if(json.parse(evt.data)["code"] == 3) {
                   s.send("{cmd:'species'}");
                 } else {
-                  data = json.parse(evt.data).data;
-                  data.forEach(function(itm) {
+                  nrk = json.parse(evt.data).data;
+                  nrk.forEach(function(itm) {
                     i++;
                     x = document.getElementById('data');
                     h = document.createElement("option");
@@ -193,13 +195,15 @@ i = 0
                 }
              };
              function f (id) {
-               data.forEach(function(itm) {
+               nrk.forEach(function(itm) {
                  if (itm["sid"] == id.value) {
                    document.getElementById('info').innerText = itm["description"]
                  }
                });
              }
+
              function cun (id) {
+               if(dx) {
                s.onmessage = function (evt) {
                  data = json.parse(evt.data).data;
                  console.log(data);
@@ -211,7 +215,9 @@ i = 0
                }
                s.send(json.stringify({cmd:"cun", data:id.value}))
              }
+             }
              function cem (id) {
+               if(dx) {
                s.onmessage = function (evt) {
                  data = json.parse(evt.data).data;
                  console.log(data);
@@ -219,6 +225,7 @@ i = 0
                    err("That email is already used.");
                  }
                }
+             }
                s.send(json.stringify({cmd:"cem", data:id.value}))
              }
 </script>
