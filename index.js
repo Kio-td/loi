@@ -51,11 +51,13 @@ con.connect(function(err) {
 				} else if (d["cmd"] == "cun") {
 					if(d["data"] == undefined) {
 						ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
+					} else if (["ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc"].includes(d["data"].toLowerCase())) {
+						ws.send(json.stringify({ok:false, code:-4, data:"BL"}))
 					} else {
-					con.query("select username from users where username = ?", [d["data"]], function (a, b) {
+					con.query("select username from users where username = ?", [d["data"].toLowerCase()], function (a, b) {
 						if (a) throw a;
-						if (b.length > 0) {ws.send(json.stringify({ok:true, code:4, data:false}));}
-						else {ws.send(json.stringify({ok:true, code:4, data:true}));}
+						if (b.length > 0) {ws.send(json.stringify({ok:true, code:4, data:"F"}));}
+						else {ws.send(json.stringify({ok:true, code:4, data:"NF"}));}
 					});
 				}
 			} else if (d["cmd"] == "cem") {
