@@ -182,9 +182,7 @@ u = 0
 nrk = "";
 function emai() {
   s.onmessage = function (evt) {
-    console.log(evt);
-    data = evt.data;
-    console.log(data);
+    data = json.parse(evt.data).data;
     if (data == false) {
       err("That email is already used.");
     }
@@ -231,9 +229,7 @@ function us() {
                s.send(json.stringify({cmd:"cun", data:id.value}))
              }
              function cem (id) {
-               console.log("a");
                s.send(json.stringify({cmd:"cem", data:id.value}));
-               console.log(id.value);
              }
 </script>
   <?php
