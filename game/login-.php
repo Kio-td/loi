@@ -191,9 +191,10 @@ nrk = "";
                     h.value = itm["sid"];
                     x.add(h);
                     if (i == 1) document.getElementById('info').innerText = itm["description"]
-                  })
+                  });
                 }
-             };
+                dx = 1;
+             }
              function f (id) {
                nrk.forEach(function(itm) {
                  if (itm["sid"] == id.value) {
