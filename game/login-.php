@@ -166,7 +166,7 @@ elseif (isset($_GET["auth"])) {
   <form id="reg" action="?auth&register" method="post">
     <input class="form-control" name="un" placeholder="Username" required="" onfocus="us()" oninput="cun(this)" type="text"><br>
     <input class="form-control" id="pw" type="password" name="pw" required placeholder="Password"><br>
-    <input class="form-control" type="email" name="em" onfocus="em()" required oniput="cem(this)" placeholder="Email"><br>
+    <input class="form-control" type="email" name="em" onfocus="emai()" required oniput="cem(this)" placeholder="Email"><br>
     <select class="form-control" id="data" name="sp" required onchange="f(this)"></select><br>
     <button class="btn btn-secondary">register</button>&emsp;<a href="/game/reset">Reset Password</a>
   </form>
@@ -180,7 +180,7 @@ dx = 0
 e = 0
 u = 0
 nrk = "";
-function em() {
+function emai() {
   s.onmessage = function (evt) {
     data = json.parse(evt.data).data;
     console.log(data);
