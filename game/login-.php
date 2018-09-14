@@ -203,8 +203,10 @@ i = 0
                s.onmessage = function (evt) {
                  data = json.parse(evt.data).data;
                  console.log(data);
-                 if (data == false) {
+                 if (data == "F") {
                    err("Your username is already used.");
+                 } else if (data == "BL") {
+                   err("Your username is on the blacklist.");
                  }
                }
                s.send(json.stringify({cmd:"cun", data:id.value}))
