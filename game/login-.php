@@ -182,7 +182,7 @@ u = 0
 nrk = "";
 function emai() {
   s.onmessage = function (evt) {
-    data = json.parse(evt.data).data;
+    data = evt.data;
     console.log(data);
     if (data == false) {
       err("That email is already used.");
@@ -193,7 +193,6 @@ function emai() {
 function us() {
   s.onmessage = function (evt) {
     data = json.parse(evt.data).data;
-    console.log(data);
     if (data == "F") {
       err("Your username is already used.");
     } else if (data == "BL") {
