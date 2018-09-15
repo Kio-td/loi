@@ -91,6 +91,8 @@ con.connect(function(err) {
 				} else {
 					n = json.parse(d["data"]);
 					//un, em, pw, sp
+					n.un = n.un.toLowerCase();
+					n.em = n.em.toLowerCase();
 					con.query("select username from users where username = ? or email = ?", [n.un, n.em], function (a, b) {
 						if(b.length > 0) {ws.send(json.stringify({ok: false, code:6, msg: "ACCT_EXISTS"}))}
 						else if (blacklist.includes(n.un.toLowerCase()))  {ws.send(json.stringify({ok: false, code:6, msg: "ACCT_BLACKLIST"}))}
@@ -99,6 +101,7 @@ con.connect(function(err) {
 							ce = shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate();
 							con.query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);", [n.un, pass.hash(n.pw),n.em, token, ce, n.sp], function (a) {
 								if (a) throw a;
+								sendemail(n.em, "LOI>> Confirm your Email", "Hello, " + n.un + ".\nWe have recieved a request to sign your citizenship papers, and have approved you.\nTo recieve your documents and live life here in Arden, please click the following link:\nhttps://loi.nayami.party/game/login-?confirm=" + ce + "&username=" + n.un)
 								ws.send(json.stringify({ok:true, code:4, msg:"CHECK_EMAIL"}));
 							});
 						}
