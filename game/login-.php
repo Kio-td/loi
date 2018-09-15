@@ -149,7 +149,7 @@ function sub() {
             window.location = "index";
           }
         }
-        s.send(json.stringify({cmd:'auth', data:{un:document.getElementById('un').value, pw:getElementById('pw').value}}))
+        s.send(json.stringify({cmd:'auth', data:{un:document.getElementById('un').value, pw:document.getElementById('pw').value}}))
       }
     </script>
     <?php
