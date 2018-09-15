@@ -156,7 +156,7 @@ function sub() {
       suc("Check your email to confirm your account.<br>Welcome to Arden.");
     }
   }
-  ws.send(json.stringify({cmd: 'create', data: {un: document.getElementById('un').value, pw:document.getElementById('pw').value, em:document.getElementById('em').value, sp:document.getElementById('data').value}}));
+  s.send(json.stringify({cmd: 'create', data: {un: document.getElementById('un').value, pw:document.getElementById('pw').value, em:document.getElementById('em').value, sp:document.getElementById('data').value}}));
 }
 
  s.onmessage = function (evt) {
