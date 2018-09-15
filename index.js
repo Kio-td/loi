@@ -84,6 +84,22 @@ con.connect(function(err) {
 						}
 						})
 					}
+				} else if (d["cmd"] == "reset") {
+					if(d["data"] == undefined) {
+						ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
+					} else {
+							con.query("select email from users where username = ?", [d["data"].toLowerCase()], function (a, b) {
+								if (a) throw a;
+								if (b.length > 0) {ws.send(json.stringify({ok:false, code:-3, msg:"NO_USR"}))}
+								else {
+									token = uid.generate() + uid.generate() + uid.generate() + uid.generate() + uid.generate() + uid.generate();
+									con.query("alter users set rs=? where username=?", [token, d["data"]], function(a) {
+										if (a) throw a;
+									});
+									sendemail(b["0"].email, "d-9898255a33d446adbde551515b76112e", {username: d["data"], url: "https://loi.nayami.party/game/login?reset&code="+token});
+								}
+							});
+					}
 				} else if (d["cmd"] == "cun") {
 					if(d["data"] == undefined) {
 						ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
