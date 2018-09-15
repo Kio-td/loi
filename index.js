@@ -79,7 +79,7 @@ con.connect(function(err) {
 							else if(pass.verify(data.pw, s.password) == false) {
 								ws.send(json.stringify({ok:false, code:-4, msg:"INC_PASS"}));
 							} else {
-								ws.send(json.stringify({ok:true, code:4, data:btoa(s.token)}));
+								ws.send(json.stringify({ok:true, code:4, data:Buffer.from(s.token).toString('base64')}));
 							}
 						}
 						})
