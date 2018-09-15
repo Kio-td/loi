@@ -73,8 +73,6 @@ elseif (isset($_GET["auth"])) {
         die();
       }
 
-    }
-
 } else {
     echo "<style>input{color: white !important;}</style>";
     require('../base/head.php');
