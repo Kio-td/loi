@@ -82,7 +82,6 @@ con.connect(function(err) {
 							}
 						})
 					}
-				}
 				} else if (d["cmd"] == "cun") {
 					if(d["data"] == undefined) {
 						ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
