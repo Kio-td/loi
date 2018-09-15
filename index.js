@@ -63,6 +63,26 @@ con.connect(function(err) {
 						if(a) throw a;
 						ws.send(json.stringify({ok:true, code:4, data:b}));
 					});
+				} else if (d["cmd"] == "auth") {
+					if(d["data"] == undefined) {
+						ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
+					} else {
+						data = d["data"]
+						//un, pw
+						data.un = data.un.toLowerCase();
+						data.pw = pass.hash(data.pw);
+						con.query("select ce, password, token from users where username = ?", [data.un], function(a,b) {
+							if (a) throw a;
+							s = b[0];
+							if(s.ce) {ws.send(json.stringify({ok:false, code:-4, msg:"CONF_EMAIL"}));}
+							else if(!pass.verify(data.pw, s.password)) {
+								ws.send(json.stringify({ok:false, code:-4, msg:"INC_PASS"}));
+							} else {
+								ws.send(json.stringify({ok:true, code:4, data:s.token}));
+							}
+						})
+					}
+				}
 				} else if (d["cmd"] == "cun") {
 					if(d["data"] == undefined) {
 						ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
