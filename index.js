@@ -1,5 +1,7 @@
 const cfg1 = require('node-storage');
 const http = require('https');
+const mail = require('@sendgrid/mail');
+const pass = require('node-php-password');
 const WebSocket = require('ws');
 const msql = require('mysql2');
 const json = require('json5')
@@ -7,6 +9,7 @@ const url = require('url');
 const cfg = new cfg1("./config/local.json"); //Configuration for Server, and for users
 const mcg = new cfg1("./config/hvw.json"); //HVW - High-Velocity Writing - This function will most likely be written to A LOT. It's important to make sure that the API will always be ready.
 const g = cfg.get('int.websock');
+const uid = require('shortid');
 const fs = require('fs');
 const server = http.createServer({
 	cert: fs.readFileSync('config/cert.pem'),
@@ -16,7 +19,19 @@ const serve = new WebSocket.Server(g);
 const chat = new WebSocket.Server(g);
 const battle = new WebSocket.Server(g);
 const anon = new WebSocket.Server(g);
+const black = ["ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc"];
 
+mail.setApiKey(cfg.get("int.sg"));
+
+function sendemail(to, subject, text) {
+	msg = {
+		to: to,
+		from: ["Noreply@loi.nayami.party", "Legend of Ikaros"],
+		subject: subject,
+		text: text
+	}
+	mail.send(msg);
+}
 
 function isconnected(req, ws) {
 	let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
@@ -51,7 +66,7 @@ con.connect(function(err) {
 				} else if (d["cmd"] == "cun") {
 					if(d["data"] == undefined) {
 						ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
-					} else if (["ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc"].includes(d["data"].toLowerCase())) {
+					} else if (blacklist.includes(d["data"].toLowerCase())) {
 						ws.send(json.stringify({ok:false, code:-4, data:"BL"}))
 					} else {
 					con.query("select username from users where username = ?", [d["data"].toLowerCase()], function (a, b) {
@@ -70,7 +85,25 @@ con.connect(function(err) {
 						else {ws.send(json.stringify({ok:true, code:4, data:true}));}
 					});
 				}
-			}
+			} else if (d["cmd"] == "create") {
+				if(d["data"] == undefined) {
+					ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
+				} else {
+					n = json.parse(d["data"]);
+					//un, em, pw, sp
+					con.query("select username from users where username = ? or email = ?", [n.un, n.em], function (a, b) {
+						if(b.length > 0) {ws.send(json.stringify({ok: false, code:6, msg: "ACCT_EXISTS"}))}
+						else if (blacklist.includes(n.un.toLowerCase()))  {ws.send(json.stringify({ok: false, code:6, msg: "ACCT_BLACKLIST"}))}
+						else {
+							token = shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate();
+							ce = shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate();
+							con.query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);", [n.un, pass.hash(n.pw),n.em, token, ce, n.sp], function (a) {
+								if (a) throw a;
+								ws.send(json.stringify({ok:true, code:4, msg:"CHECK_EMAIL"}));
+							});
+						}
+					});
+				}
 			});
 		});
 
