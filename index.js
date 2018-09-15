@@ -23,12 +23,12 @@ const black = ["ikaros", "admin", "console", "sysadmin", "owner", "dev", "develo
 
 mail.setApiKey(cfg.get("int.sg"));
 
-function sendemail(to, subject, text) {
+function sendemail(to, template, data) {
 	msg = {
 		to: to,
-		from: ["Noreply@loi.nayami.party", "Legend of Ikaros"],
-		subject: subject,
-		text: text
+		from: "Legend of Ikaros <Noreply@loi.nayami.party>",
+		templateId: template,
+		dynamic_template_data: data
 	}
 	mail.send(msg);
 }
@@ -101,7 +101,7 @@ con.connect(function(err) {
 							ce = uid.generate() + uid.generate() + uid.generate() + uid.generate() + uid.generate() + uid.generate();
 							con.query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);", [n.un, pass.hash(n.pw),n.em, token, ce, n.sp], function (a) {
 								if (a) throw a;
-								sendemail(n.em, "LOI>> Confirm your Email", "Hello, " + n.un + ".\nWe have recieved a request to sign your citizenship papers, and have approved you.\nTo recieve your documents and live life here in Arden, please click the following link:\nhttps://loi.nayami.party/game/login-?confirm=" + ce + "&username=" + n.un)
+								sendemail(n.em, "d-d506a7695d094d6196dac374b1e00630", {username: n.un, url: "https://loi.nayami.party/game/login-?confirm=" + ce + "&username=" + n.un});
 								ws.send(json.stringify({ok:true, code:4, msg:"CHECK_EMAIL"}));
 							});
 						}
