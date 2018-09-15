@@ -74,7 +74,7 @@ con.connect(function(err) {
 						con.query("select ce, password, token from users where username = ?", [data.un], function(a,b) {
 							if (a) throw a;
 							s = b[0];
-							if(s.ce) {ws.send(json.stringify({ok:false, code:-4, msg:"CONF_EMAIL"}));}
+							if(!s.ce == "") {ws.send(json.stringify({ok:false, code:-4, msg:"CONF_EMAIL"}));}
 							else if(!pass.verify(data.pw, s.password)) {
 								ws.send(json.stringify({ok:false, code:-4, msg:"INC_PASS"}));
 							} else {
