@@ -73,6 +73,7 @@ con.connect(function(err) {
 						data.pw = data.pw;
 						con.query("select ce, password, token from users where username = ?", [data.un], function(a,b) {
 							if (a) throw a;
+							if(b.length == 0) {ws.send(json.stringify({ok:false, code-4, msg:"NOBODY_FOUND"}))} else {
 							s = b[0];
 							if(s.ce !== "0") {ws.send(json.stringify({ok:false, code:-4, msg:"CONF_EMAIL"}));}
 							else if(pass.verify(data.pw, s.password) == false) {
@@ -80,6 +81,7 @@ con.connect(function(err) {
 							} else {
 								ws.send(json.stringify({ok:true, code:4, data:s.token}));
 							}
+						}
 						})
 					}
 				} else if (d["cmd"] == "cun") {
