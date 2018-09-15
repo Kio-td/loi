@@ -99,6 +99,7 @@ con.connect(function(err) {
 							ce = shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate();
 							con.query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);", [n.un, pass.hash(n.pw),n.em, token, ce, n.sp], function (a) {
 								if (a) throw a;
+								sendemail(n.em)
 								ws.send(json.stringify({ok:true, code:4, msg:"CHECK_EMAIL"}));
 							});
 						}
