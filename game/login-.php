@@ -29,57 +29,6 @@ elseif (isset($_GET["lo"])) {
   header("Location: index");
 }
 elseif (isset($_GET["auth"])) {
-    require('/var/www/no-access/loi/config.php');
-    if (isset($_GET["register"])) {
-        if (!isset($_POST["un"]) || !isset($_POST["pw"]) || !isset($_POST["em"])) {
-            header("Location: login?reg&x=3");
-            die();
-        }
-        if (strlen($_POST["un"]) > 30) {
-            header("Location: login?reg&x=5");
-            die();
-        }
-        if (strlen($_POST["pw"]) < 8) {
-            header("Location: login?reg&x=2");
-            die();
-        }
-        $upl       = array(
-            "username" => strtolower($_POST["un"]),
-            "password" => password_hash($_POST["pw"], PASSWORD_DEFAULT),
-            "email" => strtolower($_POST["em"]),
-            "token" => password_hash(md5(rand()), PASSWORD_DEFAULT),
-            "cfe" => md5(rand())
-        );
-        $blacklist = array("ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc"
-        );
-        if (in_array(strtolower($upl["username"]), $blacklist)) {
-            header("Location: login?reg&x=1");
-            die();
-        }
-        $x = $conn->query("select username from users where username = '" . $upl["username"] . "'");
-        if ($x->num_rows) {
-            header("Location: login?reg&x=4");
-            die();
-        }
-
-        $conn->query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`) VALUES ('" . $upl["username"] . "','" . $upl["password"] . "','" . $upl["email"] . "', '" . $upl["token"] . "', '" . $upl["cfe"] . "')");
-
-        require('../base/head.php');
-        sendmail("LOI>> Confirm your Email.", $upl["email"], $upl["username"], "Hello, " . $upl["username"] . ".\n\nThis is the Department of life and birth.\nTo completely be born as a citizen of Arven, please click the following link:\nhttps://" . $_SERVER['HTTP_HOST'] . "/game/login?confirm&username=" . $upl["username"] . "&confirm=" . $upl["cfe"] . "\n\nThank you,\nArven DOLB");
-?>
-     <a class="nav-link" href="login">Login</a>
-    </nav>
-  </div>
-</header>
-<main role="main" class="inner cover">
-  <h1 class="cover-heading">Verify your email.</h1>
-  <p class="lead">Your new life is awaiting. Please verify your email.</p>
-  <?php
-        require('../base/feet.php');
-
-
-    } else {
-      //logging in
       if(isset($_POST["un"]) && isset($_POST["pw"])) {
         //Username and password are present
         require("/var/www/no-access/loi/config.php");
@@ -163,14 +112,12 @@ elseif (isset($_GET["auth"])) {
 
   <h1 class="cover-heading">Registration</h1>
   <p class="lead">Register your existance with the department.</p>
-  <form id="reg" action="?auth&register" method="post">
-    <input class="form-control" name="un" placeholder="Username" required="" onfocus="us()" oninput="cun(this)" type="text"><br>
-    <input class="form-control" id="pw" type="password" name="pw" required placeholder="Password"><br>
-    <input class="form-control" type="email" name="em" onfocus="emai()" required oninput="cem(this)" placeholder="Email"><br>
-    <select class="form-control" id="data" name="sp" required onchange="f(this)"></select><br>
-    <button class="btn btn-secondary">register</button>&emsp;<a href="/game/reset">Reset Password</a>
-  </form>
-<span id="info"></span>
+    <input class="form-control" id="un" placeholder="Username" required="" onfocus="us()" oninput="cun(this)" type="text"><br>
+    <input class="form-control" id="pw" type="password"required placeholder="Password"><br>
+    <input class="form-control" id="em" type="email" onfocus="emai()" required oninput="cem(this)" placeholder="Email"><br>
+    <select class="form-control" id="data" required onchange="f(this)"></select><br>
+    <button onclick="sub()" class="btn btn-secondary">register</button>&emsp;<a href="/game/reset">Reset Password</a>
+<span id="info" style="display: none"></span>
 <script>
 json = JSON5;
 var s = new WebSocket("wss://loi.nayami.party:2053/anon");
@@ -200,6 +147,20 @@ function us() {
   }
   console.log("Switched to Username.");
 }
+
+function sub() {
+  s.onmessage = function (evt) {
+    data = json.parse(evt.data);
+    if (data.ok == false) {
+      if (data.msg == "ACCT_BLACKLIST") { err("This username has been blacklisted.");}
+      else if (data.msg == "ACCT_EXISTS") { err("This Username or Email already exists.");}
+    } else {
+      suc("Check your email to confirm your account.<br>Welcome to Arden.");
+    }
+  }
+  ws.send(json.stringify({cmd: 'create', data: {un: document.getElementById('un').value, pw:document.getElementById('pw').value, em:document.getElementById('em').value, sp:document.getElementById('data').value}}));
+}
+
  s.onmessage = function (evt) {
                 if(json.parse(evt.data)["code"] == 3) {
                   s.send("{cmd:'species'}");
