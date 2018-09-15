@@ -75,7 +75,7 @@ con.connect(function(err) {
 							if (a) throw a;
 							s = b[0];
 							if(s.ce !== "0") {ws.send(json.stringify({ok:false, code:-4, msg:"CONF_EMAIL"}));}
-							else if(!pass.verify(data.pw, s.password)) {
+							else if(pass.verify(data.pw, s.password) == false) {
 								ws.send(json.stringify({ok:false, code:-4, msg:"INC_PASS"}));
 							} else {
 								ws.send(json.stringify({ok:true, code:4, data:s.token}));
