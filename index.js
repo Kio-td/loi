@@ -89,7 +89,7 @@ con.connect(function(err) {
 				if(d["data"] == undefined) {
 					ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
 				} else {
-					n = json.parse(d["data"]);
+					n = d.data;
 					//un, em, pw, sp
 					n.un = n.un.toLowerCase();
 					n.em = n.em.toLowerCase();
