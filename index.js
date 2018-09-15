@@ -66,7 +66,7 @@ con.connect(function(err) {
 				} else if (d["cmd"] == "cun") {
 					if(d["data"] == undefined) {
 						ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
-					} else if (blacklist.includes(d["data"].toLowerCase())) {
+					} else if (black.includes(d["data"].toLowerCase())) {
 						ws.send(json.stringify({ok:false, code:-4, data:"BL"}))
 					} else {
 					con.query("select username from users where username = ?", [d["data"].toLowerCase()], function (a, b) {
@@ -95,7 +95,7 @@ con.connect(function(err) {
 					n.em = n.em.toLowerCase();
 					con.query("select username from users where username = ? or email = ?", [n.un, n.em], function (a, b) {
 						if(b.length > 0) {ws.send(json.stringify({ok: false, code:6, msg: "ACCT_EXISTS"}))}
-						else if (blacklist.includes(n.un.toLowerCase()))  {ws.send(json.stringify({ok: false, code:6, msg: "ACCT_BLACKLIST"}))}
+						else if (black.includes(n.un.toLowerCase()))  {ws.send(json.stringify({ok: false, code:6, msg: "ACCT_BLACKLIST"}))}
 						else {
 							token = shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate();
 							ce = shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate() + shortid.generate();
