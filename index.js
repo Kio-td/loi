@@ -70,7 +70,7 @@ con.connect(function(err) {
 						data = d["data"]
 						//un, pw
 						data.un = data.un.toLowerCase();
-						data.pw = pass.hash(data.pw);
+						data.pw = data.pw;
 						con.query("select ce, password, token from users where username = ?", [data.un], function(a,b) {
 							if (a) throw a;
 							s = b[0];
