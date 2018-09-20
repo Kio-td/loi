@@ -1,5 +1,5 @@
 const cfg1 = require('node-storage');
-const http = require('https');
+const http = require('http');
 const mail = require('@sendgrid/mail');
 const pass = require('node-php-password');
 const WebSocket = require('ws');
@@ -11,10 +11,7 @@ const mcg = new cfg1("./config/hvw.json"); //HVW - High-Velocity Writing - This 
 const g = cfg.get('int.websock');
 const uid = require('shortid');
 const fs = require('fs');
-const server = http.createServer({
-	cert: fs.readFileSync('config/cert.pem'),
-	key: fs.readFileSync('config/key.pem')
-});
+const server = http.createServer({});
 const serve = new WebSocket.Server(g);
 const chat = new WebSocket.Server(g);
 const battle = new WebSocket.Server(g);
