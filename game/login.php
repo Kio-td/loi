@@ -42,7 +42,7 @@ elseif (isset($_GET["lo"])) {
     <input class="form-control" id="pw" type="password"required placeholder="Password"><br>
     <input class="form-control" id="em" type="email" onfocus="emai()" required oninput="cem(this)" placeholder="Email"><br>
     <select class="form-control" id="data" required onchange="f(this)"></select><br>
-    <button onclick="sub()" class="btn btn-secondary">register</button>&emsp;<a href="/game/reset">Reset Password</a>
+   <!-- <button onclick="sub()" class="btn btn-secondary">register</button>&emsp;<a href="/game/reset">Reset Password</a>-->
 <span id="info" style="display: none"></span>
 <script>
 var s = new WebSocket("wss://ws.nayami.party/anon");
