@@ -45,7 +45,7 @@ elseif (isset($_GET["lo"])) {
     <button onclick="sub()" class="btn btn-secondary">register</button>&emsp;<a href="/game/reset">Reset Password</a>
 <span id="info" style="display: none"></span>
 <script>
-var s = new WebSocket("wss://loi.nayami.party:2053/anon");
+var s = new WebSocket("wss://ws.nayami.party/anon");
 data = "";
 i = 0
 dx = 0
@@ -136,7 +136,7 @@ function sub() {
     <button onclick="auth()" class="btn btn-secondary">Login</button>
 
     <script>
-      s = new WebSocket("wss://loi.nayami.party:2053/anon");
+      s = new WebSocket("wss://ws.nayami.party/anon");
       function auth() {
         s.onmessage = function(evt) {
           data = json.parse(evt.data);
