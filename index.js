@@ -51,6 +51,7 @@ con.connect(function(err) {
 					d = json.parse(data);
 				} catch (e) {
 					ws.send(json.stringify({ok:false, code:-3, msg:"NOT_JSON5"}));
+					return;
 				}
 				if (d["cmd"] == undefined) {
 					ws.send(json.stringify({ok:false, code:-1, msg:"NO_CMD"}));
@@ -80,6 +81,33 @@ con.connect(function(err) {
 							}
 						}
 						})
+					}
+				} else if (d["cmd"] == "ress2") {
+					if(d["data"] == undefined) {
+						ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
+					} else {
+						try {
+							auth = json.parse(d["data"]);
+						} catch (e) {
+							ws.send(json.stringify({ok:false, code:-3, msg:"NOT_JSON5"}));
+							return;
+						}
+						if(m["code"] == undefined || m["password"] == undefined || m["Conpass"] == undefined) {
+							ws.send(json.stringify({ok: false, code:-3, msg:"MISSING_DATA"}));
+							return
+						}
+						con.query("select id from users where rc = ?", [m["code"]], function(a, b) {
+							if (a) throw a;
+							if (b.length() != 1) {
+								ws.send(json.stringify({ok:false, code:-4 msg:"FRAUD"}));
+								console.log(ip + " tried to access a code that doesn't exist.");
+							} else {
+								if (m["password"] != m["Conpass"]) {ws.send(json.stringify(ok: false, code: -4, msg: "DIFFERENT"))}
+								else {
+									//I'll continue from here in a bit - I'm tired.
+								}
+							}
+						});
 					}
 				} else if (d["cmd"] == "reset") {
 					if(d["data"] == undefined) {
