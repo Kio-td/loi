@@ -115,7 +115,7 @@ con.connect(function(err) {
 					} else {
 							con.query("select email from users where username = ?", [d["data"].toLowerCase()], function (a, b) {
 								if (a) throw a;
-								if (b.length > 0) {ws.send(json.stringify({ok:false, code:-3, msg:"NO_USR"}))}
+								if (b.length != 1) {ws.send(json.stringify({ok:false, code:-3, msg:"NO_USR"}))}
 								else {
 									token = uid.generate() + uid.generate() + uid.generate() + uid.generate() + uid.generate() + uid.generate();
 									con.query("alter users set rs=? where username=?", [token, d["data"]], function(a) {
