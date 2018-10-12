@@ -122,6 +122,7 @@ con.connect(function(err) {
 										if (a) throw a;
 									});
 									sendemail(b["0"].email, "d-9898255a33d446adbde551515b76112e", {username: d["data"], url: "https://loi.nayami.party/game/login?reset&code="+token});
+									ws.send(json.stringify({ok: true, code: 4, msg: "SENT EMAIL"}));
 								}
 							});
 					}
