@@ -99,7 +99,7 @@ con.connect(function(err) {
 						con.query("select id from users where rc = ?", [m["code"]], function(a, b) {
 							if (a) throw a;
 							if (b.length() != 1) {
-								ws.send(json.stringify({ok:false, code:-4 msg:"FRAUD"}));
+								ws.send(json.stringify({ok:false, code:-4, msg:"FRAUD"}));
 								console.log(ip + " tried to access a code that doesn't exist.");
 							} else {
 								if (m["password"] != m["Conpass"]) {ws.send(json.stringify(ok: false, code: -4, msg: "DIFFERENT"))}
