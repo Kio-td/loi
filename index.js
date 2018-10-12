@@ -102,7 +102,7 @@ con.connect(function(err) {
 								ws.send(json.stringify({ok:false, code:-4, msg:"FRAUD"}));
 								console.log(ip + " tried to access a code that doesn't exist.");
 							} else {
-								if (m["password"] != m["Conpass"]) {ws.send(json.stringify(ok: false, code: -4, msg: "DIFFERENT"))}
+								if (m["password"] != m["Conpass"]) {ws.send(json.stringify({ok: false, code: -4, msg: "DIFFERENT"}))}
 								else {
 									//I'll continue from here in a bit - I'm tired.
 								}
