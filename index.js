@@ -118,7 +118,7 @@ con.connect(function(err) {
 								if (b.length != 1) {ws.send(json.stringify({ok:false, code:-3, msg:"NO_USR"}))}
 								else {
 									token = uid.generate() + uid.generate() + uid.generate() + uid.generate() + uid.generate() + uid.generate();
-									con.query("alter users set rs=? where username=?", [token, d["data"]], function(a) {
+									con.query("update users set rs=? where username=?", [token, d["data"]], function(a) {
 										if (a) throw a;
 									});
 									sendemail(b["0"].email, "d-9898255a33d446adbde551515b76112e", {username: d["data"], url: "https://loi.nayami.party/game/login?reset&code="+token});
