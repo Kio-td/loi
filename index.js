@@ -87,7 +87,7 @@ con.connect(function(err) {
 						ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
 					} else {
 						try {
-							auth = json.parse(d["data"]);
+							auth = d["data"]
 						} catch (e) {
 							ws.send(json.stringify({ok:false, code:-3, msg:"NOT_JSON5"}));
 							console.log(d["data"]);
