@@ -31,7 +31,7 @@ function sendemail(to, template, data) {
 }
 
 function isconnected(req, ws) {
-	let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
+	let ip = req.headers['x-forwarded-for']
 	let uid = ip.replace(/\./g, '');
 	if (cfg.get("user." + uid + ".token") == undefined) {
 		ws.close(1013);
@@ -46,8 +46,6 @@ con.connect(function(err) {
 
 	anon.on('connection', function(ws, req) {
 		let ip = req.headers['x-forwarded-for'];
-		console.log(ip);
-//		let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
 		let uid = ip.replace(/\./g, '');
 			ws.send(json.stringify({ok:true, code:3, msg:"HI_ANON"}));
 			ws.on('message', function(data) {
@@ -182,7 +180,7 @@ con.connect(function(err) {
 		});
 
 	serve.on('connection', function connection(ws, req) {
-		let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
+		let ip = req.headers['x-forwarded-for']
 		let uid = ip.replace(/\./g, '');
 		console.log(ip + " has connected.");
 		if (cfg.get("user." + uid + ".ddm")) {
@@ -250,7 +248,7 @@ con.connect(function(err) {
 	chat.on('connection', function connection(ws, req) {
 		isconnected(req, ws);
 		ws.on('message', function msg(data) {
-			let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
+			let ip = req.headers['x-forwarded-for']
 			let uid = ip.replace(/\./g, '');
 			ds = 0
 			data = data.split(/\r?\n|\r/g)[0].replace(/\</g, '&lt;').replace(/\>/g, '&gt;').trim();
