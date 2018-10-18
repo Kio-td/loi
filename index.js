@@ -96,8 +96,7 @@ con.connect(function(err) {
 							ws.send(json.stringify({ok: false, code:-3, msg:"MISSING_DATA"}));
 							return
 						}
-						ws.send("a");
-						con.query("select id from users where rc = ?", [m["code"]], function(a, b) {
+						con.query("select uid from users where rc = ?", [m["code"]], function(a, b) {
 							if (a) throw a;
 							if (b.length() != 1) {
 								ws.send(json.stringify({ok:false, code:-4, msg:"FRAUD"}));
