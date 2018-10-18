@@ -90,6 +90,7 @@ con.connect(function(err) {
 							auth = json.parse(d["data"]);
 						} catch (e) {
 							ws.send(json.stringify({ok:false, code:-3, msg:"NOT_JSON5"}));
+							console.log(d["data"]);
 							return;
 						}
 						if(m["code"] == undefined || m["password"] == undefined || m["Conpass"] == undefined) {
