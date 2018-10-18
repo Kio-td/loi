@@ -98,7 +98,7 @@ con.connect(function(err) {
 						}
 						con.query("select uid from users where rs = ?", [m["code"]], function(a, b) {
 							if (a) throw a;
-							if (b.length() != 1) {
+							if (b.length != 1) {
 								ws.send(json.stringify({ok:false, code:-4, msg:"FRAUD"}));
 								console.log(ip + " tried to access a code that doesn't exist.");
 							} else {
