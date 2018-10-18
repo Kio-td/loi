@@ -124,7 +124,7 @@ con.connect(function(err) {
 								if (a) throw a;
 								if (b.length != 1) {ws.send(json.stringify({ok:false, code:-3, msg:"NO_USR"}))}
 								else {
-									token = await uid.generateSync();
+									token = uid.generateSync();
 									con.query("update users set rs=? where username=?", [token, d["data"]], function(a) {
 										if (a) throw a;
 									});
@@ -167,8 +167,8 @@ con.connect(function(err) {
 						if(b.length > 0) {ws.send(json.stringify({ok: false, code:6, msg: "ACCT_EXISTS"}))}
 						else if (black.includes(n.un.toLowerCase()))  {ws.send(json.stringify({ok: false, code:6, msg: "ACCT_BLACKLIST"}))}
 						else {
-							await token = uid.generateSync();
-							await ce = uid.generateSync();
+							token = uid.generateSync();
+						  ce = uid.generateSync();
 							con.query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);", [n.un, pass.hash(n.pw),n.em, token, ce, n.sp], function (a) {
 								if (a) throw a;
 								sendemail(n.em, "d-01419621eb244bd29bb43c34fcd6b5dd", {username: n.un, url: "https://loi.nayami.party/game/login?confirm=" + ce + "&username=" + n.un});
