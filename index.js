@@ -96,7 +96,7 @@ con.connect(function(err) {
 							ws.send(json.stringify({ok: false, code:-3, msg:"MISSING_DATA"}));
 							return
 						}
-						con.query("select uid from users where rc = ?", [m["code"]], function(a, b) {
+						con.query("select uid from users where rs = ?", [m["code"]], function(a, b) {
 							if (a) throw a;
 							if (b.length() != 1) {
 								ws.send(json.stringify({ok:false, code:-4, msg:"FRAUD"}));
@@ -104,7 +104,7 @@ con.connect(function(err) {
 							} else {
 								if (m["password"] != m["conpass"]) {ws.send(json.stringify({ok: false, code: -4, msg: "DIFFERENT"}))}
 								else {
-									con.query("UPDATE users set password = ?, rc = 0 where rc = ?", [pass.hash(m["password"]), m["code"]], function(a, b) {
+									con.query("UPDATE users set password = ?, rs = 0 where rs = ?", [pass.hash(m["password"]), m["code"]], function(a, b) {
 										if (a) throw a;
 										ws.send(json.stringify({ok:true, code:4, data:"LOGIN_AGAIN"}));
 									});
