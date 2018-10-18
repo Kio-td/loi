@@ -45,7 +45,7 @@ con.connect(function(err) {
 	console.log("Connected to MySQL, and server is running.");
 
 	anon.on('connection', function(ws, req) {
-		let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+		let ip = req.headers['x-forwarded-for'];
 		console.log(ip);
 //		let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
 		let uid = ip.replace(/\./g, '');
