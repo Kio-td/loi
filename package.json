@@ -24,13 +24,13 @@
     "@sendgrid/mail": "^6.3.1",
     "bufferutil": "^4.0.0",
     "https": "^1.0.0",
-    "json5": "^2.0.1",
+    "json5": "^2.1.0",
     "mysql2": "^1.6.1",
     "node-php-password": "^0.1.2",
     "node-storage": "0.0.7",
-    "shortid": "^2.2.13",
+    "uid-generator": "^1.0.0",
     "url": "^0.11.0",
     "utf-8-validate": "^5.0.1",
-    "ws": "^6.0.0"
+    "ws": "^6.1.0"
   }
 }
