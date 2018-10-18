@@ -87,13 +87,12 @@ con.connect(function(err) {
 						ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));
 					} else {
 						try {
-							auth = d["data"]
+							m = d["data"]
 						} catch (e) {
 							ws.send(json.stringify({ok:false, code:-3, msg:"NOT_JSON5"}));
-							console.log(d["data"]);
 							return;
 						}
-						if(m["code"] == undefined || m["password"] == undefined || m["Conpass"] == undefined) {
+						if(m["code"] == undefined || m["password"] == undefined || m["conpass"] == undefined) {
 							ws.send(json.stringify({ok: false, code:-3, msg:"MISSING_DATA"}));
 							return
 						}
