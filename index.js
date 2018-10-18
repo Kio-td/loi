@@ -102,9 +102,12 @@ con.connect(function(err) {
 								ws.send(json.stringify({ok:false, code:-4, msg:"FRAUD"}));
 								console.log(ip + " tried to access a code that doesn't exist.");
 							} else {
-								if (m["password"] != m["Conpass"]) {ws.send(json.stringify({ok: false, code: -4, msg: "DIFFERENT"}))}
+								if (m["password"] != m["conpass"]) {ws.send(json.stringify({ok: false, code: -4, msg: "DIFFERENT"}))}
 								else {
-									//I'll continue from here in a bit - I'm tired.
+									con.query("UPDATE users set password = ?, rc = 0 where rc = ?", [pass.hash(m["password"]), m["code"]], function(a, b) {
+										if (a) throw a;
+										ws.send(json.stringify({ok:true, code:4, data:"LOGIN_AGAIN"}));
+									});
 								}
 							}
 						});
@@ -121,8 +124,8 @@ con.connect(function(err) {
 									con.query("update users set rs=? where username=?", [token, d["data"]], function(a) {
 										if (a) throw a;
 									});
-									sendemail(b["0"].email, "d-9898255a33d446adbde551515b76112e", {username: d["data"], url: "https://loi.nayami.party/game/login?reset&code="+token});
-									ws.send(json.stringify({ok: true, code: 4, msg: "SENT EMAIL"}));
+									sendemail(b["0"].email, "d-3fcf2355b269462cb8941330ce44175f", {username: d["data"], url: "https://loi.nayami.party/game/login?reset&code="+token});
+									ws.send(json.stringify({ok: true, code: 4, msg: "SENT_EMAIL"}));
 								}
 							});
 					}
@@ -164,7 +167,7 @@ con.connect(function(err) {
 							ce = uid.generate() + uid.generate() + uid.generate() + uid.generate() + uid.generate() + uid.generate();
 							con.query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);", [n.un, pass.hash(n.pw),n.em, token, ce, n.sp], function (a) {
 								if (a) throw a;
-								sendemail(n.em, "d-d506a7695d094d6196dac374b1e00630", {username: n.un, url: "https://loi.nayami.party/game/login-?confirm=" + ce + "&username=" + n.un});
+								sendemail(n.em, "d-01419621eb244bd29bb43c34fcd6b5dd", {username: n.un, url: "https://loi.nayami.party/game/login?confirm=" + ce + "&username=" + n.un});
 								ws.send(json.stringify({ok:true, code:4, msg:"CHECK_EMAIL"}));
 							});
 						}
