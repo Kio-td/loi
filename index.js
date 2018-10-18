@@ -45,7 +45,9 @@ con.connect(function(err) {
 	console.log("Connected to MySQL, and server is running.");
 
 	anon.on('connection', function(ws, req) {
-		let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
+		let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+		console.log(ip);
+//		let ip = req.connection.remoteAddress.replace(/::ffff:/g, '');
 		let uid = ip.replace(/\./g, '');
 			ws.send(json.stringify({ok:true, code:3, msg:"HI_ANON"}));
 			ws.on('message', function(data) {
