@@ -9,7 +9,7 @@ const url = require('url');
 const cfg = new cfg1("./config/local.json"); //Configuration for Server, and for users
 const mcg = new cfg1("./config/hvw.json"); //HVW - High-Velocity Writing - This function will most likely be written to A LOT. It's important to make sure that the API will always be ready.
 const g = cfg.get('int.websock');
-const uid = require('crypto-random-string');
+const uuid = require('crypto-random-string');
 const fs = require('fs');
 const server = http.createServer({});
 const serve = new WebSocket.Server(g);
@@ -123,7 +123,7 @@ con.connect(function(err) {
 								if (a) throw a;
 								if (b.length != 1) {ws.send(json.stringify({ok:false, code:-3, msg:"NO_USR"}))}
 								else {
-									token = uid(30);
+									token = uuid(30);
 									con.query("update users set rs=? where username=?", [token, d["data"]], function(a) {
 										if (a) throw a;
 									});
@@ -166,8 +166,8 @@ con.connect(function(err) {
 						if(b.length > 0) {ws.send(json.stringify({ok: false, code:6, msg: "ACCT_EXISTS"}))}
 						else if (black.includes(n.un.toLowerCase()))  {ws.send(json.stringify({ok: false, code:6, msg: "ACCT_BLACKLIST"}))}
 						else {
-							token = uid(30);
-						  ce = uid(30);
+							token = uuid(30);
+						  ce = uuid(30);
 							con.query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);", [n.un, pass.hash(n.pw),n.em, token, ce, n.sp], function (a) {
 								if (a) throw a;
 								sendemail(n.em, "d-01419621eb244bd29bb43c34fcd6b5dd", {username: n.un, url: "https://loi.nayami.party/game/login?confirm=" + ce + "&username=" + n.un});
