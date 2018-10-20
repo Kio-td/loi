@@ -22,6 +22,22 @@ if (isset($_GET["confirm"])) {
     }
   }
 }
+elseif (isset($_GET["reset"])) {
+    require('../base/head.php');
+    echo "<span class='nav-link'>&emsp;</span>";
+    ?>
+  </nav>
+</div>
+</header>
+<main role="main" class="inner cover">
+  <h1 class="cover-heading">Reset</h1>
+  <p class="lead">Reset your password, to gain entry.</p>
+  <input class="form-control" id="pw" placeholder="Password" required=""><br>
+  <input class="form-control" id="cpw" placeholder="Confirm" required=""><br>
+  <input type="hidden" id="token" value="<?php echo $_GET['code'];?>"><br>
+  <button onclick="zen()" class="btn btn-secondary">Reset</button>
+    <?php
+}
 elseif (isset($_GET["lo"])) {
   setcookie("token", '' , time() - 3600);
   header("Location: index");
@@ -42,7 +58,7 @@ elseif (isset($_GET["lo"])) {
     <input class="form-control" id="pw" type="password"required placeholder="Password"><br>
     <input class="form-control" id="em" type="email" onfocus="emai()" required oninput="cem(this)" placeholder="Email"><br>
     <select class="form-control" id="data" required onchange="f(this)"></select><br>
-   <button onclick="sub()" class="btn btn-secondary">register</button><!--&emsp;<a href="/game/reset">Reset Password</a>-->
+   <button onclick="sub()" class="btn btn-secondary">register</button>
 <span id="info" style="display: none"></span>
 <script>
 var s = new WebSocket("wss://ws.nayami.party/anon");
