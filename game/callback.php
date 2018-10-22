@@ -1,7 +1,8 @@
 <?php
     echo "<style>input{color: white !important;}.small{font-size:.5rem}</style>";
     require('../base/head.php');
-    if(!isset($_GET["return"])) {
+    if(0) {
+//    if(!isset($_GET["return"])) {
       ?>
     </nav></div></header><main role="main" class="inner cover">
       <h1 class="cover-heading">Something went wrong.</h1>
