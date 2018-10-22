@@ -1,6 +1,16 @@
 <?php
     echo "<style>input{color: white !important;}.small{font-size:.5rem}</style>";
     require('../base/head.php');
+    if(!isset($_GET["return"])) {
+      ?>
+    </nav></div></header><main role="main" class="inner cover">
+      <h1 class="cover-heading">Something went wrong.</h1>
+      <p class="lead">Please go back and try again. If this issue persists, please contact the webmaster of the site who brought you here.</p>
+    </main>
+      <?php
+      require('../base/feet.php');
+      die();
+    }
 ?>
 </nav>
 </div>
@@ -26,11 +36,10 @@
             else if (data.msg == "INC_PASS") {err("Your username or password is incorrect.")}
             else if (data.msg == "NOBODY_FOUND") {err("Your username or password is incorrect.")}
           } else {
-            document.cookie = "token=" + data.data;
-            window.location = "index";
+            window.location = <?php echo $_GET["return"]; ?> + "?token="+data.token+"&username="+data.username;
           }
         }
-        s.send(json.stringify({cmd:'auth', data:{un:document.getElementById('un').value, pw:document.getElementById('pw').value}}))
+        s.send(json.stringify({cmd:'authcallback', data:{un:document.getElementById('un').value, pw:document.getElementById('pw').value}}))
       }
     </script>
     <?php
