@@ -22,7 +22,7 @@ mail.setApiKey(cfg.get("int.sg"));
 let error = 0
 function pdc(error, con, ip) {
 	if (error == 0) {
-		con.query("INSERT INTO `pagelog`(`eid`, `ip`, `page`, `toe`) VALUES (?,?,?,?)", ["SE_"+uuid(13), ip, json.stringify(error), Date.now()]);
+		con.query("INSERT INTO `pagelog`(`eid`, `ip`, `page`, `toe`) VALUES (?,?,?,NOW())", ["SE_"+uuid(13), ip, json.stringify(error)]);
 	}
 }
 
