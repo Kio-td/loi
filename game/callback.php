@@ -31,7 +31,5 @@
       }
     </script>
     <?php
-
     require('../base/feet.php');
-}
 ?>
