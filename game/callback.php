@@ -43,7 +43,6 @@
         s.send(json.stringify({cmd:'authcallback', data:{un:document.getElementById('un').value, pw:document.getElementById('pw').value}}))
       }
     </script>
-  </div>
     <?php
     require('../base/feet.php');
 ?>
