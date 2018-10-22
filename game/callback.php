@@ -1,8 +1,8 @@
 <?php
     echo "<style>input{color: white !important;}.small{font-size:.5rem}</style>";
     require('../base/head.php');
-    if(0) {
-//    if(!isset($_GET["return"])) {
+//    if(0) {
+   if(!isset($_GET["return"])) {
       ?>
     </nav></div></header><main role="main" class="inner cover">
       <h1 class="cover-heading">Something went wrong.</h1>
@@ -27,6 +27,7 @@
     <p>The person requesting your LOI Account be linked is responsible for any misuse.<br>
       If you need to register, then click <u><a href="https://loi.nayami.party/login?reg">here</a></u>, and login here when you're finished.</p>
 </div>
+</main>
     <script>
       s = new WebSocket("wss://ws.nayami.party/anon");
       function auth() {
