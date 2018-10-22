@@ -108,7 +108,7 @@ con.connect(function(err) {
 							} else {
 								token = uuid(30);
 								con.query("INSERT INTO `oauthtokens`(`authid`, `uid`) VALUES (?,?)", [token, s.uid]);
-								try{ws.send(json.stringify({ok:true, code:4, data:token}));} catch (e) {pdc(e, con, ip);}
+								try{ws.send(json.stringify({ok:true, code:4, data:{token: token, username:data.un}}));} catch (e) {pdc(e, con, ip);}
 							}
 						}
 					})
