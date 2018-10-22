@@ -19,9 +19,9 @@ const anon = new WebSocket.Server(g);
 const black = ["ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc"];
 
 mail.setApiKey(cfg.get("int.sg"));
-
+let error = 0
 function pdc(error, con, ip) {
-	if (error != undefined) {
+	if (error == 0) {
 		con.query("INSERT INTO `pagelog`(`eid`, `ip`, `page`, `toe`) VALUES (?,?,?,?)", ["SE_"+uuid(13), ip, json.stringify(error), Date.now()]);
 	}
 }
