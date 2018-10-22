@@ -38,7 +38,7 @@
             else if (data.msg == "INC_PASS") {err("Your username or password is incorrect.")}
             else if (data.msg == "NOBODY_FOUND") {err("Your username or password is incorrect.")}
           } else {
-            window.location = "<?php echo $_GET["return"]; ?>" + "?token="+data.token+"&username="+data.username;
+            window.location = "<?php echo $_GET["return"]; ?>" + "?token="+data.data.token+"&username="+data.data.username;
           }
         }
         s.send(json.stringify({cmd:'authcallback', data:{un:document.getElementById('un').value, pw:document.getElementById('pw').value}}))
