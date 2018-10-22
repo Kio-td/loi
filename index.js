@@ -90,6 +90,29 @@ con.connect(function(err) {
 						}
 					})
 				}
+			} else if (d["cmd"] == "authcallback") {
+				if(d["data"] == undefined) {
+					try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));} catch (e) {pdc(e, con, ip);}
+				} else {
+					data = d["data"]
+					//un, pw
+					data.un = data.un.toLowerCase();
+					data.pw = data.pw;
+					con.query("select uid, ce, password from users where username = ?", [data.un], function(a,b) {
+						if (a) throw a;
+						if(b.length == 0) {try{ws.send(json.stringify({ok:false, code:-4, msg:"NOBODY_FOUND"}))} catch (e) {pdc(e, con, ip);}} else {
+							s = b[0];
+							if(s.ce !== "0") {try{ws.send(json.stringify({ok:false, code:-4, msg:"CONF_EMAIL"}));} catch (e) {pdc(e, con, ip);}}
+							else if(pass.verify(data.pw, s.password) == false) {
+								try{ws.send(json.stringify({ok:false, code:-4, msg:"INC_PASS"}));} catch (e) {pdc(e, con, ip);}
+							} else {
+								token = uuid(30);
+								con.query("INSERT INTO `oauthtokens`(`authid`, `uid`) VALUES (?,?)", [token, s.uid]);
+								try{ws.send(json.stringify({ok:true, code:4, data:token}));} catch (e) {pdc(e, con, ip);}
+							}
+						}
+					})
+				}
 			} else if (d["cmd"] == "ress2") {
 				if(d["data"] == undefined) {
 					try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));} catch (e) {pdc(e, con, ip);}
