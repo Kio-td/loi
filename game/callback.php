@@ -7,7 +7,7 @@
 </header>
 <main role="main" class="inner cover">
 
-  <h1 class="cover-heading">Login</h1>
+  <h1 class="cover-heading">Link your account</h1>
   <p class="lead">Welcome back. Please login to link your account.</p>
   <p>The person requesting your LOI Account be linked is responsible for any misuse.</p>
   <p>If you need to register, then click <u><a href="https://loi.nayami.party/login?reg">here</a></u>, and login here when you're finished.</p>
