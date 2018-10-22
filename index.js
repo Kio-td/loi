@@ -79,7 +79,7 @@ con.connect(function(err) {
 					data.pw = data.pw;
 					con.query("select ce, password, token from users where username = ?", [data.un], function(a,b) {
 						if (a) throw a;
-						if(b.length == 0) {try{ws.send(json.stringify({ok:false, code:-4, msg:"NOBODY_FOUND"}))} else {
+						if(b.length == 0) {try{ws.send(json.stringify({ok:false, code:-4, msg:"NOBODY_FOUND"}))} catch (e) {pdc(e, con, ip);}} else {
 							s = b[0];
 							if(s.ce !== "0") {try{ws.send(json.stringify({ok:false, code:-4, msg:"CONF_EMAIL"}));} catch (e) {pdc(e, con, ip);}}
 							else if(pass.verify(data.pw, s.password) == false) {
