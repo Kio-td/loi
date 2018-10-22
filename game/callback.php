@@ -1,5 +1,5 @@
 <?php
-    echo "<style>input{color: white !important;}</style>";
+    echo "<style>input{color: white !important;}.small{font-size:.5rem}</style>";
     require('../base/head.php');
 ?>
 </nav>
@@ -9,12 +9,13 @@
 
   <h1 class="cover-heading">Link your account</h1>
   <p class="lead">Welcome back. Please login to link your account.</p>
-  <p>The person requesting your LOI Account be linked is responsible for any misuse.</p>
-  <p>If you need to register, then click <u><a href="https://loi.nayami.party/login?reg">here</a></u>, and login here when you're finished.</p>
     <input class="form-control" id="un" placeholder="Username" required type="text"><br>
     <input class="form-control" id="pw" placeholder="Password" required type="password"><br>
     <button onclick="auth()" class="btn btn-secondary">Link</button>
-
+<div class="small">
+    <p>The person requesting your LOI Account be linked is responsible for any misuse.</p>
+    <p>If you need to register, then click <u><a href="https://loi.nayami.party/login?reg">here</a></u>, and login here when you're finished.</p>
+</div>
     <script>
       s = new WebSocket("wss://ws.nayami.party/anon");
       function auth() {
