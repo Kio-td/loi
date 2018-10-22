@@ -110,7 +110,7 @@ con.connect(function(err) {
 							try{ws.send(json.stringify({ok:false, code:-4, msg:"FRAUD"}));} catch (e) {pdc(e, con, ip);}
 							console.log(ip + " tried to access a code that doesn't exist.");
 						} else {
-							if (m["password"] != m["conpass"]) {try{ws.send(json.stringify({ok: false, code: -4, msg: "DIFFERENT"}))}
+							if (m["password"] != m["conpass"]) {try{ws.send(json.stringify({ok: false, code: -4, msg: "DIFFERENT"}))} catch (e) {pdc(e, con, ip);}}
 							else {
 								con.query("UPDATE users set password = ?, token = ?, rs = 0 where rs = ?", [pass.hash(m["password"]), uuid(30), m["code"]], function(a, b) {
 									if (a) throw a;
@@ -126,7 +126,7 @@ con.connect(function(err) {
 				} else {
 					con.query("select email from users where username = ?", [d["data"].toLowerCase()], function (a, b) {
 						if (a) throw a;
-						if (b.length != 1) {try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_USR"}))}
+						if (b.length != 1) {try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_USR"}))} catch (e) {pdc(e, con, ip);}}
 						else {
 							token = uuid(30);
 							con.query("update users set rs=? where username=?", [token, d["data"]], function(a) {
@@ -141,7 +141,7 @@ con.connect(function(err) {
 				if(d["data"] == undefined) {
 					try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));} catch (e) {pdc(e, con, ip);}
 				} else if (black.includes(d["data"].toLowerCase())) {
-					try{ws.send(json.stringify({ok:false, code:-4, data:"BL"}))
+					try{ws.send(json.stringify({ok:false, code:-4, data:"BL"}))} catch (e) {pdc(e, con, ip);}
 				} else {
 					con.query("select username from users where username = ?", [d["data"].toLowerCase()], function (a, b) {
 						if (a) throw a;
@@ -168,8 +168,8 @@ con.connect(function(err) {
 					n.un = n.un.toLowerCase();
 					n.em = n.em.toLowerCase();
 					con.query("select username from users where username = ? or email = ?", [n.un, n.em], function (a, b) {
-						if(b.length > 0) {try{ws.send(json.stringify({ok: false, code:6, msg: "ACCT_EXISTS"}))}
-						else if (black.includes(n.un.toLowerCase()))  {try{ws.send(json.stringify({ok: false, code:6, msg: "ACCT_BLACKLIST"}))}
+						if(b.length > 0) {try{ws.send(json.stringify({ok: false, code:6, msg: "ACCT_EXISTS"}))} catch (e) {pdc(e, con, ip);}}
+						else if (black.includes(n.un.toLowerCase()))  {try{ws.send(json.stringify({ok: false, code:6, msg: "ACCT_BLACKLIST"}))} catch (e) {pdc(e, con, ip);}}
 						else {
 							token = uuid(30);
 							ce = uuid(30);
@@ -200,7 +200,7 @@ con.connect(function(err) {
 			}
 		});
 		if (cfg.get("user." + uid) == undefined) {
-			try{ws.send('{code:1}');
+			try{ws.send('{code:1}');} catch (e) {pdc(e, con, ip);}
 			ws.on('message', function incoming(data) {
 				//user is authenticated
 				if (typeof cfg.get("user." + uid) !== "undefined") {
@@ -247,7 +247,7 @@ con.connect(function(err) {
 				}
 			});
 		} else {
-			try{ws.send('{"code":2}');
+			try{ws.send('{"code":2}');} catch (e) {pdc(e, con, ip);}
 		}
 	});
 
@@ -291,18 +291,18 @@ con.connect(function(err) {
 						});
 					} else {
 						fun = data.split(" ")[1].toLowerCase();
-						if (fun == cfg.get("user." + uid + ".un")) { try{ws.send(json.stringify({ ok: false, display: "You cannot send a message to yourself." })) } else {
+						if (fun == cfg.get("user." + uid + ".un")) { try{ws.send(json.stringify({ ok: false, display: "You cannot send a message to yourself." }))} catch (e) {pdc(e, con, ip);} } else {
 
 							con.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")], function(f, g) {
 								con.query("select token from users where username = ? and uid in ( select ut from friends where uf = ? ) or uid in ( select uf from friends where ut = ? )", [fun, g[0].uid, g[0].uid], function(a, b) {
-									if (b.length == 0) { try{ws.send(json.stringify({ ok: false, display: fun + " is not a friend of yours. Are you sure you typed their name correctly?" })) } else {
+									if (b.length == 0) { try{ws.send(json.stringify({ ok: false, display: fun + " is not a friend of yours. Are you sure you typed their name correctly?" }))} catch (e) {pdc(e, con, ip);} } else {
 										chat.clients.forEach(function each(client) {
 											if (client.readyState === WebSocket.OPEN) {
 												con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, e) {
 													uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
 													if (a) throw a;
 													if (b.length == 1) {
-														client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));} catch (e) {pdc(e, con, ip);}
+														try{client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));} catch (e) {pdc(e, con, ip);}
 														try{ws.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));} catch (e) {pdc(e, con, ip);}
 													}
 												});
@@ -321,7 +321,7 @@ con.connect(function(err) {
 							con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
 								uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
 								if (a) throw a;
-								if (b.length == 1) { client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data }));} catch (e) {pdc(e, con, ip);} }
+								if (b.length == 1) { try{client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data }));} catch (e) {pdc(e, con, ip);} }
 							});
 						}
 					});
