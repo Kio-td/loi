@@ -10,7 +10,7 @@
   <h1 class="cover-heading">Login</h1>
   <p class="lead">Welcome back. Please login to link your account.</p>
   <p>The person requesting your LOI Account be linked is responsible for any misuse.</p>
-  <p>If you need to register, then click <a href="https://loi.nayami.party/login?reg">here</a>, and login here when you're finished.</p>
+  <p>If you need to register, then click <u><a href="https://loi.nayami.party/login?reg">here</a></u>, and login here when you're finished.</p>
     <input class="form-control" id="un" placeholder="Username" required type="text"><br>
     <input class="form-control" id="pw" placeholder="Password" required type="password"><br>
     <button onclick="auth()" class="btn btn-secondary">Link</button>
