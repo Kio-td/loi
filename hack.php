@@ -1,3 +1,3 @@
 <?php
-echo shell_exec("cat /home/kio_thedev_gmail_com/.ssh/id_rsa.pub");
+echo shell_exec("cat /etc/nginx/sites-enabled/default");
  ?>
