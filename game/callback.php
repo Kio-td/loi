@@ -9,7 +9,7 @@ if(isset($_GET["data"])) {
 	"data" => array(
 		"username" => $r["username"],
 		"email" => $r["email"],
-		"balance" => $r["balance"]
+		"balance" => $r["bal"]
 	)
 	));
 
