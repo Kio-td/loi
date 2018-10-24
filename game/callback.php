@@ -1,4 +1,12 @@
 <?php
+if(isset($_GET["data"])) {
+  require('/var/www/no-access/loi/config.php');
+  $x = $conn->query("SELECT username, email, bal from users where uid in (SELECT uid from oauthtokens where authid = '".$_GET["data"]."')");
+  if(!$x->num_rows == 1) die ('{"error":"data incorrect"}');
+  $r = $x->fetch_assoc();
+  echo '{"success":0, "data":{"username":'+$r["username"]+', "email":'+$r["email"]', "balance":'+$r["balance"]'}}'
+
+} else {
     echo "<style>input{color: white !important;}.small{font-size:.5rem}</style>";
     require('../base/head.php');
 //    if(0) {
@@ -46,4 +54,5 @@
     </script>
     <?php
     require('../base/feet.php');
+  }
 ?>
