@@ -4,7 +4,7 @@ if(isset($_GET["data"])) {
   $x = $conn->query("SELECT username, email, bal from users where uid in (SELECT uid from oauthtokens where authid = '".$_GET["data"]."')");
   if(!$x->num_rows == 1) die ('{"error":"data incorrect"}');
   $r = $x->fetch_assoc();
-  echo '{"success":0, "data":{"username":'+$r["username"]+', "email":'+$r["email"]', "balance":'+$r["balance"]'}}'
+  echo '{"success":0, "data":{"username":'+$r["username"]+', "email":'+$r["email"]+', "balance":'+$r["balance"]+'}}';
 
 } else {
     echo "<style>input{color: white !important;}.small{font-size:.5rem}</style>";
