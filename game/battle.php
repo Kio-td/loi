@@ -13,6 +13,14 @@ require('../base/head.php');
   <div class="inv">
   </div>
   <div class="rab">
+    <div class="atk">
+    </div>
+    <div class="def">
+    </div>
+    <div class="inv">
+    </div>
+    <div class="fle">
+    </div>
   </div>
   <div class="trip">
   </div>
