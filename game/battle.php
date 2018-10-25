@@ -30,11 +30,15 @@ require('../base/head.php');
   <span onclick="sendtrip()" class="trip btn btn-raised btn-light">
     Trip
   </span>
+  <span onclick="record()" class="proc btn btn-secondary">
+    Proceed
+  </span>
   </main>
 
   <script>
 
     $('.trip').hide();
+    $('.proc').hide();
     function toggletrip() {
       $('.trip').toggle();
       $('.rab').toggle();
