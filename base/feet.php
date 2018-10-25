@@ -22,7 +22,7 @@ devtools.toString = function() {
   this.opened = true;
 }
 while(devtools.opened == true) {
-  console.error();("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.")
+  console.error("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.")
 }
 </script>
 
