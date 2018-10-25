@@ -26,11 +26,20 @@ require('../base/head.php');
     <span class="fle btn btn-raised btn-warning">
       Flee
     </span>
-  </span>
+  </div>
   <span class="trip btn btn-raised btn-light">
     Trip
   </span>
   </main>
+
+  <script>
+
+    $('.trip').hide();
+    function toggletrip() {
+      $('.trip').show();
+      $('.rab').hide();
+    }
+  </script>
 <?php
 require('../base/feet.php');
  ?>
