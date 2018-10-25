@@ -78,7 +78,7 @@ con.connect(function(err) {
 					data.un = data.un.toLowerCase();
 					data.pw = data.pw;
 					con.query("select ce, password, token from users where username = ?", [data.un], function(a,b) {
-						if (a) throw a;
+						if (a) pdc(a, con, ip);
 						if(b.length == 0) {try{ws.send(json.stringify({ok:false, code:-4, msg:"NOBODY_FOUND"}))} catch (e) {pdc(e, con, ip);}} else {
 							s = b[0];
 							if(s.ce !== "0") {try{ws.send(json.stringify({ok:false, code:-4, msg:"CONF_EMAIL"}));} catch (e) {pdc(e, con, ip);}}
@@ -99,7 +99,7 @@ con.connect(function(err) {
 					data.un = data.un.toLowerCase();
 					data.pw = data.pw;
 					con.query("select uid, ce, password from users where username = ?", [data.un], function(a,b) {
-						if (a) throw a;
+						if (a) pdc(a, con, ip);
 						if(b.length == 0) {try{ws.send(json.stringify({ok:false, code:-4, msg:"NOBODY_FOUND"}))} catch (e) {pdc(e, con, ip);}} else {
 							s = b[0];
 							if(s.ce !== "0") {try{ws.send(json.stringify({ok:false, code:-4, msg:"CONF_EMAIL"}));} catch (e) {pdc(e, con, ip);}}
@@ -128,7 +128,7 @@ con.connect(function(err) {
 						return
 					}
 					con.query("select uid from users where rs = ?", [m["code"]], function(a, b) {
-						if (a) throw a;
+						if (a) pdc(a, con, ip);
 						if (b.length != 1) {
 							try{ws.send(json.stringify({ok:false, code:-4, msg:"FRAUD"}));} catch (e) {pdc(e, con, ip);}
 							console.log(ip + " tried to access a code that doesn't exist.");
@@ -136,7 +136,7 @@ con.connect(function(err) {
 							if (m["password"] != m["conpass"]) {try{ws.send(json.stringify({ok: false, code: -4, msg: "DIFFERENT"}))} catch (e) {pdc(e, con, ip);}}
 							else {
 								con.query("UPDATE users set password = ?, token = ?, rs = 0 where rs = ?", [pass.hash(m["password"]), uuid(30), m["code"]], function(a, b) {
-									if (a) throw a;
+									if (a) pdc(a, con, ip);
 									try{ws.send(json.stringify({ok:true, code:4, data:"LOGIN_AGAIN"}));} catch (e) {pdc(e, con, ip);}
 								});
 							}
@@ -148,12 +148,12 @@ con.connect(function(err) {
 					try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));} catch (e) {pdc(e, con, ip);}
 				} else {
 					con.query("select email from users where username = ?", [d["data"].toLowerCase()], function (a, b) {
-						if (a) throw a;
+						if (a) pdc(a, con, ip);
 						if (b.length != 1) {try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_USR"}))} catch (e) {pdc(e, con, ip);}}
 						else {
 							token = uuid(30);
 							con.query("update users set rs=? where username=?", [token, d["data"]], function(a) {
-								if (a) throw a;
+								if (a) pdc(a, con, ip);
 							});
 							sendemail(b["0"].email, "d-3fcf2355b269462cb8941330ce44175f", {username: d["data"], url: "https://loi.nayami.party/game/login?reset&code="+token});
 							try{ws.send(json.stringify({ok: true, code: 4, msg: "SENT_EMAIL"}));} catch (e) {pdc(e, con, ip);}
@@ -167,7 +167,7 @@ con.connect(function(err) {
 					try{ws.send(json.stringify({ok:false, code:-4, data:"BL"}))} catch (e) {pdc(e, con, ip);}
 				} else {
 					con.query("select username from users where username = ?", [d["data"].toLowerCase()], function (a, b) {
-						if (a) throw a;
+						if (a) pdc(a, con, ip);
 						if (b.length > 0) {try{ws.send(json.stringify({ok:true, code:4, data:"F"}));} catch (e) {pdc(e, con, ip);}}
 						else {try{ws.send(json.stringify({ok:true, code:4, data:"NF"}));} catch (e) {pdc(e, con, ip);}}
 					});
@@ -177,7 +177,7 @@ con.connect(function(err) {
 					try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));} catch (e) {pdc(e, con, ip);}
 				} else {
 					con.query("select username from users where email = ?", [d["data"]], function (a, b) {
-						if (a) throw a;
+						if (a) pdc(a, con, ip);
 						if (b.length > 0) {try{ws.send(json.stringify({ok:true, code:4, data:false}));} catch (e) {pdc(e, con, ip);}}
 						else {try{ws.send(json.stringify({ok:true, code:4, data:true}));} catch (e) {pdc(e, con, ip);}}
 					});
@@ -197,7 +197,7 @@ con.connect(function(err) {
 							token = uuid(30);
 							ce = uuid(30);
 							con.query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);", [n.un, pass.hash(n.pw),n.em, token, ce, n.sp], function (a) {
-								if (a) throw a;
+								if (a) pdc(a, con, ip);
 								sendemail(n.em, "d-01419621eb244bd29bb43c34fcd6b5dd", {username: n.un, url: "https://loi.nayami.party/game/login?confirm=" + ce + "&username=" + n.un});
 								try{ws.send(json.stringify({ok:true, code:4, msg:"CHECK_EMAIL"}));} catch (e) {pdc(e, con, ip);}
 							});
@@ -323,7 +323,7 @@ con.connect(function(err) {
 											if (client.readyState === WebSocket.OPEN) {
 												con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, e) {
 													uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
-													if (a) throw a;
+													if (a) pdc(a, con, ip);
 													if (b.length == 1) {
 														try{client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));} catch (e) {pdc(e, con, ip);}
 														try{ws.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));} catch (e) {pdc(e, con, ip);}
@@ -343,7 +343,7 @@ con.connect(function(err) {
 						if (client.readyState === WebSocket.OPEN) {
 							con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
 								uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
-								if (a) throw a;
+								if (a) pdc(a, con, ip);
 								if (b.length == 1) { try{client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data }));} catch (e) {pdc(e, con, ip);} }
 							});
 						}
