@@ -7,7 +7,7 @@ require('../base/head.php');
 <main role="main" class="inner cover">
   <link href="/battle.css" rel="stylesheet">
   <div class="battlebox">
-
+a
   </div>
 
   <div class="inv">
