@@ -19,7 +19,7 @@ require('../base/head.php');
     <span class="def btn btn-raised btn-info">
       Defend
     </span>
-    <span class="inv btn btn-raised btn-light">
+    <span class="inv btn btn-raised btn-success">
       Inventory
     </span>
     <span class="fle btn btn-raised btn-warning">
