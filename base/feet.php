@@ -23,6 +23,7 @@ jdetects.create(function(status) {
   t = status
 });
 while (t) {
+  console.clear();
   console.error("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.")
 }
 
