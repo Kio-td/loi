@@ -1,4 +1,5 @@
 .battlebox {
   border: 3px solid rgba(255,255,255,.5);
   width: 50vw;
+  border-radius: 5px;
 }

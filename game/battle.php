@@ -16,3 +16,7 @@ require('../base/head.php');
   </div>
   <div class="trip">
   </div>
+</main>
+<?php
+require('../base/feet.php');
+ ?>
