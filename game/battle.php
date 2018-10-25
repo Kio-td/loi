@@ -34,7 +34,6 @@ require('../base/head.php');
     Proceed
   </span>
   </main>
-
   <script>
 
     $('.trip').hide();
