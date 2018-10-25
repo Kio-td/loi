@@ -19,14 +19,14 @@ require('../base/head.php');
     <span class="def btn btn-info">
       Defend
     </span>
-    <span class="inv btn btn-grey">
+    <span class="inv btn btn-light">
       Inventory
     </span>
     <span class="fle btn btn-warning">
       Flee
     </span>
   </span>
-  <span class="trip btn btn-grey">
+  <span class="trip btn btn-light">
     Trip
   </span>
 <?php
