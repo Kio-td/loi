@@ -27,7 +27,7 @@ require('../base/head.php');
       Flee
     </span>
   </div>
-  <span class="trip btn btn-raised btn-light">
+  <span onclick="sendtrip()" class="trip btn btn-raised btn-light">
     Trip
   </span>
   </main>
@@ -39,6 +39,11 @@ require('../base/head.php');
       $('.trip').toggle();
       $('.rab').toggle();
     }
+    function sendtrip() {
+      //send trip paramaters here
+      toggletrip();
+    }
+
   </script>
 <?php
 require('../base/feet.php');
