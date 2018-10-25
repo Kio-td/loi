@@ -18,11 +18,13 @@
 <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/jdetects@0.1.0/jdetects.js">
 <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });
-
+var t = false
 jdetects.create(function(status) {
-  console.error("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.")
-
+  t = status
 });
+while (t) {
+  console.error("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.")
+}
 
 </script>
 
