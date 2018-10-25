@@ -36,8 +36,8 @@ require('../base/head.php');
 
     $('.trip').hide();
     function toggletrip() {
-      $('.trip').show();
-      $('.rab').hide();
+      $('.trip').toggle();
+      $('.rab').toggle();
     }
   </script>
 <?php
