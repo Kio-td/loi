@@ -6,6 +6,7 @@ require('../base/head.php');
 </header>
   <link href="/battle.css" rel="stylesheet">
 
+  <main role="main" class="inner cover">
   <div class="battlebox">
 
   </div>
@@ -29,7 +30,6 @@ require('../base/head.php');
   <span class="trip btn btn-raised btn-light">
     Trip
   </span>
-  <main role="main" class="inner cover">
   </main>
 <?php
 require('../base/feet.php');
