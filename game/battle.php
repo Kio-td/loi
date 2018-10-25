@@ -7,7 +7,7 @@ require('../base/head.php');
   <link href="/battle.css" rel="stylesheet">
 
   <div class="battlebox">
-a
+
   </div>
 
   <div class="inv">
