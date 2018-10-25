@@ -13,20 +13,20 @@ require('../base/head.php');
   <div class="inv">
   </div>
   <div class="rab">
-    <span class="atk btn btn-danger">
+    <span class="atk btn btn-raised btn-danger">
       Attack
     </span>
-    <span class="def btn btn-info">
+    <span class="def btn btn-raised btn-info">
       Defend
     </span>
-    <span class="inv btn btn-light">
+    <span class="inv btn btn-raised btn-light">
       Inventory
     </span>
-    <span class="fle btn btn-yellow">
+    <span class="fle btn btn-raised btn-warning">
       Flee
     </span>
   </span>
-  <span class="trip btn btn-light">
+  <span class="trip btn btn-raised btn-light">
     Trip
   </span>
 <?php
