@@ -62,6 +62,7 @@ elseif (isset($_GET["lo"])) {
 <span id="info" style="display: none"></span>
 <script>
 var s = new WebSocket("wss://ws.nayami.party/anon");
+s.onerror = function(evt) { err("Something wrong has happened with the back of the server. Please DM the administrators on discord.") };
 data = "";
 i = 0
 dx = 0
@@ -153,6 +154,7 @@ function sub() {
 
     <script>
       s = new WebSocket("wss://ws.nayami.party/anon");
+      s.onerror = function(evt) { err("Something wrong has happened with the back of the server. Please DM the administrators on discord.") };
       function auth() {
         s.onmessage = function(evt) {
           data = json.parse(evt.data);
