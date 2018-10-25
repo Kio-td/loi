@@ -13,17 +13,17 @@ require('../base/head.php');
   <div class="inv">
   </div>
   <div class="rab">
-    <div class="atk btn btn-danger">
-    </div>
-    <div class="def btn btn-info">
-    </div>
-    <div class="inv btn btn-primary">
-    </div>
-    <div class="fle btn btn-warning">
-    </div>
-  </div>
-  <div class="trip">
-  </div>
+    <span class="atk btn btn-danger">
+    </span>
+    <span class="def btn btn-info">
+    </span>
+    <span class="inv btn btn-primary">
+    </span>
+    <span class="fle btn btn-warning">
+    </span>
+  </span>
+  <span class="trip">
+  </span>
 <?php
 require('../base/feet.php');
  ?>
