@@ -21,16 +21,11 @@
 $(document).ready(function() { $('body').bootstrapMaterialDesign(); });
 var t = false
 jdetects.create({
-	once: true,
 	onchange: function(status) {
-    t = true
+      console.clear();
+      console.error("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.")
 	}
 });
-
-while(t){
-  console.clear();
-  console.error("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.")
-}
 
 </script>
 
