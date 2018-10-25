@@ -22,7 +22,7 @@ require('../base/head.php');
     <span class="inv btn btn-light">
       Inventory
     </span>
-    <span class="fle btn btn-warning">
+    <span class="fle btn btn-yellow">
       Flee
     </span>
   </span>
