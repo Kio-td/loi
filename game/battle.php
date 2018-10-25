@@ -14,15 +14,20 @@ require('../base/head.php');
   </div>
   <div class="rab">
     <span class="atk btn btn-danger">
+      Attack
     </span>
     <span class="def btn btn-info">
+      Defend
     </span>
     <span class="inv btn btn-primary">
+      Inventory
     </span>
     <span class="fle btn btn-warning">
+      Flee
     </span>
   </span>
-  <span class="trip">
+  <span class="trip btn btn-secondary">
+    Trip
   </span>
 <?php
 require('../base/feet.php');
