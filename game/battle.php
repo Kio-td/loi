@@ -6,6 +6,7 @@ require('../base/head.php');
 </header>
 <main role="main" class="inner cover">
   <link href="/battle.css" rel="stylesheet">
+  
   <div class="battlebox">
 a
   </div>

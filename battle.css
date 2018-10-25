@@ -3,5 +3,6 @@
   width: 50vw;
   border-radius: 2.5px;
   height: 25%;
+  position: relative;
   display: flex;
 }
