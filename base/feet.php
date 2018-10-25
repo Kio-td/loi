@@ -21,6 +21,7 @@
 $(document).ready(function() { $('body').bootstrapMaterialDesign(); });
 var t = false
 jdetects.create({
+  once: true,
 	onchange: function(status) {
       console.clear();
       console.error("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.");
