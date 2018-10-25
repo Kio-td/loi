@@ -26,7 +26,7 @@ require('../base/head.php');
       Flee
     </span>
   </span>
-  <span class="trip btn btn-secondary">
+  <span class="trip btn btn-primary">
     Trip
   </span>
 <?php
