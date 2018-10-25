@@ -23,7 +23,7 @@ var t = false
 jdetects.create({
 	onchange: function(status) {
       console.clear();
-      console.error("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.")
+      console.error("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.");
 	}
 });
 
