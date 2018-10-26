@@ -12,7 +12,7 @@ require('../base/head.php');
     <div class="uc">
     </div>
     <div class="mc">
-      <span id="playername"></span><br>
+      <span id="playername"><?php echo $username; ?></span><br>
       <span id="health"></span>HP
       <span id="effects"></span>
     </div>
