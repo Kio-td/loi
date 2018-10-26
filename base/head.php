@@ -23,7 +23,6 @@ if (isset($_COOKIE["token"])) {
   $c = $conn->query("SELECT bal, token, username from users where token = '".$n."'");
   if (!$c->num_rows) {
     $na = array("index.php", "login.php", "index", "login", "login-");
-  //  if(in_array(basename($_SERVER['PHP_SELF']), $na)) {header("Location: index.php");}
 } else {
   $auth = true;
   $c = $c->fetch_assoc();
@@ -44,9 +43,7 @@ $x = false;
     <script src="/assets/popper.min.js"></script>
     <script src="/assets/tooltip.min.js"></script>
     <script src="/assets/bootstrap-material-design.min.js"></script>
-    <script>
-      json = JSON5;
-    </script>
+    <script>json = JSON5;</script>
     <title>Legend of Ikaros</title>
     <link rel="stylesheet" href="/assets/bootstrap-material-design.min.css">
     <link href="/base/cover.css" rel="stylesheet">
