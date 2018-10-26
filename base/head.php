@@ -39,9 +39,7 @@ $x = false;
     <meta name="description" content="">
     <meta name="author" content="Team LOI">
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="/node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js"></script>
     <script src="/node_modules/jdetects/jdetects.min.js"></script>
-    <script src="/node_modules/popper.js/dist/popper.min.js"></script>
     <script src="/node_modules/tooltip.js/dist/tooltip.min.js"></script>
     <script src="/node_modules/json5/dist/index.min.js"></script>
     <script>
@@ -55,7 +53,7 @@ $x = false;
 #content > #center > .dose > .dosesingle
 {display:none !important;}</style></head>
 
-  <body class="text-center">
+  <body class="text-center" onload="">
 
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto cal">
