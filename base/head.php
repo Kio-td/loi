@@ -38,8 +38,7 @@ $x = false;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Team LOI">
-    <script src="/bower_components/tooltip.js/dist/tooltip.min.js"></script>
-    <script src="/bower_components/popper.js/dist/popper.min.js"></script>
+    <script src="/assets/allassets.js"></script>
     <script>
       json = JSON5;
     </script>
