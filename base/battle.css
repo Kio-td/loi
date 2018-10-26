@@ -28,10 +28,10 @@ body {
 }
 
 .info {
+  vertical-align: top;
   background: red;
   display: inline-block;
   width: 20%;
-  transform: translateY(-12%);
   padding-left: 1vh
 }
 .brdr {
