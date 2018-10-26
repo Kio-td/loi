@@ -43,7 +43,7 @@ $x = false;
       json = JSON5;
     </script>
     <title>Legend of Ikaros</title>
-    <link rel="stylesheet" href="/assets/build.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/build.css" crossorigin="anonymous">
     <link href="/base/cover.css" rel="stylesheet">
     <link rel="author" href="humans.txt" />
   <style>#content > #right > .dose > .dosesingle,
