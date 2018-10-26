@@ -9,12 +9,12 @@ require('../base/head.php');
 <main role="main" class="inner cover">
   <div class="battlebox">
     <div class="info">
-      <div class="mc">
+      <div class="mc healthbox">
         <span id="mobname"></span><br>
         <span id="mobhealth"></span>/<span id="mobttlhealth"></span> HP<br>
         <span id="mobeffects"></span>
       </div>
-      <div class="uc">
+      <div class="uc healthbox">
         <span id="playername"><?php echo $username; ?></span><br>
         <span id="playerhealth">15</span>/<span id="playerttlhealth">15</span> HP<br>
         <span id="playereffects"><b><u>None</u></b></span>
