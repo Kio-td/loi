@@ -61,7 +61,7 @@ enemy.effects = json.parse("[]");
 $('#mobname').text(enemy.name);
 $('#health:first').text(enemy.health);
 $('#ttlhealth:first').text(enemy.total);
-$('#effects').text("<b><u>None</u></b>");
+$('#effects').html("<b><u>None</u></b>");
 
 $('.trip').hide();
 $('.proc').hide();
