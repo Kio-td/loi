@@ -23,7 +23,7 @@ require('../base/head.php');
     <div class="brdr">
     </div>
     <div class="story">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae nisl gravida, luctus orci eget, scelerisque ante. Duis non urna eget diam bibendum scelerisque. Phasellus pellentesque tellus at cursus molestie. Integer tempus orci ut nibh venenatis, vel dapibus velit accumsan. Nulla at libero rutrum, vehicula quam sit amet, sollicitudin nisi. Mauris pretium, orci eu volutpat viverra, dolor felis tincidunt velit, vitae laoreet dolor urna eget diam.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae nisl gravida, luctus orci eget, scelerisque ante. Duis non urna eget diam bibendum scelerisque. Phasellus pellentesque tellus at cursus molestie. Integer tempus orci ut nibh venenatis, vel dapibus velit accumsan. Nulla at libero rutrum, vehicula quam sit amet, sollicitudin nisi. Mauris pretium, orci eu volutpat viverra, dolor felis tincidunt velit, vitae laoreet dolor urna eget.
     </div>
   </div>
 
