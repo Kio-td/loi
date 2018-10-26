@@ -53,7 +53,7 @@ require('../base/head.php');
       $('.rab').toggle();
     }
 
-    funtion reccord(item) {
+    function record(item) {
       if (item == "trip") {
         //send trip paramaters here
         toggletrip();
