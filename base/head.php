@@ -60,7 +60,7 @@ $x = false;
   <body class="text-center">
 
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-      <header class="masthead mb-auto">
+      <header class="masthead mb-auto cal">
         <div class="inner">
             <h3 class="masthead-brand">Legend of Ikaros</h3>
             <nav class="nav nav-masthead justify-content-center">
