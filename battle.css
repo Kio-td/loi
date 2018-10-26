@@ -9,7 +9,9 @@
   text-align: left;
 }
 
-
+html,body{
+  html,body{height:100%;}
+}
 
 #playername {
   font-weight: bold;
