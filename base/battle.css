@@ -21,7 +21,9 @@
   width: 3px;
   height: 100%;
 }
-
+.story {
+  display: inline-block;
+}
 .healthbox {
   padding: 3px;
 }
