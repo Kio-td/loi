@@ -42,6 +42,7 @@ body {
 .story {
   transform: translateY(-16%);
   display: inline-block;
+  border-top: 3px solid rgba(255,255,255,.25);
   width: 75%;
   height: 100%;
   padding: inherit;
