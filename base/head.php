@@ -38,12 +38,13 @@ $x = false;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Team LOI">
-    <script src="/assets/build.js"></script>
+    <script src="/bower_components/tooltip.js/dist/tooltip.min.js"></script>
+    <script src="/bower_components/popper.js/dist/popper.min.js"></script>
     <script>
       json = JSON5;
     </script>
     <title>Legend of Ikaros</title>
-    <link rel="stylesheet" href="/assets/build.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/bootstrap-material-design.min.css">
     <link href="/base/cover.css" rel="stylesheet">
     <link rel="author" href="humans.txt" />
   <style>#content > #right > .dose > .dosesingle,
