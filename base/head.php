@@ -38,15 +38,12 @@ $x = false;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Team LOI">
-    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="/node_modules/jdetects/jdetects.min.js"></script>
-    <script src="/node_modules/tooltip.js/dist/tooltip.min.js"></script>
-    <script src="/node_modules/json5/dist/index.min.js"></script>
+    <script src="/asset/build.js">
     <script>
       json = JSON5;
     </script>
     <title>Legend of Ikaros</title>
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/build.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
     <link href="/base/cover.css" rel="stylesheet">
     <link rel="author" href="humans.txt" />
   <style>#content > #right > .dose > .dosesingle,

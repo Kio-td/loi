@@ -5,3 +5,5 @@ vendor
 package-lock.json
 node_modules/
 main.js
+bower_components/
+bower.json
