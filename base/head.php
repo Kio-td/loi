@@ -35,6 +35,7 @@ $x = false;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Team LOI">
+    <script src="/node_modules/jquery/dist/jquery.slim.min.js"
     <script src="/assets/bundle.min.js"></script>
     <title>Legend of Ikaros</title>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
