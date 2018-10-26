@@ -21,7 +21,7 @@ body {
   width: 50vw;
   height: 25vh;
   border-radius: 2.5px;
-  height: 25%;
+  height: 27%;
   padding-left: 16px;
   overflow: hidden;
   text-align: left;
@@ -48,6 +48,10 @@ body {
 }
 .healthbox {
   padding: 3px;
+}
+
+.uc {
+  margin-top: 2vh;
 }
 
 .cal {
