@@ -4,7 +4,7 @@ require('../base/head.php');
 </nav>
 </div>
 </header>
-  <link href="/battle.css" rel="stylesheet">
+  <link href="/base/battle.css" rel="stylesheet">
 
   <main role="main" class="inner cover">
   <div class="battlebox">
