@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="Team LOI">
+  <link href="/assets/bootstrap-material-design.min.css" rel="stylesheet">
   <link href="/base/battle.css" rel="stylesheet">
   <script src="/assets/jquery.slim.min.js"></script>
   <script src="/assets/jdetects.min.js"></script>
@@ -11,7 +12,6 @@
   <script src="/assets/popper.min.js"></script>
   <script src="/assets/tooltip.min.js"></script>
   <script src="/assets/bootstrap-material-design.min.js"></script>
-  <link href="/assets/bootstrap-material-design.min.css" rel="stylesheet">
   <script>json = JSON5;</script>
   <title>Legend of Ikaros</title>
 </head>
