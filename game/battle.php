@@ -11,6 +11,7 @@
   <script src="/assets/popper.min.js"></script>
   <script src="/assets/tooltip.min.js"></script>
   <script src="/assets/bootstrap-material-design.min.js"></script>
+  <link src="/assets/bootstrap-material-design.min.css">
   <script>json = JSON5;</script>
   <title>Legend of Ikaros</title>
 </head>
