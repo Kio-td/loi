@@ -19,7 +19,6 @@ require('../base/head.php');
   </div>
   <div class="">
   </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   </div>
 
   <div class="inv">
