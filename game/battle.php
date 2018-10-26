@@ -34,6 +34,7 @@ $x = false;
 </head>
 <body>
   <main role="main" class="inner cover">
+    <h3 class="brand">Legend of Ikaros</h3>
     <div class="battlebox">
       <div class="info">
         <div class="mc healthbox">

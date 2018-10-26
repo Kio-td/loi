@@ -4,6 +4,9 @@ html, body {
   margin: 0;
     background: linear-gradient(to right, #262626,#404040,#262626);
 }
+.brand {
+  margin-bottom: 15vh;
+}
 body {
   color: white;
   display: -ms-flexbox;
