@@ -9,8 +9,18 @@
   text-align: left;
 }
 
+.info {
+  width: 20%;
+  padding-top: 1%;
+  border-right: 3px solid gray;
+}
+
+.healthbox {
+  padding: 3px;
+}
+
 .cal {
-    margin-bottom: 10rem !important;
+  margin-bottom: 10rem !important;
 }
 
 #playername {
@@ -22,7 +32,7 @@
 }
 
 .masthead {
-      margin-bottom: 20rem !important;
+  margin-bottom: 20rem !important;
 }
 
 .cover {
