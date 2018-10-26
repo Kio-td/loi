@@ -17,7 +17,7 @@ require('../base/head.php');
       <div class="uc healthbox">
         <span id="playername"><?php echo $username; ?></span><br>
         <span id="playerhealth">15</span>/<span id="playerttlhealth">15</span> HP<br>
-        <span id="playereffects"><b><u>None</u></b></span>
+        <span id="playereffects"><b><u>No Effects</u></b></span>
       </div>
     </div>
     <div class="">
@@ -61,7 +61,7 @@ enemy.effects = json.parse("[]");
 $('#mobname').text(enemy.name);
 $('#mobhealth').text(enemy.health);
 $('#mobttlhealth').text(enemy.total);
-$('#mobeffects').html("<b><u>None</u></b>");
+$('#mobeffects').html("<b><u>No Effects</u></b>");
 
 $('.trip').hide();
 $('.proc').hide();
