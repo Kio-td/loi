@@ -24,23 +24,23 @@ require('../base/head.php');
   <div class="inv">
   </div>
   <div class="rab">
-    <span class="atk btn btn-raised btn-danger">
+    <span onclick="record('atk')" class="atk btn btn-raised btn-danger">
       Attack
     </span>
-    <span class="def btn btn-raised btn-info">
+    <span onclick="record('def')" class="def btn btn-raised btn-info">
       Defend
     </span>
-    <span class="inv btn btn-raised btn-success">
+    <span onclick="record('inv')" class="inv btn btn-raised btn-success">
       Inventory
     </span>
-    <span class="fle btn btn-raised btn-warning" style="background-color: #ffde00">
+    <span onclick="record('flee')" class="fle btn btn-raised btn-warning" style="background-color: #ffde00">
       Flee
     </span>
   </div>
-  <span onclick="sendtrip()" class="trip btn btn-raised btn-light">
+  <span onclick="record('trip')" class="trip btn btn-raised btn-light">
     Trip
   </span>
-  <span onclick="record()" class="proc btn btn-secondary">
+  <span onclick="record('winfail')" class="proc btn btn-secondary">
     Proceed
   </span>
   </main>
@@ -52,10 +52,14 @@ require('../base/head.php');
       $('.trip').toggle();
       $('.rab').toggle();
     }
-    function sendtrip() {
-      //send trip paramaters here
-      toggletrip();
+
+    funtion reccord(item) {
+      if (item == "trip") {
+        //send trip paramaters here
+        toggletrip();
+      }
     }
+
 
   </script>
 <?php
