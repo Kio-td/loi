@@ -57,7 +57,7 @@ require('../base/head.php');
 
 
   $('.mobname').text(enemy.name);
-  $('.')
+//  $('.')
 
     $('.trip').hide();
     $('.proc').hide();
