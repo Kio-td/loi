@@ -60,81 +60,7 @@ elseif (isset($_GET["lo"])) {
     <select class="form-control" id="data" required onchange="f(this)"></select><br>
    <button onclick="sub()" class="btn btn-secondary">register</button>
 <span id="info" style="display: none"></span>
-<script>
-var s = new WebSocket("wss://ws.nayami.party/anon");
-s.onerror = function(evt) { err("Something wrong has happened with the back of the server. Please DM the administrators on discord.") };
-data = "";
-i = 0
-dx = 0
-e = 0
-u = 0
-nrk = "";
-function emai() {
-  s.onmessage = function (evt) {
-    data = json.parse(evt.data).data;
-    if (data == false) {
-      err("That email is already used.");
-    }
-  }
-  console.log("Switched to Email.");
-}
-function us() {
-  s.onmessage = function (evt) {
-    data = json.parse(evt.data).data;
-    if (data == "F") {
-      err("Your username is already used.");
-    } else if (data == "BL") {
-      err("Your username is on the blacklist.");
-    }
-  }
-  console.log("Switched to Username.");
-}
-
-function sub() {
-  s.onmessage = function (evt) {
-    data = json.parse(evt.data);
-    if (data.ok == false) {
-      if (data.msg == "ACCT_BLACKLIST") { err("This username has been blacklisted.");}
-      else if (data.msg == "ACCT_EXISTS") { err("This Username or Email already exists.");}
-    } else {
-      suc("Check your email to confirm your account.<br>Welcome to Arden.");
-    }
-  }
-  s.send(json.stringify({cmd: 'create', data: {un: document.getElementById('un').value, pw:document.getElementById('pw').value, em:document.getElementById('em').value, sp:document.getElementById('data').value}}));
-}
-
- s.onmessage = function (evt) {
-                if(json.parse(evt.data)["code"] == 3) {
-                  s.send("{cmd:'species'}");
-                } else {
-                  nrk = json.parse(evt.data).data;
-                  nrk.forEach(function(itm) {
-                    i++;
-                    x = document.getElementById('data');
-                    h = document.createElement("option");
-                    h.text = itm["sname"];
-                    h.value = itm["sid"];
-                    x.add(h);
-                    if (i == 1) document.getElementById('info').innerText = itm["description"]
-                  });
-                }
-                dx = 1;
-             }
-             function f (id) {
-               nrk.forEach(function(itm) {
-                 if (itm["sid"] == id.value) {
-                   document.getElementById('info').innerText = itm["description"]
-                 }
-               });
-             }
-
-             function cun (id) {
-               s.send(json.stringify({cmd:"cun", data:id.value}))
-             }
-             function cem (id) {
-               s.send(json.stringify({cmd:"cem", data:id.value}));
-             }
-</script>
+<script src="/assets/register.min.js"></script>
   <?php
 
     } else {
@@ -151,25 +77,7 @@ function sub() {
     <input class="form-control" id="un" placeholder="Username" required type="text"><br>
     <input class="form-control" id="pw" placeholder="Password" required type="password"><br>
     <button onclick="auth()" class="btn btn-secondary">Login</button>
-
-    <script>
-      s = new WebSocket("wss://ws.nayami.party/anon");
-      s.onerror = function(evt) { err("Something wrong has happened with the back of the server. Please DM the administrators on discord.") };
-      function auth() {
-        s.onmessage = function(evt) {
-          data = json.parse(evt.data);
-          if(data.ok == false) {
-            if(data.msg == "CONF_EMAIL") {err("Please look in your inbox for the confirmation email.")}
-            else if (data.msg == "INC_PASS") {err("Your username or password is incorrect.")}
-            else if (data.msg == "NOBODY_FOUND") {err("Your username or password is incorrect.")}
-          } else {
-            document.cookie = "token=" + data.data;
-            window.location = "index";
-          }
-        }
-        s.send(json.stringify({cmd:'auth', data:{un:document.getElementById('un').value, pw:document.getElementById('pw').value}}))
-      }
-    </script>
+    <script src="/assets/login.min.js"></script>
     <?php
 
     }

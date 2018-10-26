@@ -17,10 +17,6 @@ if($p["guild"] == 0 ) {
       $conn->query("UPDATE users SET guild = " . $x->fetch_assoc()["gid"] . " WHERE username = '".$username."'");
     } elseif ($bal >= $mg) {
       ?>
-      <style>
-      .vg {
-      }
-      </style>
         <main role="main" class="inner cover">
           <h1 class="cover-heading">Create a Guild</h1>
           <p class="lead">Creating a guild will cost <?php echo ucwords($mg); ?>Tn.</p>
