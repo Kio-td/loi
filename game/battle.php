@@ -11,13 +11,13 @@ require('../base/head.php');
     <div class="info">
       <span class="mc">
         <span id="mobname"></span><br>
-        <span id="health"></span>/<span id="ttlhealth"></span> HP<br>
-        <span id="effects"></span>
+        <span id="mobhealth"></span>/<span id="mobttlhealth"></span> HP<br>
+        <span id="mobeffects"></span>
       </span>
       <span class="uc">
         <span id="playername"><?php echo $username; ?></span><br>
-        <span id="health">15</span>/<span id="ttlhealth"15></span> HP<br>
-        <span id="effects"><b><u>None</u></b></span>
+        <span id="playerhealth">15</span>/<span id="playerttlhealth">15</span> HP<br>
+        <span id="playereffects"><b><u>None</u></b></span>
       </span>
     </div>
     <div class="">
@@ -59,9 +59,9 @@ enemy.effects = json.parse("[]");
 
 
 $('#mobname').text(enemy.name);
-$('#health:first').text(enemy.health);
-$('#ttlhealth:first').text(enemy.total);
-$('#effects').html("<b><u>None</u></b>");
+$('#mobhealth').text(enemy.health);
+$('#mobttlhealth').text(enemy.total);
+$('#mobeffects').html("<b><u>None</u></b>");
 
 $('.trip').hide();
 $('.proc').hide();
