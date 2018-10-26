@@ -13,12 +13,13 @@ require('../base/head.php');
     </div>
     <div class="mc">
       <span id="playername"><?php echo $username; ?></span><br>
-      <span id="health"></span>HP
+      <span id="health"></span>/<span id="ttlhealth"></span> HP<br>
       <span id="effects"></span>
     </div>
   </div>
   <div class="">
   </div>
+    &nbsp;
   </div>
 
   <div class="inv">
