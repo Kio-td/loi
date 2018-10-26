@@ -1,6 +1,7 @@
 .battlebox {
   border: 3px solid rgba(255,255,255,.25);
   width: 50vw;
+  height: 5vh;
   border-radius: 2.5px;
   height: 25%;
   transform: translate(-8vh, -12vw);
