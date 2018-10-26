@@ -23,6 +23,8 @@
 }
 .story {
   display: inline-block;
+  width: 75%;
+  padding: inherit;
 }
 .healthbox {
   padding: 3px;
