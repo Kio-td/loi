@@ -16,8 +16,8 @@ require('../base/head.php');
       </span>
       <span class="uc">
         <span id="playername"><?php echo $username; ?></span><br>
-        <span id="health"></span>/<span id="ttlhealth"></span> HP<br>
-        <span id="effects"></span>
+        <span id="health">15</span>/<span id="ttlhealth"15></span> HP<br>
+        <span id="effects"><b><u>None</u></b></span>
       </span>
     </div>
     <div class="">
