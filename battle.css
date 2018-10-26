@@ -9,6 +9,9 @@
   text-align: left;
 }
 
+.masthead {
+    margin-bottom: 10rem !important;
+}
 
 #playername {
   font-weight: bold;
