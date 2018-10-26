@@ -13,6 +13,7 @@
   display: inline-block;
   width: 20%;
   padding-top: 1%;
+  transform: translateY(-12%);
 }
 .brdr {
   display: inline-block;
