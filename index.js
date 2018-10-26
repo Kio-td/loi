@@ -66,7 +66,7 @@ con.connect(function(err) {
 				return;
 			} else if (d["cmd"] == "species") {
 				con.query("select * from spec", function(a,b) {
-					if(a) throw a;
+					if(a) pdc(a, con, ip);
 					try{ws.send(json.stringify({ok:true, code:4, data:b}));} catch (e) {pdc(e, con, ip);}
 				});
 			} else if (d["cmd"] == "auth") {
@@ -295,14 +295,14 @@ con.connect(function(err) {
 					if (data.split(" ")[1] == "all") {
 						con.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")], function(a, b) {
 							con.query("select token from users where uid in (select ut from friends where uf = ?) or uid in (select uf from friends where ut = ?) and ? != uid", [b[0].uid, b[0].uid, b[0].uid], function(c, d) {
-								if (c) throw c;
+								if (c) pdc(c, con, ip);
 								d.forEach(function(h) {
 									chat.clients.forEach(function each(client) {
 										if (client.readyState === WebSocket.OPEN) {
 											if (cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token") == h.token) {
 												con.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(e, f) {
 													uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
-													if (e) throw e;
+													if (e) pdc(e, con, ip);
 													if (f.length == 1) { try{client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f all ", ""), color: "pink" }));} catch (e) {pdc(e, con, ip);} }
 												});
 											}
