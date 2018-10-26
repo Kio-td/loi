@@ -24,6 +24,7 @@ body {
   height: 25%;
   padding-left: 16px;
   text-align: left;
+  overflow: auto;
 }
 
 .info {
@@ -43,6 +44,7 @@ body {
   display: inline-block;
   width: 75%;
   height: 100%;
+  overflow: auto;
   padding: inherit;
 }
 .healthbox {
