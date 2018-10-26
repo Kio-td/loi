@@ -10,6 +10,9 @@ require('../base/head.php');
   <div class="battlebox">
   <div class="info">
     <span class="mc">
+      <span id="mobname"></span><br>
+      <span id="health"></span>/<span id="ttlhealth"></span> HP<br>
+      <span id="effects"></span>
     </span>
     <span class="uc">
       <span id="playername"><?php echo $username; ?></span><br>
@@ -46,9 +49,19 @@ require('../base/head.php');
   </main>
   <script>
 
+  enemy = new Object();
+  enemy.name = "Example Enemy";
+  enemy.health = "120";
+  enemy.total = "120";
+  enemy.effects = json.parse("[]");
+
+
+  $('.mobname').text(enemy.name);
+  $('.')
+
     $('.trip').hide();
     $('.proc').hide();
-    
+
     function toggletrip() {
       $('.trip').toggle();
       $('.rab').toggle();
