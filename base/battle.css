@@ -29,8 +29,8 @@ body {
 .info {
   display: inline-block;
   width: 20%;
-  padding-top: 1%;
   transform: translateY(-12%);
+  padding-left: 1vh
 }
 .brdr {
   display: inline-block;
