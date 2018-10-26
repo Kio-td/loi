@@ -1,4 +1,4 @@
-require('jquery');
+var $ = require('jquery');
 require('json5');
 require('popper.js');
 require('tooltip.js');
