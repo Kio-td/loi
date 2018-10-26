@@ -39,7 +39,33 @@ $x = false;
     <meta name="description" content="">
     <meta name="author" content="Team LOI">
     <script src="/node_modules/jquery/dist/jquery.slim.min.js"></script>
-    <script src="/assets/bundle.min.js"></script>
+    <script src="/node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js"></script>
+    <script src="/node_modules/jdetects/jdetects.min.js"></script>
+    <script src="/node_modules/popper.js/dist/popper.min.js"></script>
+    <script src="/node_modules/tooltip.js/dist/tooltip.min.js"></script>
+    <script src="/node_modules/json5/dist/index.min.js"></script>
+    <script>
+      json = JSON5;
+      function err(info) {
+  document.getElementById('ap').innerHTML += '<div class="alert alert-warning alert-dismissible fade show" role="alert">'+info+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
+}
+function inf(info) {
+  document.getElementById('ap').innerHTML += '<div class="alert alert-info alert-dismissible fade show" role="alert">'+info+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
+}
+function suc(info) {
+  document.getElementById('ap').innerHTML += '<div class="alert alert-success alert-dismissible fade show" role="alert">'+info+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
+}
+
+$(document).ready(function() { $('body').bootstrapMaterialDesign(); });
+var t = false
+jdetects.create({
+  once: true,
+	onchange: function(status) {
+      console.clear();
+      console.error("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.");
+	}
+});
+    </script>
     <title>Legend of Ikaros</title>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
     <link href="/base/cover.css" rel="stylesheet">
