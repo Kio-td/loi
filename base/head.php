@@ -38,7 +38,7 @@ $x = false;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Team LOI">
-    <script src="/asset/build.js"></script>
+    <script src="/assets/build.js"></script>
     <script>
       json = JSON5;
     </script>
