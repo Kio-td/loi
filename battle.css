@@ -4,9 +4,12 @@
   border-radius: 2.5px;
   height: 25%;
   transform: translate(-8vh, -12vw);
-  padding: 6px;
   padding-left: 16px;
   text-align: left;
+}
+
+#playername {
+  font-weight: bold;
 }
 
 .btn-light {

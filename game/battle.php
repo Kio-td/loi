@@ -8,7 +8,17 @@ require('../base/head.php');
 
   <main role="main" class="inner cover">
   <div class="battlebox">
-
+  <div class="info">
+    <div class="uc">
+    </div>
+    <div class="mc">
+      <span id="playername"></span><br>
+      <span id="health"></span>HP
+      <span id="effects"></span>
+    </div>
+  </div>
+  <div class="">
+  </div>
   </div>
 
   <div class="inv">
