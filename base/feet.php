@@ -25,7 +25,6 @@ document.getElementById('ap').innerHTML += '<div class="alert alert-success aler
 }
 
 $(document).ready(function() { $('body').bootstrapMaterialDesign(); });
-//I'm removing this for right now as it just spurrs up meaningless errors for no reason.
 var t = false
 jdetects.create({
 once: true,
