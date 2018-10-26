@@ -1,4 +1,7 @@
 <?php
+header("X-Frame-Options: Deny");
+header("X-XSS-Protection: 1; mode=block");
+header("X-Content-Type-Options: nosniff");
 function sendmail($sub, $mail, $user, $body) {
 require '/var/www/loi/vendor/autoload.php';
 $email = new \SendGrid\Mail\Mail();

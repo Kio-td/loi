@@ -48,6 +48,7 @@ require('../base/head.php');
 
     $('.trip').hide();
     $('.proc').hide();
+    
     function toggletrip() {
       $('.trip').toggle();
       $('.rab').toggle();
