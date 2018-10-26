@@ -25,11 +25,14 @@ body {
   overflow: hidden;
   text-align: left;
 }
+.buttons {
 
+    text-align: center;
+}
 .info {
   vertical-align: top;
   display: inline-block;
-  width: 20%;
+  width: 126px;
   margin-top: 1.5vh;
   padding-left: 1vh
 }
