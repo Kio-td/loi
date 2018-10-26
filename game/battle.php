@@ -20,6 +20,8 @@ require('../base/head.php');
         <span id="playereffects"><b><u>No Effects</u></b></span>
       </div>
     </div>
+    <div class="brdr">
+    </div>
     <div class="">
     </div>
   </div>

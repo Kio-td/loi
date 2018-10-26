@@ -12,7 +12,11 @@
 .info {
   width: 20%;
   padding-top: 1%;
-  border-right: 3px solid gray;
+}
+.brdr {
+  background: rgba(255,255,255,.25);
+  width: 3px;
+  height: 100%;
 }
 
 .healthbox {
