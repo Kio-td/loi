@@ -29,6 +29,7 @@ body {
   height: 27%;
   overflow: hidden;
   text-align: left;
+  display: flex
 }
 .buttons {
     margin-top: 10vh;
