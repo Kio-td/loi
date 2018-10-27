@@ -65,7 +65,7 @@ $x = false;
         <span onclick="record('def')" class="def btn btn-raised btn-info">
           Defend
         </span>
-        <span onclick="record('inv')" class="inv btn btn-raised btn-success">
+        <span onclick="record('inv')" id="inv" class="inv btn btn-raised btn-success">
           Inventory
         </span>
         <span onclick="record('flee')" class="fle btn btn-raised btn-warning" style="background-color: #ffde00">
@@ -82,7 +82,7 @@ $x = false;
   </main>
   <script>
 
-  new Tooltip(referenceElement, {
+  new Tooltip(document.getElementById('inv'), {
       placement: 'top', // or bottom, left, right, and variations
       title: "Try Tooltip."
   });
