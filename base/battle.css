@@ -39,8 +39,7 @@ body {
   vertical-align: top;
   display: inline-block;
   width: 120px;
-  margin-top: 1.5vh;
-  padding-left: 1vh
+  margin: 1.5vh 1vh 0 0 ;
 }
 .brdr {
   display: inline-block;
