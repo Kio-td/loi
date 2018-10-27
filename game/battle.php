@@ -82,10 +82,6 @@ $x = false;
   </main>
   <script>
 
-  d = new Tooltip(document.getElementById('inv'), {
-      placement: 'top', // or bottom, left, right, and variations
-      title: "Try Tooltip."
-  });
 
   enemy = new Object();
   enemy.name = "Example Enemy";
@@ -112,7 +108,6 @@ $x = false;
       //send trip paramaters here
       toggletrip();
     } else if (item == "inv") {
-      d.toggle();
     }
   }
 
