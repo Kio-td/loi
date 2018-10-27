@@ -1,0 +1,8 @@
+//STANDARD QUERY RESPONSE
+
+{
+  ok: true, //boolean - decypher if the program is okay with this command
+  code: 1, //refer to codelist for information on codes
+  data: {}, //Any additional data the client might need to process
+  msg: "" //A funny or informative message that the client needs to process. Examples are "USERNAME_ON_BLACKLIST".
+}

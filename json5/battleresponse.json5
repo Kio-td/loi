@@ -1,0 +1,20 @@
+{
+  battleid: "battleid",
+  story:"STORY FOR BATTLEBOX",
+  mobdata: {
+    name: "MOBNAME", //The mob's name.
+    health: 5, //The mob's health
+    ttlhealth: 10 //The mob's overall health
+  },
+  playerdata: {
+    name: "PLAYERNAME",
+    health: 5, //The player's current health.
+    ttlhealth: 10, //The player's overall health.
+    inventory: [], //ItemIDs.
+    effects: [],  //Effenct on the player.
+    canfight: true, //If the player is able to fight.
+    istripped: false, //If the regular ADIF buttons are replaced with "Trip"
+    isproceed: false, //If the regular ADIF buttons are replaced with "Proceed"
+    isabletoflee: true //Set on bosses, traps, or other places that are unfleeable
+  }
+}

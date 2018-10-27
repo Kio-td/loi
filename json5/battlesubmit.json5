@@ -1,0 +1,19 @@
+{
+  battleid: "BATTLEID",
+  action: "",
+  //Optional-
+  itemid: 1, //The ItemID is an INT
+  spellid: 1 //The spellID is an INT
+}
+
+ /*
+    Action Options:
+      -Attack - Use an attack using the main weapon.
+      -Defend - Calculate damage with a defensive buff.
+      -Flee - Process Fleeing
+      -UseItem - Use an item, requires more information
+      -ChangeWeapon - For later consumption
+      -CastSpell - Cast a spell, will include later.
+
+
+ */

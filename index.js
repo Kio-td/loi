@@ -17,15 +17,14 @@ const chat = new WebSocket.Server(g);
 const battle = new WebSocket.Server(g);
 const anon = new WebSocket.Server(g);
 const black = ["ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc"];
-
 mail.setApiKey(cfg.get("int.sg"));
-let error = 0
+
+//Writes errors to the logger.
 function pdc(error, con, ip) {
-	if (error == 0) {
 		con.query("INSERT INTO `pagelog`(`eid`, `ip`, `page`, `toe`) VALUES (?,?,?,NOW())", ["SE_"+uuid(13), ip, json.stringify(error)]);
-	}
 }
 
+//Send Emails using the following template. Please leave this alone, it's fine as is.
 function sendemail(to, template, data) {
 	msg = {
 		to: to,
@@ -36,6 +35,8 @@ function sendemail(to, template, data) {
 	mail.send(msg);
 }
 
+//Function to check whether or not the user is authenticated.
+//TODO: Full makeover of auth system from 1AUTH to Auth every request
 function isconnected(req, ws) {
 	let ip = req.headers['x-forwarded-for']
 	let uid = ip.replace(/\./g, '');
@@ -50,6 +51,7 @@ con.connect(function(err) {
 	if (err) throw err;
 	console.log("Connected to MySQL, and server is running.");
 
+//Anonymous websocket, for getting general information. New races, pinging, and authentication.
 	anon.on('connection', function(ws, req) {
 		let ip = req.headers['x-forwarded-for'];
 		let uid = ip.replace(/\./g, '');
@@ -208,6 +210,7 @@ con.connect(function(err) {
 		});
 	});
 
+//Main Websocket, for processing most events related to the game
 	serve.on('connection', function connection(ws, req) {
 		let ip = req.headers['x-forwarded-for']
 		let uid = ip.replace(/\./g, '');
@@ -274,6 +277,7 @@ con.connect(function(err) {
 		}
 	});
 
+//Chat websocket, for.. chatting.
 	chat.on('connection', function connection(ws, req) {
 		isconnected(req, ws);
 		ws.on('message', function msg(data) {
@@ -354,6 +358,7 @@ con.connect(function(err) {
 		});
 	});
 
+//Battlesocket, for processing battling sequences
 	battle.on('connection', function connection(ws, req) {
 		isconnected(req, ws);
 		if(cnf.get("user."+uid+"battleid")) {try{ws.send(json.stringify({ok:true, code:2, bid: cnf.get("user."+uid+"battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));} catch (e) {pdc(e, con, ip);}}
@@ -362,6 +367,7 @@ con.connect(function(err) {
 		}
 	});
 
+//Main server module. change anything here and I will kill you.
 	server.on('upgrade', function upgrade(request, socket, head) {
 		const pathname = url.parse(request.url).pathname;
 
@@ -369,7 +375,7 @@ con.connect(function(err) {
 			serve.handleUpgrade(request, socket, head, function done(ws) {
 				serve.emit('connection', ws, request);
 			});
-		} else if (pathname === '/ccon') {
+		} else if (pathname === '/chat') {
 			chat.handleUpgrade(request, socket, head, function done(ws) {
 				chat.emit('connection', ws, request);
 			});
