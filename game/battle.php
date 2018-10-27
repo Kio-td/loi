@@ -82,7 +82,7 @@ $x = false;
   </main>
   <script>
 
-  new Tooltip(document.getElementById('inv'), {
+  d = new Tooltip(document.getElementById('inv'), {
       placement: 'top', // or bottom, left, right, and variations
       title: "Try Tooltip."
   });
@@ -111,6 +111,8 @@ $x = false;
     if (item == "trip") {
       //send trip paramaters here
       toggletrip();
+    } else if (item == "inv") {
+      d.toggle();
     }
   }
 
