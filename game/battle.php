@@ -84,7 +84,7 @@ $x = false;
 
 
   enemy = new Object();
-  enemy.name = "Example Enemy";
+  enemy.name = "Xavier";
   enemy.health = "120";
   enemy.total = "120";
   enemy.effects = json.parse("[]");
