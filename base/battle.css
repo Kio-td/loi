@@ -37,7 +37,7 @@ body {
 .info {
   vertical-align: top;
   display: inline-block;
-  width: 140px;
+  width: 120px;
   margin-top: 1.5vh;
   padding-left: 1vh
 }
@@ -51,7 +51,7 @@ body {
   vertical-align: top;
   position: relative;
   padding: 1vh;
-  display: inline-block;
+  display: flex
   width: 75%;
   height: 100%;
 }
