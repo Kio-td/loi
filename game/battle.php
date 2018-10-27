@@ -82,6 +82,11 @@ $x = false;
   </main>
   <script>
 
+  new Tooltip(referenceElement, {
+      placement: 'top', // or bottom, left, right, and variations
+      title: "Try Tooltip."
+  });
+
   enemy = new Object();
   enemy.name = "Example Enemy";
   enemy.health = "120";
