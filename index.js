@@ -1,4 +1,3 @@
-use strict;
 const cfg1 = require('node-storage');
 const http = require('http');
 const mail = require('@sendgrid/mail');
