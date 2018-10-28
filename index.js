@@ -362,6 +362,10 @@ con.connect(function(err) {
 		if(cnf.get("user."+uid+"battleid")) {try{ws.send(json.stringify({ok:true, code:2, bid: cnf.get("user."+uid+"battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));} catch (e) {pdc(e, con, ip);}}
 		else {
 			r = Math.random().toString(36).substring(7);
+			con.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ?	), '%') order by RAND() limit 1;", cfg.get("user." + uid + ".token", x["atoken"]), function(a,b) {
+				if (a) pdc(a, con, ip);
+
+			});
 		}
 	});
 
