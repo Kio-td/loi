@@ -1,3 +1,4 @@
+use strict;
 const cfg1 = require('node-storage');
 const http = require('http');
 const mail = require('@sendgrid/mail');
@@ -16,7 +17,7 @@ const serve = new WebSocket.Server(g);
 const chat = new WebSocket.Server(g);
 const battle = new WebSocket.Server(g);
 const anon = new WebSocket.Server(g);
-const black = ["ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc"];
+const black = ["all", "ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc"]; //These usernames are banned from being registered, in part or in full
 mail.setApiKey(cfg.get("int.sg"));
 
 //Writes errors to the logger.
@@ -66,12 +67,12 @@ con.connect(function(err) {
 			if (d["cmd"] == undefined) {
 				try{ws.send(json.stringify({ok:false, code:-1, msg:"NO_CMD"}));} catch (e) {pdc(e, con, ip);}
 				return;
-			} else if (d["cmd"] == "species") {
+			} else if (d["cmd"] == "species") { //Return all the species that is available for use
 				con.query("select * from spec", function(a,b) {
 					if(a) pdc(a, con, ip);
 					try{ws.send(json.stringify({ok:true, code:4, data:b}));} catch (e) {pdc(e, con, ip);}
 				});
-			} else if (d["cmd"] == "auth") {
+			} else if (d["cmd"] == "auth") { //Authenticate the user.
 				if(d["data"] == undefined) {
 					try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));} catch (e) {pdc(e, con, ip);}
 				} else {
@@ -92,7 +93,7 @@ con.connect(function(err) {
 						}
 					})
 				}
-			} else if (d["cmd"] == "authcallback") {
+			} else if (d["cmd"] == "authcallback") { //Used for the callback page.
 				if(d["data"] == undefined) {
 					try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));} catch (e) {pdc(e, con, ip);}
 				} else {
@@ -115,7 +116,7 @@ con.connect(function(err) {
 						}
 					})
 				}
-			} else if (d["cmd"] == "ress2") {
+			} else if (d["cmd"] == "ress2") { //Phase 2 of the password reset function.
 				if(d["data"] == undefined) {
 					try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));} catch (e) {pdc(e, con, ip);}
 				} else {
@@ -145,7 +146,7 @@ con.connect(function(err) {
 						}
 					});
 				}
-			} else if (d["cmd"] == "reset") {
+			} else if (d["cmd"] == "reset") { //Reset passwords.
 				if(d["data"] == undefined) {
 					try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));} catch (e) {pdc(e, con, ip);}
 				} else {
@@ -162,7 +163,7 @@ con.connect(function(err) {
 						}
 					});
 				}
-			} else if (d["cmd"] == "cun") {
+			} else if (d["cmd"] == "cun") { //Check usernames to make sure they're not banned/registered
 				if(d["data"] == undefined) {
 					try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));} catch (e) {pdc(e, con, ip);}
 				} else if (black.includes(d["data"].toLowerCase())) {
@@ -281,21 +282,19 @@ con.connect(function(err) {
 	chat.on('connection', function connection(ws, req) {
 		isconnected(req, ws);
 		ws.on('message', function msg(data) {
-			let ip = req.headers['x-forwarded-for']
+			let ip = req.headers['x-forwarded-for'];
 			let uid = ip.replace(/\./g, '');
-			ds = 0
-			data = data.split(/\r?\n|\r/g)[0].replace(/\</g, '&lt;').replace(/\>/g, '&gt;').trim();
-			if (data.length >= 80) {
+			ds = 0; //Start with Data Sanatized is Okay.
+			data = data.split(/\r?\n|\r/g)[0].replace(/\</g, '&lt;').replace(/\>/g, '&gt;').trim(); //Make sure no true HTMl is passed into the server.
+			if (data.length >= 80) { // If the message is over 80 characters, whisper to the character that the message has been voided.
 				try{ws.send(json.stringify({ ok: false, display: "*Your voice falls on deaf ears. (Too many characters.)", color: "red" }));} catch (e) {pdc(e, con, ip);}
 				ds = 1
 			}
 			if (ds == 0) {
-				if (data.split(" ")[0] == "!s") {
-					//Use shout
+				if (data.split(" ")[0] == "!s") { //Shouting, if this is ommitted then only the people in your town will hear you.
 					try{ws.send(json.stringify({ ok: false, display: "*Shouts are not setup yet.", color: "red" }));} catch (e) {pdc(e, con, ip);}
-				} else if (data.split(" ")[0] == "!g") {
-					//Guilds
-				} else if (data.split(" ")[0] == "!f") {
+				} else if (data.split(" ")[0] == "!g") { //Send a message to your guild. This will essentially shout to all of your guild. Not going to setup ATM.
+				} else if (data.split(" ")[0] == "!f") { //Send a message to your friends
 					if (data.split(" ")[1] == "all") {
 						con.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")], function(a, b) {
 							con.query("select token from users where uid in (select ut from friends where uf = ?) or uid in (select uf from friends where ut = ?) and ? != uid", [b[0].uid, b[0].uid, b[0].uid], function(c, d) {
