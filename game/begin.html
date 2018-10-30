@@ -38,7 +38,11 @@
   <script src="../assets/typeit.min.js"></script>
   <script>
   var beep = new Howl({src: ["../assets/beep.ogg"]});
-  new TypeIt('.writingbox', {speed: 90, strings:"Interesting.", afterStep: function(s,q,i) {beep.play()}});
+  new TypeIt('.writingbox', {speed: 90, strings:["Interesting.", "You think you're special."], afterStep: function(s,q,i) {
+    if(s[2] == "first-of-string") {x = 1}
+    if(s[2] == "last-of-string") {x = 0}
+    if(x) {beep.play()}
+  }});
   </script>
 </body>
 </html>
