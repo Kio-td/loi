@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../assets/bootstrap-material-design.min.css">
   <title>Interesting.</title>
-  <link href="../assets/bootstrap-material-design.min.css" ref="stylesheet">
 
   <style>
   body {
-    background: black;
+    background: #353535;
+    transition: 4s;
     color: white;
   }
   .box {
@@ -27,6 +28,12 @@
     height: 15vh;
     width: 50vw;
   }
+  .btn {
+    position: fixed;
+    top: 42vh;
+    left: 42vw;
+
+  }
   .btn-secondary,
   .btn-secondary:hover,
   .btn-secondary:focus {
@@ -38,9 +45,9 @@
   </style>
 </head>
 <body>
+    <a href="game/login?reg" class="btn btn-lg btn-secondary">Continue Anyways</a>
   <center>
-  <div class="box spritebox"></div>
-  <a class="btn btn-secondary" href="/game/login?reg">Continue anyways</a>
+  <div class=" spritebox"></div>
   <div class="box writingbox"></div>
 </center>
   <script src="../assets/popper.min.js"></script>
@@ -49,7 +56,10 @@
   <script src="../assets/howler.min.js"></script>
   <script src="../assets/typeit.min.js"></script>
   <script>
-//  $(".btn").hide();
+  $('.writingbox').hide();
+   $("body").css("background", "black");
+  $('.writingbox').delay(2200).fadeIn();
+  $(".btn").hide();
   var beep = new Howl({volume: 0.05, src: ["../assets/beep.ogg"]});
     x = 0;
 function t (s,q,i) {
@@ -65,6 +75,7 @@ function t (s,q,i) {
     $(".btn").fadeIn();
   }
   new TypeIt('.writingbox', {speed: 90, afterComplete: function(s,q,i) {o()}, afterStep: function (s,q,i) {t(s,q,i)}})
+  .pause(3000)
   .type("Interesting.")
   .pause(500)
   .break()
