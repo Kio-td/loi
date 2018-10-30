@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../assets/bootstrap-material-design.min.css">
-  <title>Interesting.</title>
+  <title>Legend of Ikaros</title>
 
   <style>
   body {
@@ -59,6 +59,7 @@
   $('.writingbox').hide();
    $("body").css("background", "black");
   $('.writingbox').delay(2200).fadeIn();
+  window.title = "Interesting."
   $(".btn").hide();
   var beep = new Howl({volume: 0.05, src: ["../assets/beep.ogg"]});
     x = 0;
