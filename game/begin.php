@@ -59,7 +59,7 @@
   $('.writingbox').hide();
    $("body").css("background", "black");
   $('.writingbox').delay(2200).fadeIn();
-  document.title = "Interesting."
+  setTimeout(function(){ document.title = "Interesting." }, 2200);
   $(".btn").hide();
   var beep = new Howl({volume: 0.05, src: ["../assets/beep.ogg"]});
     x = 0;
