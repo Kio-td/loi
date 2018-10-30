@@ -45,7 +45,7 @@
   </style>
 </head>
 <body>
-    <a href="game/login?reg" class="btn btn-lg btn-secondary">Continue Anyways</a>
+    <a href="/game/login?reg" class="btn btn-lg btn-secondary">Continue Anyways</a>
   <center>
   <div class=" spritebox"></div>
   <div class="box writingbox"></div>
