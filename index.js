@@ -367,7 +367,7 @@ con.connect(function(err) {
 				if (a) pdc(a, ip);
 				try{client.send(
 					json.stringify({battleid: "battleid",story:"STORY FOR BATTLEBOX",mobdata: {name: "MOBNAME",health: 5,ttlhealth: 10},playerdata: {name: "PLAYERNAME",health: 5,ttlhealth: 10,inventory: [],effects: [],canfight: true,istripped: false,isproceed: false,isabletoflee: true}}
-				))} catch (e) {pdc(e, ip);}}
+				))} catch (e) {pdc(e, ip);}
 			});
 		}
 	});
