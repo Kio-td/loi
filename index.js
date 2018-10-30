@@ -42,10 +42,6 @@ function isconnected(req, ws) {
 
 let con = msql.createPool(cfg.get("int.mysql"));
 
-con.connect(function(err) {
-	if (err) throw err;
-	console.log("Connected to MySQL, and server is running.");
-
 	//Writes errors to the logger.
 	function pdc(error, ip) {
 		console.warn(error);
@@ -398,4 +394,3 @@ con.connect(function(err) {
 	});
 
 	server.listen(2053);
-});
