@@ -48,7 +48,7 @@ con.connect(function(err) {
 
 	//Writes errors to the logger.
 	function pdc(error, ip) {
-		console.log(error);
+		console.warn(error);
 			con.query("INSERT INTO `pagelog`(`eid`, `ip`, `page`, `toe`) VALUES (?,?,?,NOW())", ["SE_"+uuid(13), ip, json.stringify(error)]);
 	}
 
