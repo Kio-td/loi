@@ -366,6 +366,7 @@ con.connect(function(err) {
 			con.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ? ), '%') order by RAND() limit 1;", cfg.get("user." + uid + ".token", x["atoken"]), function(a,b) {
 				if (a) pdc(a, ip);
 				try{client.send(json.stringify({battleid: "battleid",story:"STORY FOR BATTLEBOX",mobdata: {name: "MOBNAME",health: 5,ttlhealth: 10},playerdata: {name: "PLAYERNAME",health: 5,ttlhealth: 10,inventory: [],effects: [],canfight: true,istripped: false,isproceed: false,isabletoflee: true}}))}
+				{pdc(e, ip);}}
 			});
 		}
 	});
