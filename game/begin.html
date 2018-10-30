@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interesting.</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <style>
+  body {
+    background: black;
+    color: white;
+    font-family: "Roboto";
+  }
+  .box {
+    position: relative;
+    border: 1px solid white;
+  }
+  .spritebox {
+    top: 35vh;
+    height: 15vh;
+    width: 5vw;
+  }
+  .writingbox {
+    text-align: left;
+    padding: 2vh;
+    top: 45vh;
+    height: 15vh;
+    width: 50vw;
+  }
+  </style>
+</head>
+<body>
+  <center>
+  <div class="box spritebox"></div>
+  <div class="box writingbox"></div>
+</center>
+  <script src="../assets/howler.min.js"></script>
+  <script src="../assets/typeit.min.js"></script>
+  <script>
+  var beep = new Howl({src: ["../assets/beep.ogg"]});
+  new TypeIt('.writingbox', {speed: 90, strings:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae bibendum nisl, a congue lectus. Proin felis orci, congue ut leo id, condimentum bibendum odio. Nulla sagittis ante in convallis tempus. Sed dictum tellus augue, in pulvinar purus tempor sed. Aliquam consectetur feugiat auctor. Suspendisse feugiat feugiat enim eget vulputate. Etiam eu convallis diam, ac molestie quam. Nullam sit amet hendrerit sapien, sit amet maximus sem. Sed ut sapien a purus dictum lobortis. In sed blandit metus.", afterStep: function(s,q,i) {beep.play()}});
+  </script>
+</body>
+</html>

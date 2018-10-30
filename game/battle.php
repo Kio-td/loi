@@ -8,12 +8,8 @@ if (isset($_COOKIE["token"])) {
     $na = array("index.php", "login.php", "index", "login", "login-");
 } else {
   $auth = true;
-  $c = $c->fetch_assoc();
-  $username = ucfirst($c["username"]);
-  $bal = $c["bal"];
 }
 }
-$x = false;
 ?>
 <html lang="en">
 <head>
@@ -43,7 +39,7 @@ $x = false;
           <span id="mobeffects"></span>
         </div>
         <div class="uc healthbox">
-          <span id="playername"><?php echo $username; ?></span><br>
+          <span id="playername"></span><br>
           <span id="playerhealth">15</span>/<span id="playerttlhealth">15</span> HP<br>
           <span id="playereffects"><b><u>No Effects</u></b></span>
         </div>
