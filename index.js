@@ -40,7 +40,7 @@ function isconnected(req, ws) {
 	}
 }
 
-let con = msql.createConnection(cfg.get("int.mysql"));
+let con = msql.createPool(cfg.get("int.mysql"));
 
 con.connect(function(err) {
 	if (err) throw err;
@@ -48,6 +48,7 @@ con.connect(function(err) {
 
 	//Writes errors to the logger.
 	function pdc(error, ip) {
+		console.log(error);
 			con.query("INSERT INTO `pagelog`(`eid`, `ip`, `page`, `toe`) VALUES (?,?,?,NOW())", ["SE_"+uuid(13), ip, json.stringify(error)]);
 	}
 
@@ -362,9 +363,9 @@ con.connect(function(err) {
 		if(cnf.get("user."+uid+"battleid")) {try{ws.send(json.stringify({ok:true, code:2, bid: cnf.get("user."+uid+"battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));} catch (e) {pdc(e, ip);}}
 		else {
 			r = Math.random().toString(36).substring(7);
-			con.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ?	), '%') order by RAND() limit 1;", cfg.get("user." + uid + ".token", x["atoken"]), function(a,b) {
+			con.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ? ), '%') order by RAND() limit 1;", cfg.get("user." + uid + ".token", x["atoken"]), function(a,b) {
 				if (a) pdc(a, ip);
-
+				try{client.send(json.stringify({battleid: "battleid",story:"STORY FOR BATTLEBOX",mobdata: {name: "MOBNAME",health: 5,ttlhealth: 10},playerdata: {name: "PLAYERNAME",health: 5,ttlhealth: 10,inventory: [],effects: [],canfight: true,istripped: false,isproceed: false,isabletoflee: true}}))}
 			});
 		}
 	});
