@@ -47,7 +47,7 @@ elseif (isset($_GET["lo"])) {
     if (isset($_GET["reg"])) {
 ?>
    <a class="nav-link" href="login">Login</a>
-    <a class="nav-link active" href="login?reg">Register</a>
+    <a class="nav-link active" href="#">Register</a>
   </nav>
 </div>
 </header>
@@ -66,7 +66,7 @@ elseif (isset($_GET["lo"])) {
     } else {
 ?>
  <a class="nav-link active" href="login">Login</a>
-  <a class="nav-link" href="login?reg">Register</a>
+  <a class="nav-link" href="begin">Register</a>
 </nav>
 </div>
 </header>

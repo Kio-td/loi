@@ -29,7 +29,7 @@ new Tooltip(document.getElementById('tala'), {
 
 ?>
 <a class="nav-link" href="login">Login</a>
-<a class="nav-link" href="login?reg">Register</a>
+<a class="nav-link" href="begin">Register</a>
 </nav>
 </div>
 </header>
