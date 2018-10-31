@@ -356,13 +356,18 @@ console.log("Pool created - Server is running.");
 //Battlesocket, for processing battling sequences
 	battle.on('connection', function connection(ws, req) {
 		isconnected(req, ws);
-		if(cnf.get("user."+uid+"battleid")) {try{ws.send(json.stringify({ok:true, code:2, bid: cnf.get("user."+uid+"battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));} catch (e) {pdc(e, ip);}}
+		pppp = false;
+		if(cnf.get("user."+uid+"battleid")) {try{ws.send(json.stringify({ok:true, code:2, bid: cnf.get("user."+uid+".battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));} catch (e) {pdc(e, ip);}}
 		else {
-			r = Math.random().toString(36).substring(7);
+			r = uuid(7);
+			con.query("select uid from users where token = ?", [cnf.get("user."+uid+".token"], function(a,b) {
+				pppp = b[0].uid;
+			});
 			con.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ? ), '%') order by RAND() limit 1;", cfg.get("user." + uid + ".token", x["atoken"]), function(a,b) {
 				if (a) pdc(a, ip);
+				con.query("INSERT INTO currentbattles (battleid, uid, mid, phealth, mhealth) VALUES (?, ?, ?)", [r, pppp, b[0].uid ])
 				try{client.send(
-					json.stringify({battleid: "battleid",story:"STORY FOR BATTLEBOX",mobdata: {name: "MOBNAME",health: 5,ttlhealth: 10},playerdata: {name: "PLAYERNAME",health: 5,ttlhealth: 10,inventory: [],effects: [],canfight: true,istripped: false,isproceed: false,isabletoflee: true}}
+					json.stringify({battleid: r, story:"STORY FOR BATTLEBOX",mobdata: {name: b[0].name, health: 5,ttlhealth: b[0].hp},playerdata: {name: "PLAYERNAME",health: 5,ttlhealth: 10,inventory: [],effects: [],canfight: true,istripped: false,isproceed: false,isabletoflee: true}}
 				))} catch (e) {pdc(e, ip);}
 			});
 		}
