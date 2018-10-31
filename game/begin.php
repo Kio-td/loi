@@ -62,7 +62,7 @@
   setTimeout(function(){ document.title = "Interesting." }, 2200);
   $(".btn").hide();
   var beep = new Howl({volume: 0.05, src: ["../assets/beep.ogg"]});
-  var underworld = new Howl({src: ["../assets/underworld.mp3"], autoplay: true, loop: true,});
+  var underworld = new Howl({src: ["../assets/underworld.mp3"], autoplay: true, loop: false,});
     x = 0;
 function t (s,q,i) {
     if(s[2] == "first-of-string") {x = 1}
