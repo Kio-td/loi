@@ -92,7 +92,7 @@ function t (s,q,i) {
   .empty()
   .type("...")
   .pause(1500)
-  .break()
+  .empty()
   .type("I hope you understand that the rules apply only to you.")
   .pause(500)
   .break()
