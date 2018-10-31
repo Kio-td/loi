@@ -70,6 +70,7 @@ if (isset($_GET["transfer"])) {
         <?php
       } else {
         ?>
+        <main role="main" class="inner cover">
           <h1 class="cover-heading">Confirm</h1>
           <p class="lead">Are you sre you would like to send <?php echo $no . "Tn. to " . $x . "?";?></p>
           <p class="lead">Service charge: <?php echo ceil($no * 0.15); ?>Tn.</p>
