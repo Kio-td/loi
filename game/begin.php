@@ -64,12 +64,14 @@
   var beep = new Howl({volume: 0.05, src: ["../assets/beep.ogg"]});
   var underworld = new Howl({src: ["../assets/underworld.mp3"], autoplay: true, loop: false,});
     x = 0;
+    y = 1;
 function t (s,q,i) {
   console.log(s);
-    if(s[2] == "first-of-string") {x = 1}
+    if(s[2] == "first-of-string") {x = 1; y += 1;}
     if(s[2] == "last-of-string") {x = 2}
-    if(x) {beep.play()
+    if(x) {
       if (x == 2) {x = 0}
+      if (y == 2) {y = 0; beep.play()}
     }
   }
   function o () {
