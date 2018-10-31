@@ -365,7 +365,7 @@ console.log("Pool created - Server is running.");
 			});
 			con.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ? ), '%') order by RAND() limit 1;", cfg.get("user." + uid + ".token", x["atoken"]), function(a,b) {
 				if (a) pdc(a, ip);
-				con.query("INSERT INTO currentbattles (battleid, uid, mid, phealth, mhealth) VALUES (?, ?, ?)", [r, pppp, b[0].uid ])
+				con.query("INSERT INTO currentbattles (battleid, uid, mid, phealth, mhealth) VALUES (?, ?, ?, ?, ?)", [r, pppp, b[0].uid, 0, b[0].hp])
 				try{client.send(
 					json.stringify({battleid: r, story:"STORY FOR BATTLEBOX",mobdata: {name: b[0].name, health: 5,ttlhealth: b[0].hp},playerdata: {name: "PLAYERNAME",health: 5,ttlhealth: 10,inventory: [],effects: [],canfight: true,istripped: false,isproceed: false,isabletoflee: true}}
 				))} catch (e) {pdc(e, ip);}
