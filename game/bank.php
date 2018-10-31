@@ -14,9 +14,9 @@ require("../base/head.php");
 if (isset($_GET["transfer"])) {
   if(isset($_POST["amnt"]) && isset($_POST["un"])) {
     $no = (int) $_POST["amnt"];
-    $x = $conn->escape_string(strtolower($_POST["un"]));
-    $n = $conn->query("Select username from users where username = '".$x."'");
-    if($username === $x) {
+    $l = $conn->escape_string(strtolower($_POST["un"]));
+    $n = $conn->query("Select username from users where username = '".$l."'");
+    if($username === $l) {
       ?>
       <main role="main" class="inner cover">
         <div class="alert alert-danger" role="alert">Please don't send money to yourself.</div>
@@ -60,11 +60,11 @@ if (isset($_GET["transfer"])) {
       if(isset($_POST["confirm"])) {
         $ticket = uniqid("tfr_");
         $conn->query("UPDATE `users` SET `bal`=`bal` - ".($no + ceil($no * 0.15))." WHERE `username` = '".$username."'");
-        $conn->query("UPDATE `users` SET `bal`=`bal` + ".$no." WHERE `username` = '".$x."'");
-        $conn->query("INSERT INTO `ticket`(`tid`, `ufrom`, `uto`, `amnt`) VALUES ('$ticket', '$username', '$x', '$no')");
+        $conn->query("UPDATE `users` SET `bal`=`bal` + ".$no." WHERE `username` = '".$l."'");
+        $conn->query("INSERT INTO `ticket`(`tid`, `ufrom`, `uto`, `amnt`) VALUES ('$ticket', '$username', '$l', '$no')");
         ?>
           <h1 class="cover-heading">Sent</h1>
-          <p class="lead">A charge of <?php echo $no + ceil($no * 0.15); ?>Tn. was deducted from your account, and <?php echo $no; ?>Tn. has been sent to <?php echo $x; ?>.</p>
+          <p class="lead">A charge of <?php echo $no + ceil($no * 0.15); ?>Tn. was deducted from your account, and <?php echo $no; ?>Tn. has been sent to <?php echo $l; ?>.</p>
           <p class="lead">Transaction ID: <?php echo $ticket; ?></p>
           <a class="btn btn-info" href="/game">Home</a>
         <?php
@@ -72,12 +72,13 @@ if (isset($_GET["transfer"])) {
         ?>
         <main role="main" class="inner cover">
           <h1 class="cover-heading">Confirm</h1>
-          <p class="lead">Are you sre you would like to send <?php echo $no . "Tn. to " . $x . "?";?></p>
+          <p class="lead">Are you sre you would like to send <?php echo $no . "Tn. to " . $l . "?";?></p>
           <p class="lead">Service charge: <?php echo ceil($no * 0.15); ?>Tn.</p>
           <form method="post">
-            <input type="hidden" name="un" value="<?php echo $x; ?>"><input type="hidden" name="amnt" value="<?php echo $no; ?>"><input class="btn btn-info" type="submit" name="confirm" value="Charge"><a href="bank" class="btn btn-success">Cancel</a>
+            <input type="hidden" name="un" value="<?php echo $l; ?>"><input type="hidden" name="amnt" value="<?php echo $no; ?>"><input class="btn btn-info" type="submit" name="confirm" value="Charge"><a href="bank" class="btn btn-success">Cancel</a>
           </form>
         <?php
+
       }
     }
 
@@ -104,4 +105,5 @@ if (isset($_GET["transfer"])) {
 
 <?php
 }
-require("../base/feet.php");?>
+require("../base/feet.php");
+?>
