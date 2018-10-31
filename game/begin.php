@@ -71,7 +71,7 @@ function t (s,q,i) {
     if(s[2] == "last-of-string") {x = 2}
     if(x) {
       if (x == 2) {x = 0}
-      if (y == 2) {y = 0; beep.play()}
+      if (y == 2 || y == 0) {y = 0; beep.play()}
     }
   }
   function o () {
