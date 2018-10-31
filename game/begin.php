@@ -65,6 +65,7 @@
   var underworld = new Howl({src: ["../assets/underworld.mp3"], autoplay: true, loop: false,});
     x = 0;
 function t (s,q,i) {
+  console.log(s);
     if(s[2] == "first-of-string") {x = 1}
     if(s[2] == "last-of-string") {x = 2}
     if(x) {beep.play()
