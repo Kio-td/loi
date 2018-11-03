@@ -44,10 +44,9 @@
   $('.writingbox').hide();
    $("body").css("background", "black");
   $('.writingbox').delay(2200).fadeIn();
-  setTimeout(function(){ document.title = "Interesting." }, 2200);
+  setTimeout(function(){ document.title = "My heart." }, 2200);
   $(".btn").hide();
   var beep = new Howl({volume: 0.05, src: ["../assets/beep.ogg"]});
-  var underworld = new Howl({src: ["../assets/underworld.mp3"], autoplay: true, loop: false,});
     x = 0;
     y = 1;
 function t (s,q,i) {
@@ -77,6 +76,7 @@ function t (s,q,i) {
 .pause(3000)
 .empty()
 .type("...Please tell me you at least do.")
+.pause(3000)
 .break()
 .type("..It breaks my heart, knowing I have to do it this way.")
 .pause(3000)
