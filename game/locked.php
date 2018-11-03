@@ -77,7 +77,7 @@ function t (s,q,i) {
 .empty()
 .type("...Please tell me you at least do.")
 .pause(3000)
-.break()
+.empty()
 .type("..It breaks my heart, knowing I have to do it this way.")
 .pause(3000)
 
