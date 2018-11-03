@@ -78,7 +78,8 @@ function t (s,q,i) {
 .empty()
 .type("...Please tell me you at least do.")
 .break()
-.type("..It breaks my heart, knowing I can't be more useful.")
+.type("..It breaks my heart, knowing I have to do it this way.")
+.pause(3000)
 
 
   $(document).ready(function() { $('body').bootstrapMaterialDesign(); });
