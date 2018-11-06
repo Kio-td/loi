@@ -41,7 +41,7 @@ if (isset($_COOKIE["token"])) {
         </div>
         <div class="uc healthbox">
           <span id="playername"></span><br>
-          <span id="playerhealth">15</span>/<span id="playerttlhealth">15</span> HP<br>
+          <span id="playerhealth">15</span>/<span id="playerttlhealth"></span> HP<br>
           <span id="playereffects"><b><u>No Effects</u></b></span>
         </div>
       </div>
@@ -87,9 +87,8 @@ if (isset($_COOKIE["token"])) {
 var back = "451 Char MAX.";
   var story = new TypeIt('.story')
 
-  $('#mobname').text(enemy.name);
+
   $('#mobhealth').text(enemy.health);
-  $('#mobttlhealth').text(enemy.total);
   $('#mobeffects').html("<b><u>No Effects</u></b>");
   story.type(back);
   $('.trip').hide();
@@ -107,7 +106,28 @@ var back = "451 Char MAX.";
     } else if (item == "inv") {
     }
   }
+  x = 0
+  mobdata = null
+  var s = new WebSocket("wss://ws.nayami.party/battle");
+  s.onmessage = function (data) {
+    var dt = json.parse(data);
+    if(dt.msg != undefined && dt.msg == "YOU_ARE_STILL_IN_A_FIGHT") {
+      s.send("{ok:true}");
+    }
+    story.type(dt.story);
+    if (x == 0) {
+      mobdata = dt.battleid;
+      $('#mobname').text(enemy.name);
+      $('#mobttlhealth').text(enemy.total);
 
+      x = 1
+    } else {
+      if (mobdata !== dt.battleid) {
+        s.close(1008, "I'VE BEEN TAMPERED WITH");
+
+      }
+    }
+  }
   $(document).ready(function() { $('body').bootstrapMaterialDesign(); });
   var t = false
   jdetects.create({
