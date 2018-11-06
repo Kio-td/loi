@@ -50,7 +50,7 @@
   <div class=" spritebox"></div>
   <div class="box writingbox"></div>
 </center>
-  <script src="../assets/popper.min.js"></script>
+  <script src="../assets/pop.min.js"></script>
   <script src="../assets/jquery.slim.min.js"></script>
   <script src="../assets/bootstrap-material-design.min.js"></script>
   <script src="../assets/howler.min.js"></script>
