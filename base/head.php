@@ -23,11 +23,7 @@ $x = false;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Team LOI">
-    <script src="/assets/jquery.slim.min.js"></script>
-    <script src="/assets/jdetects.min.js"></script>
-    <script src="/assets/json5.min.js"></script>
-    <script src="/assets/pop.min.js"></script>
-    <script src="/assets/bootstrap-material-design.min.js"></script>
+    <script src="/assets/unify.min.js"></script>
     <script>json = JSON5;</script>
     <title>Legend of Ikaros</title>
     <link rel="stylesheet" href="/assets/bootstrap-material-design.min.css">
