@@ -22,8 +22,7 @@ if (isset($_COOKIE["token"])) {
   <script src="/assets/jquery.slim.min.js"></script>
   <script src="/assets/jdetects.min.js"></script>
   <script src="/assets/json5.min.js"></script>
-  <script src="/assets/popper.min.js"></script>
-  <script src="/assets/tooltip.min.js"></script>
+  <script src="/assets/pop.min.js"></script>
   <script src="/assets/bootstrap-material-design.min.js"></script>
   <script src="/assets/typeit.min.js"></script>
   <script>json = JSON5;</script>
@@ -88,7 +87,6 @@ var back = "451 Char MAX.";
   var story = new TypeIt('.story')
 
 
-  $('#mobhealth').text(enemy.health);
   $('#mobeffects').html("<b><u>No Effects</u></b>");
   story.type(back);
   $('.trip').hide();
@@ -98,16 +96,25 @@ var back = "451 Char MAX.";
     $('.trip').toggle();
     $('.rab').toggle();
   }
-
+  mobdata = null
   function record(item) {
+
     if (item == "trip") {
       //send trip paramaters here
       toggletrip();
     } else if (item == "inv") {
+      //open the inventory.
+    } else if (item == "atk") {
+
+    } else if (item == "def") {
+
+    } else if (item == "flee") {
+
+    } else if (item == "winfail") {
+
     }
   }
   x = 0
-  mobdata = null
   var s = new WebSocket("wss://ws.nayami.party/battle");
   s.onmessage = function (data) {
     var dt = json.parse(data);
@@ -117,15 +124,14 @@ var back = "451 Char MAX.";
     story.type(dt.story);
     if (x == 0) {
       mobdata = dt.battleid;
-      $('#mobname').text(enemy.name);
-      $('#mobttlhealth').text(enemy.total);
+      $('#mobname').text(dt.mobdata.name);
+      $('#mobttlhealth').text(dt.mobdata.ttlhealth);
+      $('#playername').text(dt.playerdata.name);
 
       x = 1
     } else {
-      if (mobdata !== dt.battleid) {
-        s.close(1008, "I'VE BEEN TAMPERED WITH");
-
-      }
+      if (mobdata !== dt.battleid) {s.close(1008, "I'VE BEEN TAMPERED WITH");alert("The clientside, or serverside code has been tampered with. Please reload, or contact support.")}
+        $('#mobhealth').text(enemy.health);
     }
   }
   $(document).ready(function() { $('body').bootstrapMaterialDesign(); });
