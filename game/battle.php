@@ -18,7 +18,7 @@ if (isset($_COOKIE["token"])) {
   <meta name="description" content="">
   <meta name="author" content="Team LOI">
   <link href="/assets/bootstrap-material-design.min.css" rel="stylesheet">
-  <link href="/base/battle.css" rel="stylesheet">
+  <link href="/assets/battle.min.css" rel="stylesheet">
   <script src="/assets/jquery.slim.min.js"></script>
   <script src="/assets/jdetects.min.js"></script>
   <script src="/assets/json5.min.js"></script>

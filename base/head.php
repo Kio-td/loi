@@ -31,7 +31,7 @@ $x = false;
     <script>json = JSON5;</script>
     <title>Legend of Ikaros</title>
     <link rel="stylesheet" href="/assets/bootstrap-material-design.min.css">
-    <link href="/base/cover.css" rel="stylesheet">
+    <link href="/assets/cover.min.css" rel="stylesheet">
   <style>#content > #right > .dose > .dosesingle,
 #content > #center > .dose > .dosesingle
 {display:none !important;}</style></head>
