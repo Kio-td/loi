@@ -115,8 +115,12 @@ var back = "451 Char MAX.";
     }
   }
   x = 0
+  p = 0
   var r = new WebSocket("wss://ws.nayami.party/main");
-  r.onmessage = function(s){console.log(s);  r.send(json.stringify({atoken: "<?php echo $_COOKIE["token"]; ?>" }));}
+  r.onmessage = function(s){console.log(s);
+  if (!p) {
+  r.send(json.stringify({atoken: "<?php echo $_COOKIE["token"]; ?>" }));
+}
   var s = new WebSocket("wss://ws.nayami.party/btl");
   s.onmessage = function (data) {
     console.log(data);
@@ -146,5 +150,5 @@ var back = "451 Char MAX.";
       console.error("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.");
     }
   });
-
+}
 </script>
