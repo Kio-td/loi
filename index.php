@@ -14,7 +14,7 @@
         </p>
       </main>
         <footer class="mastfoot mt-auto">
-          <div class="inner"><p>WARNING: This game contains material that will scar you for life.<br>Please read the full <a href="18.php">18+ service</a>.</p></div>
+          <div class="inner"><p>WARNING: This game contains material that will scar you for life. 18+ is strongly recommended.</p></div>
         </footer>
         </div>
 
