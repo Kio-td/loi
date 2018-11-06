@@ -40,8 +40,8 @@ if (isset($_COOKIE["token"])) {
         </div>
         <div class="uc healthbox">
           <span id="playername"></span><br>
-          <span id="playerhealth">15</span>/<span id="playerttlhealth"></span> HP<br>
-          <span id="playereffects"><b><u>No Effects</u></b></span>
+          <span id="playerhealth"></span>/<span id="playerttlhealth"></span> HP<br>
+          <span id="playereffects"></span>
         </div>
       </div>
       <div class="brdr">
