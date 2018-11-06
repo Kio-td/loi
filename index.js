@@ -365,7 +365,7 @@ console.log("Pool created - Server is running.");
 			con.query("select uid from users where token = ?", [cfg.get("user."+uid+".token")], function(a,b) {
 				pppp = b[0].uid;
 			});
-			con.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ? ), '%') order by RAND() limit 1;", cfg.get("user." + uid + ".token", x["atoken"]), function(a,b) {
+			con.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ? ), '%') order by RAND() limit 1;", cfg.get("user." + uid + ".token"), function(a,b) {
 				if (a) pdc(a, ip);
 				con.query("INSERT INTO currentbattles (battleid, uid, mid, phealth, mhealth) VALUES (?, ?, ?, ?, ?)", [r, pppp, b[0].uid, 0, b[0].hp])
 				try{ws.send(
