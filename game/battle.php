@@ -25,6 +25,7 @@ if (isset($_COOKIE["token"])) {
   <script src="/assets/popper.min.js"></script>
   <script src="/assets/tooltip.min.js"></script>
   <script src="/assets/bootstrap-material-design.min.js"></script>
+  <script src="/assets/typeit.min.js"></script>
   <script>json = JSON5;</script>
   <title>Legend of Ikaros</title>
 </head>
@@ -78,19 +79,20 @@ if (isset($_COOKIE["token"])) {
   </main>
   <script>
 
-
   enemy = new Object();
   enemy.name = "Xavier";
   enemy.health = "120";
   enemy.total = "120";
   enemy.effects = json.parse("[]");
 
+var back = "451 Char MAX.";
+  var story = new TypeIt('.story')
 
   $('#mobname').text(enemy.name);
   $('#mobhealth').text(enemy.health);
   $('#mobttlhealth').text(enemy.total);
   $('#mobeffects').html("<b><u>No Effects</u></b>");
-
+  story.type(back);
   $('.trip').hide();
   $('.proc').hide();
 
