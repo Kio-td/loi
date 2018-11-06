@@ -4,7 +4,8 @@
   mobdata: {
     name: "MOBNAME", //The mob's name.
     health: 5, //The mob's health
-    ttlhealth: 10 //The mob's overall health
+    ttlhealth: 10, //The mob's overall health
+    effects: [] // The mob's effects.
   },
   playerdata: {
     name: "PLAYERNAME",
