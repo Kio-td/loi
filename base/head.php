@@ -26,8 +26,7 @@ $x = false;
     <script src="/assets/jquery.slim.min.js"></script>
     <script src="/assets/jdetects.min.js"></script>
     <script src="/assets/json5.min.js"></script>
-    <script src="/assets/popper.min.js"></script>
-    <script src="/assets/tooltip.min.js"></script>
+    <script src="/assets/pop.min.js"></script>
     <script src="/assets/bootstrap-material-design.min.js"></script>
     <script>json = JSON5;</script>
     <title>Legend of Ikaros</title>
