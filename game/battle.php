@@ -48,7 +48,6 @@ if (isset($_COOKIE["token"])) {
       <div class="brdr">
       </div>
       <div class="story">
-        451 Character MAX
       </div>
     </div>
 
