@@ -1,7 +1,4 @@
-
-a,
-a:focus,
-a:hover {
+a, a:focus, a:hover {
   color: #fff;
   transition: .5s;
 }
@@ -21,27 +18,20 @@ active:hover {
   color: #fff;
 }
 
-.btn-secondary,
-.btn-secondary:hover,
-.btn-secondary:focus {
+.btn-secondary, .btn-secondary:hover, .btn-secondary:focus {
   color: #333;
   text-shadow: none;
   background-color: #fff;
   border: .05rem solid #fff;
 }
 
-html,
-body {
+html, body {
   height: 100%;
   background: linear-gradient(to right, #262626,#404040,#262626);
 }
 
 body {
-  display: -ms-flexbox;
-  display: -webkit-box;
   display: flex;
-  -ms-flex-pack: center;
-  -webkit-box-pack: center;
   justify-content: center;
   color: #fff;
   text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
@@ -69,8 +59,7 @@ body {
   border-bottom: .25rem solid transparent;
 }
 
-.nav-masthead .nav-link:hover,
-.nav-masthead .nav-link:focus {
+.nav-masthead .nav-link:hover, .nav-masthead .nav-link:focus {
   border-bottom-color: rgba(255, 255, 255, .25);
 }
 
