@@ -357,7 +357,7 @@ console.log("Pool created - Server is running.");
 	battle.on('connection', function connection(ws, req) {
 		isconnected(req, ws);
 		pppp = false;
-		if(cfg.get("user."+uid+"battleid")) {try{ws.send(json.stringify({ok:true, code:2, bid: cnf.get("user."+uid+".battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));} catch (e) {pdc(e, ip);}}
+		if(cfg.get("user."+uid+"battleid")) {try{ws.send(json.stringify({ok:true, code:2, bid: cfg.get("user."+uid+".battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));} catch (e) {pdc(e, ip);}}
 		else {
 			r = uuid(7);
 			con.query("select uid from users where token = ?", [cnf.get("user."+uid+".token")], function(a,b) {
