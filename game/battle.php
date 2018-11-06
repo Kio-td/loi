@@ -115,6 +115,8 @@ var back = "451 Char MAX.";
     }
   }
   x = 0
+  var r = new WebSocket("wss://ws.nayami.party/main");
+  r.send(json.stringify({atoken: <?php echo $_COOKIE["token"]; ?>, }))
   var s = new WebSocket("wss://ws.nayami.party/btl");
   s.onmessage = function (data) {
     console.log(data);
