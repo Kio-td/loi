@@ -115,7 +115,7 @@ var back = "451 Char MAX.";
     }
   }
   x = 0
-  var s = new WebSocket("wss://ws.nayami.party/battle");
+  var s = new WebSocket("wss://ws.nayami.party/btl");
   s.onmessage = function (data) {
     var dt = json.parse(data);
     if(dt.msg != undefined && dt.msg == "YOU_ARE_STILL_IN_A_FIGHT") {
