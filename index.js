@@ -362,7 +362,7 @@ console.log("Pool created - Server is running.");
 		if(cfg.get("user."+uid+"battleid")) {try{ws.send(json.stringify({ok:true, code:2, bid: cfg.get("user."+uid+".battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));} catch (e) {pdc(e, ip);}}
 		else {
 			r = uuid(7);
-			con.query("select uid from users where token = ?", [cnf.get("user."+uid+".token")], function(a,b) {
+			con.query("select uid from users where token = ?", [cfg.get("user."+uid+".token")], function(a,b) {
 				pppp = b[0].uid;
 			});
 			con.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ? ), '%') order by RAND() limit 1;", cfg.get("user." + uid + ".token", x["atoken"]), function(a,b) {
