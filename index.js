@@ -356,6 +356,8 @@ console.log("Pool created - Server is running.");
 //Battlesocket, for processing battling sequences
 	battle.on('connection', function connection(ws, req) {
 		isconnected(req, ws);
+		let ip = req.headers['x-forwarded-for'];
+		let uid = ip.replace(/\./g, '');
 		pppp = false;
 		if(cfg.get("user."+uid+"battleid")) {try{ws.send(json.stringify({ok:true, code:2, bid: cfg.get("user."+uid+".battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));} catch (e) {pdc(e, ip);}}
 		else {
