@@ -72,7 +72,7 @@ var ret = new Object({});
 		});
 		return ret
 	}
-	console.log(util.inspect(checkToken("$2y$10$wb1Nz.X4dMCd8kEdpWA3QeUTv.itHBRrX0RsYyO.OCZrQRamtuS3q"));
+	console.log(util.inspect(checkToken("$2y$10$wb1Nz.X4dMCd8kEdpWA3QeUTv.itHBRrX0RsYyO.OCZrQRamtuS3q")));
 
 
 
