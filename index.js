@@ -22,7 +22,7 @@ const battle = new WebSocket.Server(websocketConfig);
 const anon = new WebSocket.Server(websocketConfig);
 
 
-sendmail.setApiKey(config.get("int.sg"));
+sendgrid.setApiKey(config.get("int.sg"));
 
 //Send Emails using the following template. Please leave this alone, it's fine as is.
 function sendemail(to, template, data) {
