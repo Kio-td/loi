@@ -49,7 +49,7 @@ function checkToken(token) {
 		} else {
 			console.log(false)
 			//ws.close(1013, "MID TRAVEL FRAUD");
-			return {auth: false;}
+			return {auth: false}
 		}
 
 	});
