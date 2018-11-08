@@ -7,7 +7,7 @@ const WebSocket = require('ws');
 const mysql = require('mysql2');
 const json = require('json5')
 const url = require('url');
-const websocketConfig = cfg.get('int.websock');
+const websocketConfig = config.get('int.websock');
 const uuid = require('crypto-random-string');
 const httpServer = http.createServer({});
 
@@ -22,7 +22,7 @@ const battle = new WebSocket.Server(g);
 const anon = new WebSocket.Server(g);
 
 
-sendmail.setApiKey(cfg.get("int.sg"));
+sendmail.setApiKey(config.get("int.sg"));
 
 //Send Emails using the following template. Please leave this alone, it's fine as is.
 function sendemail(to, template, data) {
@@ -40,12 +40,12 @@ function sendemail(to, template, data) {
 function isconnected(req, ws) {
 	let ip = req.headers['x-forwarded-for']
 	let uid = ip.replace(/\./g, '');
-	if (cfg.get("user." + uid + ".token") == undefined) {
+	if (config.get("user." + uid + ".token") == undefined) {
 		ws.close(1013);
 	}
 }
 
-let connection = msql.createPool(cfg.get("int.mysql"));
+let connection = msql.createPool(config.get("int.mysql"));
 console.log("Pool created - Server is running.");
 	//Writes errors to the logger.
 	function pdc(error, ip) {
@@ -224,21 +224,21 @@ console.log("Pool created - Server is running.");
 
 
 		console.log(ip + " has connected.");
-		if (cfg.get("user." + uid + ".dontdecon")) {
+		if (config.get("user." + uid + ".dontdecon")) {
 			console.log(ip + " has been recognized.");
-			cfg.remove("user." + uid + ".dontdecon");
+			config.remove("user." + uid + ".dontdecon");
 		}
 		ws.on('close', function dc(code, reason) {
 			console.log(ip + " has disconnected.");
-			if (!cfg.get("user." + uid + ".dontdecon")) {
-				cfg.remove("user." + uid);
+			if (!config.get("user." + uid + ".dontdecon")) {
+				config.remove("user." + uid);
 			}
 		});
-		if (cfg.get("user." + uid) == undefined) {
+		if (config.get("user." + uid) == undefined) {
 			try{ws.send('{code:1}');} catch (e) {pdc(e, ip);}
 			ws.on('message', function incoming(data) {
 				//user is authenticated
-				if (typeof cfg.get("user." + uid) !== "undefined") {
+				if (typeof config.get("user." + uid) !== "undefined") {
 					try {
 						jsonData = json.parse(data);
 					} catch (e) {
@@ -254,7 +254,7 @@ console.log("Pool created - Server is running.");
 						return;
 					} else {
 						if (jsonData["cmd"] == "dontdecon") {
-							cfg.put("user." + uid + ".dontdecon", true);
+							config.put("user." + uid + ".dontdecon", true);
 							try{ws.send(json.stringify({
 								ok: true,
 								msg: "SO_REMEMBER_ME_AND_I_WILL_REMEMBER_YOU",
@@ -272,8 +272,8 @@ console.log("Pool created - Server is running.");
 						let rows = 0
 						connection.query("SELECT username, bal from users where token = ?", [jsonData["atoken"]], function asdf(a, b) {
 							if (b.length == 1) {
-								cfg.put("user." + uid + ".token", jsonData["atoken"]);
-								cfg.put("user." + uid + ".un", b[0].username);
+								config.put("user." + uid + ".token", jsonData["atoken"]);
+								config.put("user." + uid + ".un", b[0].username);
 								console.log(ip + " identified as " + b[0].username + ".");
 								try{ws.send(json.stringify({ ok: true, msg: "I_THOUGHT_I_REMEMBERED_YOU_OWO", code: 5 }));} catch (e) {pdc(e, ip);}
 							} else ws.close(1013);
@@ -304,40 +304,40 @@ console.log("Pool created - Server is running.");
 				} else if (data.split(" ")[0] == "!g") { //Send a message to your guild. This will essentially shout to all of your guild. Not going to setup ATM.
 				} else if (data.split(" ")[0] == "!f") { //Send a message to your friends
 					if (data.split(" ")[1] == "all") {
-						connection.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")], function(a, b) {
+						connection.query("select uid from users where token = ?", [config.get("user." + uid + ".token")], function(a, b) {
 							connection.query("select token from users where uid in (select ut from friends where uf = ?) or uid in (select uf from friends where ut = ?) and ? != uid", [b[0].uid, b[0].uid, b[0].uid], function(c, d) {
 								if (c) pdc(c, ip);
 								d.forEach(function(h) {
 									chat.clients.forEach(function each(client) {
 										if (client.readyState === WebSocket.OPEN) {
-											if (cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token") == h.token) {
-												connection.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(e, f) {
+											if (config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token") == h.token) {
+												connection.query("SELECT citid from users where token = ?", [config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(e, f) {
 													uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
 													if (e) pdc(e, ip);
-													if (f.length == 1) { try{client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f all ", ""), color: "pink" }));} catch (e) {pdc(e, ip);} }
+													if (f.length == 1) { try{client.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data.replace("!f all ", ""), color: "pink" }));} catch (e) {pdc(e, ip);} }
 												});
 											}
 										}
 									});
 								});
-								try{ws.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f all ", ""), color: "pink" }));} catch (e) {pdc(e, ip);}
+								try{ws.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data.replace("!f all ", ""), color: "pink" }));} catch (e) {pdc(e, ip);}
 							});
 						});
 					} else {
 						fun = data.split(" ")[1].toLowerCase();
-						if (fun == cfg.get("user." + uid + ".un")) { try{ws.send(json.stringify({ ok: false, display: "You cannot send a message to yourself." }))} catch (e) {pdc(e, ip);} } else {
+						if (fun == config.get("user." + uid + ".un")) { try{ws.send(json.stringify({ ok: false, display: "You cannot send a message to yourself." }))} catch (e) {pdc(e, ip);} } else {
 
-							connection.query("select uid from users where token = ?", [cfg.get("user." + uid + ".token")], function(f, g) {
+							connection.query("select uid from users where token = ?", [config.get("user." + uid + ".token")], function(f, g) {
 								connection.query("select token from users where username = ? and uid in ( select ut from friends where uf = ? ) or uid in ( select uf from friends where ut = ? )", [fun, g[0].uid, g[0].uid], function(a, b) {
 									if (b.length == 0) { try{ws.send(json.stringify({ ok: false, display: fun + " is not a friend of yours. Are you sure you typed their name correctly?" }))} catch (e) {pdc(e, ip);} } else {
 										chat.clients.forEach(function each(client) {
 											if (client.readyState === WebSocket.OPEN) {
-												connection.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, e) {
+												connection.query("SELECT citid from users where token = ?", [config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, e) {
 													uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
 													if (error) pdc(error, ip);
 													if (b.length == 1) {
-														try{client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));} catch (e) {pdc(e, ip);}
-														try{ws.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));} catch (e) {pdc(e, ip);}
+														try{client.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));} catch (e) {pdc(e, ip);}
+														try{ws.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));} catch (e) {pdc(e, ip);}
 													}
 												});
 											}
@@ -352,10 +352,10 @@ console.log("Pool created - Server is running.");
 				} else {
 					chat.clients.forEach(function each(client) {
 						if (client.readyState === WebSocket.OPEN) {
-							connection.query("SELECT citid from users where token = ?", [cfg.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
+							connection.query("SELECT citid from users where token = ?", [config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
 								uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
 								if (error) pdc(error, ip);
-								if (b.length == 1) { try{client.send(json.stringify({ ok: true, display: cfg.get("user." + uid + ".un") + ">> " + data }));} catch (e) {pdc(e, ip);} }
+								if (b.length == 1) { try{client.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data }));} catch (e) {pdc(e, ip);} }
 							});
 						}
 					});
@@ -371,14 +371,14 @@ console.log("Pool created - Server is running.");
 		let ip = req.headers['x-forwarded-for'];
 		let uid = ip.replace(/\./g, '');
 		pppp = false;
-		if(cfg.get("user."+uid+"battleid")) {try{ws.send(json.stringify({ok:true, code:2, bid: cfg.get("user."+uid+".battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));} catch (e) {pdc(e, ip);}}
+		if(config.get("user."+uid+"battleid")) {try{ws.send(json.stringify({ok:true, code:2, bid: config.get("user."+uid+".battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));} catch (e) {pdc(e, ip);}}
 		else {
 			r = uuid(7);
-			connection.query("select uid from users where token = ?", [cfg.get("user."+uid+".token")], function(error,b) {
+			connection.query("select uid from users where token = ?", [config.get("user."+uid+".token")], function(error,b) {
 				pppp = b[0].uid;
 			});
-			console.log(cfg.get("user." + uid + ".token"));
-			connection.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ? ), '%') order by RAND() limit 1;", [cfg.get("user." + uid + ".token")], function(error,b) {
+			console.log(config.get("user." + uid + ".token"));
+			connection.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ? ), '%') order by RAND() limit 1;", [config.get("user." + uid + ".token")], function(error,b) {
 				if (error) pdc(error, ip);
 				connection.query("INSERT INTO currentbattles (battleid, uid, mid, phealth, mhealth) VALUES (?, ?, ?, ?, ?)", [r, pppp, b[0].uid, 0, b[0].hp])
 				try{ws.send(
