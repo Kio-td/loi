@@ -72,7 +72,7 @@ console.log("Pool created - Server is running.");
 		});
 		return ret;
 	}
-	throw checkToken("$2y$10$wb1Nz.X4dMCd8kEdpWA3QeUTv.itHBRrX0RsYyO.OCZrQRamtuS3q");
+	console.log(checkToken("$2y$10$wb1Nz.X4dMCd8kEdpWA3QeUTv.itHBRrX0RsYyO.OCZrQRamtuS3q"));
 
 
 
