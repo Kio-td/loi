@@ -7,6 +7,7 @@ const WebSocket = require('ws');
 const mysql = require('mysql2');
 const json = require('json5')
 const url = require('url');
+const util = require('util');
 const uuid = require('crypto-random-string');
 const httpServer = http.createServer({});
 
@@ -71,7 +72,7 @@ var ret = new Object({});
 		});
 		return ret
 	}
-	throw checkToken("$2y$10$wb1Nz.X4dMCd8kEdpWA3QeUTv.itHBRrX0RsYyO.OCZrQRamtuS3q");
+	console.log(util.inspect(checkToken("$2y$10$wb1Nz.X4dMCd8kEdpWA3QeUTv.itHBRrX0RsYyO.OCZrQRamtuS3q"));
 
 
 
