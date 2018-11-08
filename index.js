@@ -389,7 +389,7 @@ console.log("Pool created - Server is running.");
 	});
 
 //Main server module. change anything here and I will kill you.
-	http.on('upgrade', function upgrade(request, socket, head) {
+	httpServer.on('upgrade', function upgrade(request, socket, head) {
 		const pathname = url.parse(request.url).pathname;
 
 		if (pathname === '/main') {
@@ -414,4 +414,4 @@ console.log("Pool created - Server is running.");
 	});
 
  //Main port for server.
-	http.listen(2053);
+	httpServer.listen(2053);
