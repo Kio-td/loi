@@ -54,10 +54,9 @@ console.log("Pool created - Server is running.");
 			connection.query("INSERT INTO `pagelog`(`eid`, `ip`, `page`, `toe`) VALUES (?,?,?,NOW())", ["SE_"+uuid(13), ip, json.stringify(error)]);
 	}
 
-
+var ret = new Object({});
 	//, req, ws
 	function checkToken(token) {
-		var ret = 3;
 		//let ip = req.headers['x-forwarded-for'];
 		connection.query("SELECT username, bal, guild, citid from users where token = ?", token, function (error, results) {
 			//if (error) {pdc(error, ip);}
