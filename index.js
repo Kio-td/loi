@@ -7,19 +7,19 @@ const WebSocket = require('ws');
 const mysql = require('mysql2');
 const json = require('json5')
 const url = require('url');
-const websocketConfig = config.get('int.websock');
 const uuid = require('crypto-random-string');
 const httpServer = http.createServer({});
 
 //Global variables
 //These usernames are banned from being registered, in part or in full.
+const websocketConfig = new Object({noServer: true});
 const blacklist = ["all", "ikaros", "admin", "console", "sysadmin", "owner", "dev", "developer", "support", "superuser", "root", "system", "bot", "npc"];
 
 //Webserver Sockets
-const main = new WebSocket.Server(g);
-const chat = new WebSocket.Server(g);
-const battle = new WebSocket.Server(g);
-const anon = new WebSocket.Server(g);
+const main = new WebSocket.Server(websocketConfig);
+const chat = new WebSocket.Server(websocketConfig);
+const battle = new WebSocket.Server(websocketConfig);
+const anon = new WebSocket.Server(websocketConfig);
 
 
 sendmail.setApiKey(config.get("int.sg"));
