@@ -37,6 +37,28 @@ function sendemail(to, template, data) {
 
 //Function to check whether or not the user is authenticated.
 //TODO: Full makeover of auth system from 1AUTH to Auth every request
+
+//, req, ws
+function checkToken(token) {
+	//let ip = req.headers['x-forwarded-for'];
+	connection.query("SELECT username, bal, guild, citid from users where token = ?", token, function (error, results) {
+		//if (error) {pdc(error, ip);}
+		//else
+		if (b.length == 1) {
+			return {auth: true, name: results[0].username, balance: results[0].bal, guildid: results[0].guild, city: results[0].citid};
+		} else {
+			console.log(false)
+			//ws.close(1013, "MID TRAVEL FRAUD");
+			return {auth: false;}
+		}
+
+	});
+
+
+}
+throw checkToken("$2y$10$wb1Nz.X4dMCd8kEdpWA3QeUTv.itHBRrX0RsYyO.OCZrQRamtuS3q");
+
+
 function isconnected(req, ws) {
 	let ip = req.headers['x-forwarded-for']
 	let uid = ip.replace(/\./g, '');
