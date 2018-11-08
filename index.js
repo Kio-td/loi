@@ -61,6 +61,7 @@ var ret = new Object({});
 		//let ip = req.headers['x-forwarded-for'];
 		connection.query("SELECT username, bal, guild, citid from users where token = ?", token, function (error, results) {
 			//if (error) {pdc(error, ip);}
+			if(error) throw error;
 			//else
 			if (results.length == 1) {
 				ret = {auth: true, name: results[0].username, balance: results[0].bal, guildid: results[0].guild, city: results[0].citid};
@@ -70,7 +71,7 @@ var ret = new Object({});
 				ret = {auth: false}
 			}
 		});
-		return ret
+		return ret;
 	}
 	console.log(util.inspect(checkToken("$2y$10$wb1Nz.X4dMCd8kEdpWA3QeUTv.itHBRrX0RsYyO.OCZrQRamtuS3q")));
 
