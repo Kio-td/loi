@@ -55,7 +55,7 @@ console.log("Pool created - Server is running.");
 			connection.query("INSERT INTO `pagelog`(`eid`, `ip`, `page`, `toe`) VALUES (?,?,?,NOW())", ["SE_"+uuid(13), ip, json.stringify(error)]);
 	}
 
-var ret = new Object({});
+var ret = null;
 	//, req, ws
 	function checkToken(token) {
 		//let ip = req.headers['x-forwarded-for'];
@@ -64,11 +64,11 @@ var ret = new Object({});
 			if(error) throw error;
 			//else
 			if (results.length == 1) {
-				ret = Object({auth: true, name: results[0].username, balance: results[0].bal, guildid: results[0].guild, city: results[0].citid});
+				ret = new Object({auth: true, name: results[0].username, balance: results[0].bal, guildid: results[0].guild, city: results[0].citid});
 			} else {
 				console.log(false)
 				//ws.close(1013, "MID TRAVEL FRAUD");
-				ret = Object({auth: false});
+				ret = new Object({auth: false});
 			}
 		});
 		return ret;
