@@ -56,28 +56,20 @@ console.log("Pool created - Server is running.");
 	}
 
 
-	//, req, ws
-	function checkToken(token) {
+	function checkToken(token, req, ws) {
 		var ret = null;
-		console.log(ret);
-		//let ip = req.headers['x-forwarded-for'];
+		let ip = req.headers['x-forwarded-for'];
 		connection.query("SELECT username, bal, guild, citid from users where token = ?", token, function (error, results) {
-			//if (error) {pdc(error, ip);}
-			if(error) throw error;
-			//else
-			if (results.length == 1) {
-				ret = new Object({auth: true, name: results[0].username, balance: results[0].bal, guildid: results[0].guild, city: results[0].citid});
-				console.log(ret);
+			if (error) {pdc(error, ip);}
+			else if (results.length == 1) {
+				ret = new Object({auth: true, name: results[0].username, balance: results[0].bal, guildid: results[0].guild, city: results[0].citid});0
 			} else {
-				console.log(false)
-				//ws.close(1013, "MID TRAVEL FRAUD");
+				ws.close(1013, "MID TRAVEL FRAUD");
 				ret = new Object({auth: false});
-				console.log(ret);
 			}
 		});
 		return ret;
 	}
-	console.log(util.inspect(checkToken("$2y$10$wb1Nz.X4dMCd8kEdpWA3QeUTv.itHBRrX0RsYyO.OCZrQRamtuS3q")));
 
 
 
