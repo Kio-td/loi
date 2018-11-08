@@ -62,7 +62,7 @@ console.log("Pool created - Server is running.");
 		connection.query("SELECT username, bal, guild, citid from users where token = ?", token, function (error, results) {
 			//if (error) {pdc(error, ip);}
 			//else
-			if (b.length == 1) {
+			if (results.length == 1) {
 				ret = {auth: true, name: results[0].username, balance: results[0].bal, guildid: results[0].guild, city: results[0].citid};
 			} else {
 				console.log(false)
