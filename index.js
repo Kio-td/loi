@@ -64,11 +64,11 @@ var ret = new Object({});
 			if(error) throw error;
 			//else
 			if (results.length == 1) {
-				ret = {auth: true, name: results[0].username, balance: results[0].bal, guildid: results[0].guild, city: results[0].citid};
+				ret = Object({auth: true, name: results[0].username, balance: results[0].bal, guildid: results[0].guild, city: results[0].citid});
 			} else {
 				console.log(false)
 				//ws.close(1013, "MID TRAVEL FRAUD");
-				ret = {auth: false}
+				ret = Object({auth: false});
 			}
 		});
 		return ret;
