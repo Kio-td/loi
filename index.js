@@ -57,7 +57,7 @@ console.log("Pool created - Server is running.");
 
 	//, req, ws
 	function checkToken(token) {
-		var t;
+		var ret;
 		//let ip = req.headers['x-forwarded-for'];
 		connection.query("SELECT username, bal, guild, citid from users where token = ?", token, function (error, results) {
 			//if (error) {pdc(error, ip);}
@@ -69,8 +69,8 @@ console.log("Pool created - Server is running.");
 				//ws.close(1013, "MID TRAVEL FRAUD");
 				ret = {auth: false}
 			}
-			return ret;
 		});
+		return ret;
 	}
 	throw checkToken("$2y$10$wb1Nz.X4dMCd8kEdpWA3QeUTv.itHBRrX0RsYyO.OCZrQRamtuS3q");
 
