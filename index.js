@@ -166,7 +166,6 @@ console.log("Pool created - Server is running.");
 									try{ws.send(json.stringify({ok:true, code:4, data:"LOGIN_AGAIN"}));} catch (e) {logToSQL(e, ip);}
 								});
 							}
-						}
 					});
 				}
 					return;
@@ -357,8 +356,6 @@ console.log("Pool created - Server is running.");
 				} else {
 					friendUsername = data.split(" ")[1].toLowerCase();
 					if (friendUsername == config.get("user." + uid + ".un")) { try{ws.send(json.stringify({ ok: false, display: "You cannot send a message to yourself." }))} catch (e) {logToSQL(e, ip);} } else {
-
-						connection.query("", [config.get("user." + uid + ".token")], function(f, g) {
 							connection.query("select token from users where username = ? and uid in ( select ut from friends where uf in (select uid from users where token = ?) ) or uid in ( select uf from friends where ut in (select uid from users where token = ?) )", [friendUsername, config.get("user." + uid + ".token"), config.get("user." + uid + ".token")], function(a, b) {
 								if (b.length == 0) { try{ws.send(json.stringify({ ok: false, display: friendUsername + " is not a friend of yours. Are you sure you typed their name correctly?" }))} catch (e) {logToSQL(e, ip);} } else {
 									chat.clients.forEach(function each(client) {
@@ -375,7 +372,6 @@ console.log("Pool created - Server is running.");
 									});
 								}
 							});
-						});
 					}
 				}
 				return;
