@@ -217,7 +217,6 @@ console.log("Pool created - Server is running.");
 					try{ws.send(json.stringify({ok:false, code:-3, msg:"NO_DATA_FOUND"}));} catch (e) {logToSQL(e, ip);}
 				} else {
 					n = d.data;
-					//un, em, pw, sp
 					n.username = n.un.toLowerCase();
 					n.email = n.em.toLowerCase();
 					connection.query("select username from users where username = ? or email = ?", [n.username, n.email], function (a, b) {
@@ -226,7 +225,7 @@ console.log("Pool created - Server is running.");
 						else {
 							token = uuid(30);
 							confirmEmail = uuid(30);
-							connection.query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);", [n.username, password.hash(n.password),n.email, token, confirmEmail, n.sp], function (a) {
+							connection.query("INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);", [n.username, password.hash(n.pw), n.email, token, confirmEmail, n.sp], function (a) {
 								if (error) logToSQL(error, ip);
 								sendemail(n.em, "d-01419621eb244bd29bb43c34fcd6b5dd", {username: n.un, url: "https://loi.nayami.party/game/login?confirm=" + confirmEmail + "&username=" + n.un});
 								try{ws.send(json.stringify({ok:true, code:4, msg:"CHECK_EMAIL"}));} catch (e) {logToSQL(e, ip);}
