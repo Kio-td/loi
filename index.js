@@ -326,71 +326,76 @@ console.log("Pool created - Server is running.");
 			data = data.split(/\r?\n|\r/g)[0].replace(/\</g, '&lt;').replace(/\>/g, '&gt;').trim(); //Make sure no true HTMl is passed into the server.
 			if (data.length >= 80) { // If the message is over 80 characters, whisper to the character that the message has been voided.
 				try{ws.send(json.stringify({ ok: false, display: "*Your voice falls on deaf ears. (Too many characters.)", color: "red" }));} catch (e) {logToSQL(e, ip);}
-				ds = 1
+				return;
 			}
-			if (ds == 0) {
-				if (data.split(" ")[0] == "!s") { //Shouting, if this is ommitted then only the people in your town will hear you.
+
+			switch (data.split(" ")[0]) {
+				case "!s":
 					try{ws.send(json.stringify({ ok: false, display: "*Shouts are not setup yet.", color: "red" }));} catch (e) {logToSQL(e, ip);}
-				} else if (data.split(" ")[0] == "!g") { //Send a message to your guild. This will essentially shout to all of your guild. Not going to setup ATM.
-				} else if (data.split(" ")[0] == "!f") { //Send a message to your friends
-					if (data.split(" ")[1] == "all") {
-						connection.query("select uid from users where token = ?", [config.get("user." + uid + ".token")], function(a, b) {
-							connection.query("select token from users where uid in (select ut from friends where uf = ?) or uid in (select uf from friends where ut = ?) and ? != uid", [b[0].uid, b[0].uid, b[0].uid], function(c, d) {
-								if (c) logToSQL(c, ip);
-								d.forEach(function(h) {
+					return;
+
+				case "!g":
+				return;
+
+				case "!f":
+				if (data.split(" ")[1].toLowerCase() == "all") {
+						connection.query("select token from users where uid in (select ut from friends where uf in (select uid from users where token = ?)) or uid in (select uf from friends where ut in (select uid from users where token = ?)) and uid not in (select uid from users where token = ?)", [config.get("user." + uid + ".token"), config.get("user." + uid + ".token"), config.get("user." + uid + ".token")], function(c, d) {
+							if (c) logToSQL(c, ip);
+							d.forEach(function(h) {
+								chat.clients.forEach(function each(client) {
+									if (client.readyState === WebSocket.OPEN && config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token") == h.token) {
+											connection.query("SELECT citid from users where token = ?", [config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(e, f) {
+												uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
+												if (e) logToSQL(e, ip);
+												if (f.length == 1) { try{client.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data.replace("!f all ", ""), color: "pink" }));} catch (e) {logToSQL(e, ip);} }
+											});
+										}
+								});
+							});
+							try{ws.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data.replace("!f all ", ""), color: "pink" }));} catch (e) {logToSQL(e, ip);}
+						});
+				} else {
+					friendUsername = data.split(" ")[1].toLowerCase();
+					if (friendUsername == config.get("user." + uid + ".un")) { try{ws.send(json.stringify({ ok: false, display: "You cannot send a message to yourself." }))} catch (e) {logToSQL(e, ip);} } else {
+
+						connection.query("", [config.get("user." + uid + ".token")], function(f, g) {
+							connection.query("select token from users where username = ? and uid in ( select ut from friends where uf in (select uid from users where token = ?) ) or uid in ( select uf from friends where ut in (select uid from users where token = ?) )", [friendUsername, config.get("user." + uid + ".token"), config.get("user." + uid + ".token")], function(a, b) {
+								if (b.length == 0) { try{ws.send(json.stringify({ ok: false, display: friendUsername + " is not a friend of yours. Are you sure you typed their name correctly?" }))} catch (e) {logToSQL(e, ip);} } else {
 									chat.clients.forEach(function each(client) {
 										if (client.readyState === WebSocket.OPEN) {
-											if (config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token") == h.token) {
-												connection.query("SELECT citid from users where token = ?", [config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(e, f) {
-													uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
-													if (e) logToSQL(e, ip);
-													if (f.length == 1) { try{client.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data.replace("!f all ", ""), color: "pink" }));} catch (e) {logToSQL(e, ip);} }
-												});
-											}
+											connection.query("SELECT citid from users where token = ?", [config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, e) {
+												uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
+												if (error) logToSQL(error, ip);
+												if (b.length == 1) {
+													try{client.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data.replace("!f " + friendUsername + " ", ""), color: "pink" }));} catch (e) {logToSQL(e, ip);}
+													try{ws.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data.replace("!f " + friendUsername + " ", ""), color: "pink" }));} catch (e) {logToSQL(e, ip);}
+												}
+											});
 										}
 									});
-								});
-								try{ws.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data.replace("!f all ", ""), color: "pink" }));} catch (e) {logToSQL(e, ip);}
+								}
 							});
 						});
-					} else {
-						fun = data.split(" ")[1].toLowerCase();
-						if (fun == config.get("user." + uid + ".un")) { try{ws.send(json.stringify({ ok: false, display: "You cannot send a message to yourself." }))} catch (e) {logToSQL(e, ip);} } else {
-
-							connection.query("select uid from users where token = ?", [config.get("user." + uid + ".token")], function(f, g) {
-								connection.query("select token from users where username = ? and uid in ( select ut from friends where uf = ? ) or uid in ( select uf from friends where ut = ? )", [fun, g[0].uid, g[0].uid], function(a, b) {
-									if (b.length == 0) { try{ws.send(json.stringify({ ok: false, display: fun + " is not a friend of yours. Are you sure you typed their name correctly?" }))} catch (e) {logToSQL(e, ip);} } else {
-										chat.clients.forEach(function each(client) {
-											if (client.readyState === WebSocket.OPEN) {
-												connection.query("SELECT citid from users where token = ?", [config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, e) {
-													uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
-													if (error) logToSQL(error, ip);
-													if (b.length == 1) {
-														try{client.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));} catch (e) {logToSQL(e, ip);}
-														try{ws.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data.replace("!f " + fun + " ", ""), color: "pink" }));} catch (e) {logToSQL(e, ip);}
-													}
-												});
-											}
-										});
-									}
-								});
-							});
-						}
 					}
-				} else if (data.split(" ")[0] == "!p") {
-					//Party
-				} else {
-					chat.clients.forEach(function each(client) {
-						if (client.readyState === WebSocket.OPEN) {
-							connection.query("SELECT citid from users where token = ?", [config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
-								uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
-								if (error) logToSQL(error, ip);
-								if (b.length == 1) { try{client.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data }));} catch (e) {logToSQL(e, ip);} }
-							});
-						}
-					});
 				}
+				return;
+
+				case "!p":
+
+				return;
+
+				default:
+				chat.clients.forEach(function each(client) {
+					if (client.readyState === WebSocket.OPEN) {
+						connection.query("SELECT citid from users where token = ?", [config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(a, b) {
+							uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
+							if (error) logToSQL(error, ip);
+							if (b.length == 1) { try{client.send(json.stringify({ ok: true, display: config.get("user." + uid + ".un") + ">> " + data }));} catch (e) {logToSQL(e, ip);} }
+						});
+					}
+				});
 			}
+
 
 		});
 	});
