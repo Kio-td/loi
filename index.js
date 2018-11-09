@@ -269,11 +269,13 @@ console.log("Pool created - Server is running.");
 						}));} catch (e) {pdc(e, ip);}
 						return;
 					}
-					if (jsonData["cmd"] == undefined) {
-						try{ws.send(json.stringify({ ok: false, msg: "cmd_not_found", code: -1 }));} catch (e) {pdc(e, ip);}
-						return;
-					} else {
-						if (jsonData["cmd"] == "dontdecon") {
+					//Main commands for the main server.
+					switch (jsonData["cmd"]) {
+						case undefined:
+							try{ws.send(json.stringify({ ok: false, msg: "cmd_not_found", code: -1 }));} catch (e) {pdc(e, ip);}
+							return;
+
+						case "dontdecon":
 							config.put("user." + uid + ".dontdecon", true);
 							try{ws.send(json.stringify({
 								ok: true,
@@ -281,9 +283,9 @@ console.log("Pool created - Server is running.");
 								code: 2152
 							}));} catch (e) {pdc(e, ip);}
 							return;
-						} else if (jsonData["cmd"] == "charge") {
-
-						}
+						case "charge":
+							//Todo - Charge fee and return ticket, which will be used to later process in the client.
+							return;
 					}
 				} else {
 					try { jsonData = json.parse(data); } catch (e) { ws.close(1013); return; }
@@ -387,9 +389,7 @@ console.log("Pool created - Server is running.");
 
 //Battlesocket, for processing battling sequences
 	battle.on('connection', function connection(ws, req) {
-		isconnected(req, ws);
-		let ip = req.headers['x-forwarded-for'];
-		let uid = ip.replace(/\./g, '');
+
 		pppp = false;
 		if(config.get("user."+uid+"battleid")) {try{ws.send(json.stringify({ok:true, code:2, bid: config.get("user."+uid+".battleid"), msg:"YOU_ARE_STILL_IN_A_FIGHT"}));} catch (e) {pdc(e, ip);}}
 		else {
@@ -411,24 +411,28 @@ console.log("Pool created - Server is running.");
 //Main server module. change anything here and I will kill you.
 	httpServer.on('upgrade', function upgrade(request, socket, head) {
 		const pathname = url.parse(request.url).pathname;
+		switch (pathname) {
+			case "/main":
+				main.handleUpgrade(request, socket, head, function done(ws) {
+				main.emit('connection', ws, request);});
+				break;
 
-		if (pathname === '/main') {
-			main.handleUpgrade(request, socket, head, function done(ws) {
-				main.emit('connection', ws, request);
-			});
-		} else if (pathname === '/chat') {
-			chat.handleUpgrade(request, socket, head, function done(ws) {
-				chat.emit('connection', ws, request);
-			});
-		} else if (pathname === '/btl') {
-			battle.handleUpgrade(request, socket, head, function done(ws) {
-				battle.emit('connection', ws, request);
-			});
-		} else if (pathname === '/anon') {
-			anon.handleUpgrade(request, socket, head, function done(ws) {
-				anon.emit('connection', ws, request);
-			});
-		} else {
+			case "/chat":
+				chat.handleUpgrade(request, socket, head, function done(ws) {
+					chat.emit('connection', ws, request);
+				});
+				break;
+			case "/btl":
+				battle.handleUpgrade(request, socket, head, function done(ws) {
+					battle.emit('connection', ws, request);
+				});
+				break;
+			case "/anon":
+				anon.handleUpgrade(request, socket, head, function done(ws) {
+					anon.emit('connection', ws, request);
+				});
+				break;
+			default:
 			socket.destroy();
 		}
 	});
