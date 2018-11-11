@@ -22,7 +22,7 @@ const chat = new WebSocket.Server(websocketConfig);
 const battle = new WebSocket.Server(websocketConfig);
 const anon = new WebSocket.Server(websocketConfig);
 
-
+//Set the API Key for the mail service.
 sendgrid.setApiKey(config.get("int.sg"));
 
 //Send Emails using the following template. Please leave this alone, it's fine as is.
@@ -268,11 +268,7 @@ console.log("Pool created - Server is running.");
 					try {
 						jsonData = json.parse(data);
 					} catch (e) {
-						try{ws.send(json.stringify({
-							ok: false,
-							msg: "not_JSON5",
-							code: -2
-						}));} catch (e) {logToSQL(e, ip);}
+						try{ws.send(json.stringify({ok: false, msg: "not_JSON5", code: -2}));} catch (e) {logToSQL(e, ip);}
 						return;
 					}
 					//Main commands for the main server.
@@ -283,11 +279,7 @@ console.log("Pool created - Server is running.");
 
 						case "dontdecon":
 							config.put("user." + uid + ".dontdecon", true);
-							try{ws.send(json.stringify({
-								ok: true,
-								msg: "SO_REMEMBER_ME_AND_I_WILL_REMEMBER_YOU",
-								code: 2152
-							}));} catch (e) {logToSQL(e, ip);}
+							try{ws.send(json.stringify({ok: true, msg: "SO_REMEMBER_ME_AND_I_WILL_REMEMBER_YOU", code: 2152}));} catch (e) {logToSQL(e, ip);}
 							return;
 						case "charge":
 							//Todo - Charge fee and return ticket, which will be used to later process in the client.
@@ -341,7 +333,7 @@ console.log("Pool created - Server is running.");
 							if (c) logToSQL(c, ip);
 							d.forEach(function(h) {
 								chat.clients.forEach(function each(client) {
-									if (client.readyState === WebSocket.OPEN && config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token") == h.token) {
+									if (client.readyState === WebSocket.OPEN && config.get("user." + uid + ".token") == h.token) {
 											connection.query("SELECT citid from users where token = ?", [config.get("user." + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + ".token")], function a(e, f) {
 												uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '');
 												if (e) logToSQL(e, ip);
