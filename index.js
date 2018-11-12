@@ -303,6 +303,7 @@ chat.on('connection', function connection (ws, req) {
         return
 
       case '!g':
+        try { ws.send(json.stringify({ ok: false, display: '*Guilds are not setup yet.', color: 'red' })) } catch (errorData) { logToSQL(errorData, ip) }
         return
 
       case '!f':
@@ -346,7 +347,7 @@ chat.on('connection', function connection (ws, req) {
         return
 
       case '!p':
-
+        try { ws.send(json.stringify({ ok: false, display: '*Party Talking is not setup yet.', color: 'red' })) } catch (errorData) { logToSQL(errorData, ip) }
         return
 
       default:
