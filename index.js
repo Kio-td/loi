@@ -290,7 +290,7 @@ chat.on('connection', function connection (ws, req) {
   isconnected(req, ws)
   ws.on('message', function msg (chatData) {
     let ip = req.headers['x-forwarded-for']
-    lechatDatat uid = ip.replace(/\./g, '')
+    let uid = ip.replace(/\./g, '')
     chatData = chatData.split(/\r?\n|\r/g)[0].replace(/</g, '&lt;').replace(/>/g, '&gt;').trim() // Make sure no true HTMl is passed into the server.
     if (chatData.length >= 80) { // If the message is over 80 characters, whisper to the character that the message has been voided.
       try { ws.send(json.stringify({ ok: false, display: '*Your voice falls on deaf ears. (Too many characters.)', color: 'red' })) } catch (errorData) { logToSQL(errorData, ip) }
