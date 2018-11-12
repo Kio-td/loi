@@ -5,7 +5,6 @@ This is the front-end of LOI. If you are looking for the backend, please choose 
 ----
 #### Table of Contents
 <ul>
-  <li><a href="#copyright">Copyright info</a></li>
   <li><a href="#boiler">Boiler Template</a></li>
 </ul>
 
@@ -15,10 +14,7 @@ This is the front-end of LOI. If you are looking for the backend, please choose 
 This repository, and its contents are to be kept confidential.
 
 # Copyright
-This project is the property of KTD Software. You understand that all items that are submitted, whether deleted, stored, or kept is forefit of your copyright priveleges, and instead are copyrighted to KTD Software.
-
-<b>This is non-neogotiable.</b>
-</div>
+(c) 2018-2019, KTD Software.
 
 # Boiler Template
 
