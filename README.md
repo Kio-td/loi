@@ -11,7 +11,7 @@ This is the front-end of LOI. If you are looking for the backend, please choose 
 ----
 
 # Important
-This repository, and its contents are to be kept confidential.
+This repository is still closed-source. Unauthorizedly running this game publicly can result in prosecution.
 
 # Copyright
 (c) 2018-2019, KTD Software.
