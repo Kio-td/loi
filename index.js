@@ -1,7 +1,10 @@
-/* jshint esversion: 6 */
-/* jshint -W002 */
-const configStore = require('node-storage')
-const config = new configStore('./config/local.json') // eslint-disable-line
+/* Conventions followed:
+  -crockford.com/javascript/code.html
+  -StandardJS
+
+ jshint -W002 esversion: 6 */
+const ConfigStore = require('node-storage')
+const config = new ConfigStore('./config/local.json')
 const http = require('http')
 const sendgrid = require('@sendgrid/mail')
 const password = require('node-php-password')
@@ -15,14 +18,15 @@ var errorData
 
 // Global variables
 // These usernames are banned from being registered, in part or in full.
-const websocketConfig = Object({ noServer: true })
 const blacklist = ['all', 'ikaros', 'admin', 'console', 'sysadmin', 'owner', 'dev', 'developer', 'support', 'superuser', 'root', 'system', 'bot', 'npc']
 
 // Webserver Sockets
-const main = new WebSocket.Server(websocketConfig)
-const chat = new WebSocket.Server(websocketConfig)
-const battle = new WebSocket.Server(websocketConfig)
-const anon = new WebSocket.Server(websocketConfig)
+const websocketConfig = { noServer: true } // The Websocket's default configuration.
+// Create all the websockets here.
+const main = new WebSocket.Server(websocketConfig) // The Main Websocket.
+const chat = new WebSocket.Server(websocketConfig) // The Chat Service.
+const battle = new WebSocket.Server(websocketConfig) // The socket dedicated to battles.
+const anon = new WebSocket.Server(websocketConfig) // The Anonymous
 
 // Set the API Key for the mail service.
 sendgrid.setApiKey(config.get('int.sg'))
@@ -30,42 +34,41 @@ sendgrid.setApiKey(config.get('int.sg'))
 // Send Emails using the following template. Please leave this alone, it's fine as is.
 function sendemail (to, template, data) {
   let msg = {
-    to: to,
-    from: 'Legend of Ikaros <Noreply@loi.nayami.party>',
-    templateId: template,
-    dynamic_template_data: data
+    to: to, // Supply the email.
+    from: 'Legend of Ikaros <Noreply@loi.nayami.party>', // Supply the From Email.
+    templateId: template, // Supply the template ID, created in Sendgrid.
+    dynamic_template_data: data // Submit any Data that might be necessary.
   }
-  sendgrid.send(msg)
+  sendgrid.send(msg) // Send the message.
 }
 
 // Function to check whether or not the user is authenticated.
 // TODO: Full makeover of auth system from 1AUTH to Auth every request
 
-function isconnected (req, ws) {
-  let ip = req.headers['x-forwarded-for']
-  let uid = ip.replace(/\./g, '')
+function isconnected (req, ws) { // OUTDATED - NEED TO CONVERT TO checkToken().
+  let ip = req.headers['x-forwarded-for'] // Get the NGINX "True IP".
+  let uid = ip.replace(/\./g, '') // Create a UID by removing the dots of an IP.
   if (config.get('user.' + uid + '.token') === undefined) {
-    ws.close(1013)
+    ws.close(1013) //
   }
 }
 
-let connection = mysql.createPool(config.get('int.mysql'))
+let connection = mysql.createPool(config.get('int.mysql')) // Create a MySQL2 Connection Pool.
 console.log('Pool created - Server is running.')
 // Writes errors to the logger.
 function logToSQL (errorData, ip) {
   console.warn(errorData)
-  connection.query('INSERT INTO `pagelog`(`eid`, `ip`, `page`, `toe`) VALUES (?,?,?,NOW())', ['SE_' + uuid(13), ip, json.stringify(errorData)])
+  connection.query('INSERT INTO `pagelog`(`eid`, `ip`, `page`, `toe`) VALUES (?,?,?,NOW())', ['SE_' + uuid(13), ip, json.stringify(errorData)]) // Use another connection from the pool to log the error data.
 }
 
 function checkToken (token, req, ws) {// eslint-disable-line
-  var ret = null
-  let ip = req.headers['x-forwarded-for']
+  var ret; var ip = req.headers['x-forwarded-for']
   connection.query('SELECT username, bal, guild, citid from users where token = ?', token, function (errorData, results) {
     if (errorData) { logToSQL(errorData, ip) } else if (results.length === 1) {
-      ret = Object({ auth: true, name: results[0].username, balance: results[0].bal, guildid: results[0].guild, city: results[0].citid })
+      ret = { auth: true, name: results[0].username, balance: results[0].bal, guildid: results[0].guild, city: results[0].citid }
     } else {
       ws.close(1013, 'MID TRAVEL FRAUD')
-      ret = Object({ auth: false })
+      ret = { auth: false }
     }
   })
   return ret
@@ -75,50 +78,45 @@ function checkToken (token, req, ws) {// eslint-disable-line
 anon.on('connection', function (ws, req) {
   let ip = req.headers['x-forwarded-for']
 
-  try { ws.send(json.stringify({ ok: true, code: 3, msg: 'HI_ANON' })) } catch (errorData) { logToSQL(errorData, ip) }
+  try { ws.send(json.stringify({ ok: true, code: 3, msg: 'HI_ANON' })) } catch (errorData) { logToSQL(errorData, ip) } // Send the user a welcome message, log if there is an error.
 
-  ws.on('message', function (messageData) {
+  ws.on('message', function (messageData) { // When the client sends a message, run this.
     try {
-      var jsonData = json.parse(messageData)
+      var jsonData = json.parse(messageData) // Try to parse JSON5 data if it's available.
     } catch (errorData) { try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NOT_JSON5' })) } catch (errorData) { logToSQL(errorData, ip); return } return }
     switch (jsonData.cmd) {
-      case undefined:
+      case undefined: // If there is no cmd variable, tell them there was an issue.
         try { ws.send(json.stringify({ ok: false, code: -1, msg: 'NO_COMMAND' })) } catch (errorData) { logToSQL(errorData, ip) }
         break
-      case 'species':
+      case 'species': // Prints all the available species (Mainly for the signup list.)
         connection.query('select * from spec', function (errorData, results) {
           if (errorData) { logToSQL(errorData, ip); return }
           try { ws.send(json.stringify({ ok: true, code: 4, data: results })) } catch (errorData) { logToSQL(errorData, ip) }
         })
         break
-      case 'authenticate':
-        if (jsonData.data === undefined) {
+      case 'authenticate': // Retrieve the token from the MySQL Server.
+        if (jsonData.data === undefined) { // If there is no data field, throw a fit and end the process.
           try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA' })) } catch (errorData) { logToSQL(errorData, ip); return }
         } else {
           let credentials = jsonData.data
-          credentials.username = credentials.un.toLowerCase()
-          credentials.password = credentials.pw.toLowerCase()
+          credentials.username = credentials.un.toLowerCase() // Change the username to lowercase for compat reasons.
+          credentials.password = credentials.pw
           connection('select ce, password, token from users where username = ?', [credentials.username], function (errorData, results) {
             if (errorData) { logToSQL(errorData, ip); return } else if (results.length === 0) { try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA' })) } catch (errorData) { logToSQL(errorData, ip); return } }
             var userData = results[0]
-            if (userData.ce !== '0') { try { ws.send(json.stringify({ ok: false, code: -4, msg: 'CONF_EMAIL' })) } catch (errorData) { logToSQL(errorData, ip) } } else if (password.verify(credentials.password, userData.password) === false) {
+            if (userData.ce !== '0') { // If the email needs to be confirmed.
+              try { ws.send(json.stringify({ ok: false, code: -4, msg: 'CONF_EMAIL' })) } catch (errorData) { logToSQL(errorData, ip) }
+            } else if (password.verify(credentials.password, userData.password) === false) { // If the password does not match.
               try { ws.send(json.stringify({ ok: false, code: -4, msg: 'INC_PASS' })) } catch (errorData) { logToSQL(errorData, ip) }
             } else {
               try {
-                ws.send(
-                  json.stringify(
-                    {
-                      ok: true,
-                      code: 4,
-                      data: Buffer.from(userData.token).toString('base64') }
-                  )
-                )
+                ws.send(json.stringify({ ok: true, code: 4, data: Buffer.from(userData.token).toString('base64') }))
               } catch (errorData) { logToSQL(errorData, ip) }
             }
           })
         }
         return
-      case 'authcallback':
+      case 'authcallback': // Authentication for the callback service. Possibly will delete if it's not useful enough to me.
         if (jsonData.data === undefined) {
           try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) } catch (errorData) { logToSQL(errorData, ip); return }
         } else {
