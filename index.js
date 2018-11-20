@@ -101,7 +101,7 @@ anon.on('connection', function (ws, req) {
         } else {
           let credentials = jsonData.data
           credentials.username = credentials.username.toLowerCase() // Change the username to lowercase for compat reasons.
-          connection('select ce, password, token from users where username = ?', [credentials.username], function (errorData, results) {
+          connection.query('select ce, password, token from users where username = ?', [credentials.username], function (errorData, results) {
             if (errorData) { logToSQL(errorData, ip); return } else if (results.length === 0) { try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA' })) } catch (errorData) { logToSQL(errorData, ip); return } }
             var userData = results[0]
             if (userData.ce !== '0') { // If the email needs to be confirmed.
