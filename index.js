@@ -215,6 +215,7 @@ anon.on('connection', function (ws, req) {
                 if (errorData) logToSQL(errorData, ip)
                 sendemail(userInfo.email, 'd-01419621eb244bd29bb43c34fcd6b5dd', { username: userInfo.username, url: 'https://legendofikaros.me/game/login?confirm=' + confirmEmail + '&username=' + userInfo.un })
                 try { ws.send(json.stringify({ ok: true, code: 4, msg: 'CHECK_EMAIL' })) } catch (errorData) { logToSQL(errorData, ip) }
+                console.log(ip + ' has registered user ' + userInfo.username + '. Species: ' + userInfo.sp)
               })
             }
           })
