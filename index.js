@@ -213,7 +213,7 @@ anon.on('connection', function (ws, req) {
               let confirmEmail = uuid(30)
               connection.query('INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);', [userInfo.username, password.hash(userInfo.password), userInfo.email, token, confirmEmail, userInfo.sp], function (errorData) {
                 if (errorData) logToSQL(errorData, ip)
-                sendemail(userInfo.email, 'd-01419621eb244bd29bb43c34fcd6b5dd', { username: userInfo.username, url: 'https://legendofikaros.me/game/login?confirm=' + confirmEmail + '&username=' + userInfo.un })
+                sendemail(userInfo.email, 'd-01419621eb244bd29bb43c34fcd6b5dd', { username: userInfo.username, url: 'https://legendofikaros.me/game/login?confirm=' + confirmEmail + '&username=' + userInfo.username })
                 try { ws.send(json.stringify({ ok: true, code: 4, msg: 'CHECK_EMAIL' })) } catch (errorData) { logToSQL(errorData, ip) }
                 console.log(ip + ' has registered user ' + userInfo.username + '. Species: ' + userInfo.sp)
               })
