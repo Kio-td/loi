@@ -371,7 +371,7 @@ battle.on('connection', function (ws, req) {
   if (config.get('user.' + uid + 'battleid')) { try { ws.send(json.stringify({ ok: true, code: 2, bid: config.get('user.' + uid + '.battleid'), msg: 'YOU_ARE_STILL_IN_A_FIGHT' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
     let r = uuid(7)
     connection.query('select uid from users where token = ?', [config.get('user.' + uid + '.token')], function (errorData, b) {
-      pppp = b[0].uid
+      try { pppp = b[0].uid } catch (e) { ws.close() }
     })
     console.log(config.get('user.' + uid + '.token'))
     connection.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ? ), '%') order by RAND() limit 1;", [config.get('user.' + uid + '.token')], function (errorData, b) {
