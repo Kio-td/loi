@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/Kio-td/loi/issues"
   },
-  "homepage": "https://loi.nayami.party/",
+  "homepage": "https://legendofikaros.me/",
   "dependencies": {
     "@sendgrid/mail": "^6.3.1",
     "bufferutil": "^4.0.0",
