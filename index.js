@@ -100,8 +100,7 @@ anon.on('connection', function (ws, req) {
           try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA' })) } catch (errorData) { logToSQL(errorData, ip); return }
         } else {
           let credentials = jsonData.data
-          credentials.username = credentials.un.toLowerCase() // Change the username to lowercase for compat reasons.
-          credentials.password = credentials.pw
+          credentials.username = credentials.username.toLowerCase() // Change the username to lowercase for compat reasons.
           connection('select ce, password, token from users where username = ?', [credentials.username], function (errorData, results) {
             if (errorData) { logToSQL(errorData, ip); return } else if (results.length === 0) { try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA' })) } catch (errorData) { logToSQL(errorData, ip); return } }
             var userData = results[0]
@@ -205,16 +204,16 @@ anon.on('connection', function (ws, req) {
         if (jsonData.data === undefined) {
           try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) } catch (errorData) { logToSQL(errorData, ip) }
         } else {
-          let n = jsonData.data
-          n.username = n.un.toLowerCase()
-          n.email = n.em.toLowerCase()
-          connection.query('select username from users where username = ? or email = ?', [n.username, n.email], function (a, b) {
-            if (b.length > 0) { try { ws.send(json.stringify({ ok: false, code: 6, msg: 'ACCT_EXISTS' })) } catch (errorData) { logToSQL(errorData, ip) } } else if (blacklist.includes(n.un.toLowerCase())) { try { ws.send(json.stringify({ ok: false, code: 6, msg: 'ACCT_BLACKLIST' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
+          let userInfo = jsonData.data
+          userInfo.username = userInfo.username.toLowerCase()
+          userInfo.email = userInfo.email.toLowerCase()
+          connection.query('select username from users where username = ? or email = ?', [userInfo.username, userInfo.email], function (a, b) {
+            if (b.length > 0) { try { ws.send(json.stringify({ ok: false, code: 6, msg: 'ACCT_EXISTS' })) } catch (errorData) { logToSQL(errorData, ip) } } else if (blacklist.includes(userInfo.un.toLowerCase())) { try { ws.send(json.stringify({ ok: false, code: 6, msg: 'ACCT_BLACKLIST' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
               let token = uuid(30)
               let confirmEmail = uuid(30)
-              connection.query('INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);', [n.username, password.hash(n.pw), n.email, token, confirmEmail, n.sp], function (errorData) {
+              connection.query('INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);', [userInfo.username, password.hash(userInfo.password), userInfo.email, token, confirmEmail, userInfo.sp], function (errorData) {
                 if (errorData) logToSQL(errorData, ip)
-                sendemail(n.em, 'd-01419621eb244bd29bb43c34fcd6b5dd', { username: n.un, url: 'https://legendofikaros.me/game/login?confirm=' + confirmEmail + '&username=' + n.un })
+                sendemail(userInfo.em, 'd-01419621eb244bd29bb43c34fcd6b5dd', { username: userInfo.username, url: 'https://legendofikaros.me/game/login?confirm=' + confirmEmail + '&username=' + userInfo.un })
                 try { ws.send(json.stringify({ ok: true, code: 4, msg: 'CHECK_EMAIL' })) } catch (errorData) { logToSQL(errorData, ip) }
               })
             }
