@@ -262,7 +262,7 @@ main.on('connection', function (ws, req) {
             try { ws.send(json.stringify({ ok: true, msg: 'SO_REMEMBER_ME_AND_I_WILL_REMEMBER_YOU', code: 2152 })) } catch (errorData) { logToSQL(errorData, ip) }
             break
           case 'charge':
-// Todo - Charge fee and return ticket, which will be used to later process in the client.
+          // Todo - Charge fee and return ticket, which will be used to later process in the client.
         }
       } else {
         let jsonData = json.parse(data)
@@ -364,7 +364,7 @@ chat.on('connection', function connection (ws, req) {
 })
 
 // Battlesocket, for processing battling sequences
-battle.on('connection', function connection (ws, req) {
+battle.on('connection', function (ws, req) {
   let pppp = false
   let ip = req.headers['x-forwarded-for']
   let uid = ip.replace(/\./g, '')
