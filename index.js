@@ -1,6 +1,7 @@
 /* Conventions followed:
   -crockford.com/javascript/code.html
   -StandardJS
+  -Standard Query Response (JSON) - json5/sqr.json5 (Kio)
 
  jshint -W002 esversion: 6 */
 const ConfigStore = require('node-storage')
@@ -35,7 +36,7 @@ sendgrid.setApiKey(config.get('int.sg'))
 function sendemail (to, template, data) {
   let msg = {
     to: to, // Supply the email.
-    from: 'Legend of Ikaros <Noreply@loi.nayami.party>', // Supply the From Email.
+    from: 'Legend of Ikaros <Noreply@legendofikaros.me>', // Supply the From Email.
     templateId: template, // Supply the template ID, created in Sendgrid.
     dynamic_template_data: data // Submit any Data that might be necessary.
   }
@@ -173,7 +174,7 @@ anon.on('connection', function (ws, req) {
             else if (results.length !== 1) { try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_USR' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
               let token = uuid(30)
               connection.query('update users set rs=? where username=?', [token, jsonData.data], function (errorData) { if (errorData) logToSQL(errorData, ip) })
-              sendemail(results['0'].email, 'd-3fcf2355b269462cb8941330ce44175f', { username: jsonData.data, url: 'https://loi.nayami.party/game/login?reset&code=' + token })
+              sendemail(results['0'].email, 'd-3fcf2355b269462cb8941330ce44175f', { username: jsonData.data, url: 'https://legendofikaros.me/game/login?reset&code=' + token })
               try { ws.send(json.stringify({ ok: true, code: 4, msg: 'SENT_EMAIL' })) } catch (errorData) { logToSQL(errorData, ip) }
             }
           })
@@ -213,7 +214,7 @@ anon.on('connection', function (ws, req) {
               let confirmEmail = uuid(30)
               connection.query('INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);', [n.username, password.hash(n.pw), n.email, token, confirmEmail, n.sp], function (errorData) {
                 if (errorData) logToSQL(errorData, ip)
-                sendemail(n.em, 'd-01419621eb244bd29bb43c34fcd6b5dd', { username: n.un, url: 'https://loi.nayami.party/game/login?confirm=' + confirmEmail + '&username=' + n.un })
+                sendemail(n.em, 'd-01419621eb244bd29bb43c34fcd6b5dd', { username: n.un, url: 'https://legendofikaros.me/game/login?confirm=' + confirmEmail + '&username=' + n.un })
                 try { ws.send(json.stringify({ ok: true, code: 4, msg: 'CHECK_EMAIL' })) } catch (errorData) { logToSQL(errorData, ip) }
               })
             }
