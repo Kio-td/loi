@@ -208,7 +208,7 @@ anon.on('connection', function (ws, req) {
           userInfo.username = userInfo.username.toLowerCase()
           userInfo.email = userInfo.email.toLowerCase()
           connection.query('select username from users where username = ? or email = ?', [userInfo.username, userInfo.email], function (a, b) {
-            if (b.length > 0) { try { ws.send(json.stringify({ ok: false, code: 6, msg: 'ACCT_EXISTS' })) } catch (errorData) { logToSQL(errorData, ip) } } else if (blacklist.includes(userInfo.un.toLowerCase())) { try { ws.send(json.stringify({ ok: false, code: 6, msg: 'ACCT_BLACKLIST' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
+            if (b.length > 0) { try { ws.send(json.stringify({ ok: false, code: 6, msg: 'ACCT_EXISTS' })) } catch (errorData) { logToSQL(errorData, ip) } } else if (blacklist.includes(userInfo.username)) { try { ws.send(json.stringify({ ok: false, code: 6, msg: 'ACCT_BLACKLIST' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
               let token = uuid(30)
               let confirmEmail = uuid(30)
               connection.query('INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);', [userInfo.username, password.hash(userInfo.password), userInfo.email, token, confirmEmail, userInfo.sp], function (errorData) {
