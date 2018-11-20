@@ -8,7 +8,7 @@ if (isset($_COOKIE["token"])) {
   $n = $conn->escape_string(base64_decode($_COOKIE["token"]));
   $c = $conn->query("SELECT bal, token, username from users where token = '".$n."'");
   if (!$c->num_rows) {
-    $na = array("index.php", "login.php", "index", "login", "login-");
+    $na = array("index.php", "login.php", "index", "login");
 } else {
   $auth = true;
   $c = $c->fetch_assoc();

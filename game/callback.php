@@ -40,11 +40,11 @@ if(isset($_GET["data"])) {
     <button onclick="auth()" class="btn btn-secondary">Link</button><br>
 <div class="small">
     <p>The person requesting your LOI Account be linked is responsible for any misuse.<br>
-      If you need to register, then click <u><a href="https://loi.nayami.party/login?reg">here</a></u>, and login here when you're finished.</p>
+      If you need to register, then click <u><a href="https://loi.legendofikaros.me/login?reg">here</a></u>, and login here when you're finished.</p>
 </div>
 </main>
     <script>
-      s = new WebSocket("wss://ws.nayami.party/anon");
+      s = new WebSocket("wss://ws.legendofikaros.me/anon");
       function auth() {
         s.onmessage = function(evt) {
           data = json.parse(evt.data);

@@ -116,12 +116,12 @@ var back = "451 Char MAX.";
   }
   x = 0
   p = 0
-  var r = new WebSocket("wss://ws.nayami.party/main");
+  var r = new WebSocket("wss://ws.legendofikaros.me/main");
   r.onmessage = function(s){console.log(s);
   if (!p) {
   r.send(json.stringify({atoken: "<?php echo $_COOKIE["token"]; ?>" }));
 }
-  var s = new WebSocket("wss://ws.nayami.party/btl");
+  var s = new WebSocket("wss://ws.legendofikaros.me/btl");
   s.onmessage = function (data) {
     console.log(data);
     var dt = json.parse(data);
