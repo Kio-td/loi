@@ -11,19 +11,13 @@
   <script src="https://legendofikaros.me/assets/pop.min.js"></script>
   <script src="https://legendofikaros.me/assets/bootstrap-material-design.min.js"></script>
   <script src="https://legendofikaros.me/assets/typeit.min.js"></script>
-  <style>.btns {display: flex; justify-content: space-around;}</style>
   <script>json = JSON5;</script>
   <title>Legend of Ikaros</title>
 </head>
 <body>
   <main role="main" class="inner cover">
     <h3 class="brand">Legend of Ikaros</h3>
-<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</p>
 		<p class="typer"></p>
-		<div class="btns">
-			<span class="btn btn-danger">Kill her</span><span class="btn btn-success">Heal her</span><span class="btn">Ignore her</span>
-		</div>
-
   </main>
 
   <script src="https://legendofikaros.me/assets/howler.min.js"></script>
@@ -32,18 +26,14 @@
 	var music = new Howl({
     volume: 0.5,
     src: ['https://legendofikaros.me/assets/Breathly.ogg'],
-    loop: 1,
+    loop: 1
 });
 	$(".inner").hide();
-	$(".btns").hide();
 	$("body").css("transition","4s").css("background", "white").css("color", "black")
 	$(".inner").delay(2000).fadeIn('slow/400/fast')
 	music.play();
 	var Typer = new TypeIt('.typer', {
-  speed: 90,
-      afterComplete: function(e,t,o) {
-      	$(".btns").show();
-    }
-}).pause(3000).type("A wounded angel crosses your path.").pause(2000).type(" She looks like she's in pain.").pause(2000).break().type("She looks to you, her eyes pledaing for mercy.").pause(2000).break().type("Pleading for a merciful release.")
+  speed: 90
+}).pause(3000).type("A wounded angel crosses your path.").pause(2000).type(" She looks like she's in pain.").pause(2000).break().type("She looks to you, her eyes pleaing for mercy.").pause(2000).break().type("Pleaing for a merciful release.")
 </script>
 </body>
