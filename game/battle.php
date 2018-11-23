@@ -119,7 +119,9 @@ var back = "451 Char MAX.";
   var r = new WebSocket("wss://ws.legendofikaros.me/main");
   r.onmessage = function(s){console.log(s);
   if (!p) {
-  r.send(json.stringify({atoken: "<?php echo $_COOKIE["token"]; ?>" }));
+    if(!json.parse(s).code) r.send(json.stringify({atoken: "<?php echo $_COOKIE["token"]; ?>" }));
+    else {json.stringify({cmd: "ping"})}
+      p = 1
 }
   var s = new WebSocket("wss://ws.legendofikaros.me/btl");
   s.onmessage = function (data) {

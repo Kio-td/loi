@@ -1,0 +1,37 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Team LOI">
+  <link href="https://legendofikaros.me/assets/bootstrap-material-design.min.css" rel="stylesheet">
+  <link href="https://legendofikaros.me/assets/battle.min.css" rel="stylesheet">
+  <script src="https://legendofikaros.me/assets/jquery.slim.min.js"></script>
+  <script src="https://legendofikaros.me/assets/jdetects.min.js"></script>
+  <script src="https://legendofikaros.me/assets/json5.min.js"></script>
+  <script src="https://legendofikaros.me/assets/pop.min.js"></script>
+  <script src="https://legendofikaros.me/assets/bootstrap-material-design.min.js"></script>
+  <script src="https://legendofikaros.me/assets/typeit.min.js"></script>
+  <script>json = JSON5;</script>
+  <title>Legend of Ikaros</title>
+</head>
+<body>
+  <main role="main" class="inner cover">
+    <h3 class="brand">Legend of Ikaros</h3>
+		A wounded angel crosses your path.<br>
+		She looks like she's in pain.
+  </main>
+
+  <script src="https://legendofikaros.me/assets/howler.min.js"></script>
+<script>
+	var music = new Howl({
+    volume: 0.05,
+    src: ['https://legendofikaros.me/assets/Breathly.ogg'],
+    loop: 1
+});
+	$(".inner").hide();
+	$("body").css("transition","4s").css("background", "white").css("color", "black")
+	$(".inner").delay(2000).fadeIn('slow/400/fast')
+	music.play();
+
+	document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+</body>
