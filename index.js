@@ -245,7 +245,7 @@ main.on('connection', function (ws, req) {
     }
   })
   if (config.get('user.' + uid) === undefined) {
-    try { ws.send('{code:1}') } catch (errorData) { logToSQL(errorData, ip) }
+    try { ws.send('{code:1, msg:"ALREADY_AUTHENTICATED"}') } catch (errorData) { logToSQL(errorData, ip) }
     ws.on('message', function incoming (data) {
       // user is authenticated
       if (typeof config.get('user.' + uid) !== 'undefined') {
@@ -256,7 +256,8 @@ main.on('connection', function (ws, req) {
           case undefined:
             try { ws.send(json.stringify({ ok: false, msg: 'cmd_not_found', code: -1 })) } catch (errorData) { logToSQL(errorData, ip) }
             return
-
+          case 'ping':
+            try { ws.send('pong') } catch (e) { logToSQL(e, ip) }
           case 'dontdecon':
             config.put('user.' + uid + '.dontdecon', true)
             try { ws.send(json.stringify({ ok: true, msg: 'SO_REMEMBER_ME_AND_I_WILL_REMEMBER_YOU', code: 2152 })) } catch (errorData) { logToSQL(errorData, ip) }
@@ -371,7 +372,7 @@ battle.on('connection', function (ws, req) {
   if (config.get('user.' + uid + 'battleid')) { try { ws.send(json.stringify({ ok: true, code: 2, bid: config.get('user.' + uid + '.battleid'), msg: 'YOU_ARE_STILL_IN_A_FIGHT' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
     let r = uuid(7)
     connection.query('select uid from users where token = ?', [config.get('user.' + uid + '.token')], function (errorData, b) {
-      try { pppp = b[0].uid } catch (e) { ws.close() }
+      try { pppp = b[0].uid } catch (e) { }
     })
     console.log(config.get('user.' + uid + '.token'))
     connection.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ? ), '%') order by RAND() limit 1;", [config.get('user.' + uid + '.token')], function (errorData, b) {
