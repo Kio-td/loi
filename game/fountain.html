@@ -24,7 +24,7 @@
   <script src="https://legendofikaros.me/assets/howler.min.js"></script>
 <script>
 	var music = new Howl({
-    volume: 0.05,
+    volume: 0.5,
     src: ['https://legendofikaros.me/assets/Breathly.ogg'],
     loop: 1
 });
@@ -32,6 +32,4 @@
 	$("body").css("transition","4s").css("background", "white").css("color", "black")
 	$(".inner").delay(2000).fadeIn('slow/400/fast')
 	music.play();
-
-	document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>
