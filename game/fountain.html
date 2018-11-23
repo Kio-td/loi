@@ -17,11 +17,14 @@
 <body>
   <main role="main" class="inner cover">
     <h3 class="brand">Legend of Ikaros</h3>
-		A wounded angel crosses your path.<br>
-		She looks like she's in pain.
+		<p class="typer">A wounded angel crosses your path. She looks like she's in pain.<br>
+			She looks to you, her eyes pleaing for mercy.<br>
+			Pleaing...<br>
+			For death.</p>
   </main>
 
   <script src="https://legendofikaros.me/assets/howler.min.js"></script>
+  <script src="../assets/typeit.min.js"></script>
 <script>
 	var music = new Howl({
     volume: 0.5,
@@ -32,5 +35,8 @@
 	$("body").css("transition","4s").css("background", "white").css("color", "black")
 	$(".inner").delay(2000).fadeIn('slow/400/fast')
 	music.play();
+	var Typer = new TypeIt('.typer', {
+  speed: 90
+})
 </script>
 </body>
