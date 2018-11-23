@@ -23,16 +23,16 @@
   <script src="https://legendofikaros.me/assets/howler.min.js"></script>
   <script src="../assets/typeit.min.js"></script>
 <script>
-	var music = new Howl({
-    volume: 0.5,
-    src: ['https://legendofikaros.me/assets/Breathly.ogg'],
-    loop: 1
-});
-	$(".inner").hide();
-	$("body").css("transition","4s").css("background", "white").css("color", "black")
-	$(".inner").delay(2000).fadeIn('slow/400/fast')
-	music.play();
-	var Typer = new TypeIt('.typer', {
+var music = new Howl({
+  volume: 0.5,
+  src: ['https://legendofikaros.me/assets/Breathly.ogg'],
+  loop: 1
+})
+$(".inner").hide();
+$("body").css("transition","4s").css("background", "white").css("color", "black")
+$(".inner").delay(2000).fadeIn('slow/400/fast')
+music.play()
+var Typer = new TypeIt('.typer', {
   speed: 90
 }).pause(3000).type("A wounded angel crosses your path.").pause(2000).type(" She looks like she's in pain.").pause(2000).break().type("She looks to you, her eyes pleaing for mercy.").pause(2000).break().type("Pleaing for a merciful release.")
 </script>
