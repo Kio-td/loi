@@ -17,10 +17,7 @@
 <body>
   <main role="main" class="inner cover">
     <h3 class="brand">Legend of Ikaros</h3>
-		<p class="typer">A wounded angel crosses your path. She looks like she's in pain.<br>
-			She looks to you, her eyes pleaing for mercy.<br>
-			Pleaing...<br>
-			For death.</p>
+		<p class="typer"></p>
   </main>
 
   <script src="https://legendofikaros.me/assets/howler.min.js"></script>
@@ -37,6 +34,6 @@
 	music.play();
 	var Typer = new TypeIt('.typer', {
   speed: 90
-})
+}).type("A wounded angel crosses your path.").pause(2000).type(" She looks like she's in pain.").pause(2000).break().type("She looks to you, her eyes pleaing for mercy.").pause(2000).break().type("Pleaing for a merciful release.")
 </script>
 </body>
