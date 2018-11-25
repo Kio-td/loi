@@ -21,7 +21,7 @@
 <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</p>
 		<p class="typer"></p>
 		<div class="btns">
-			<span class="btn btn-danger">Kill her</span><span class="btn btn-success">Heal her</span><span class="btn">Ignore her</span>
+			<span onclick="kill()" class="btn btn-danger">Kill her</span><span onclick="heal()" class="btn btn-success">Heal her</span><span onclick="ignore()" class="btn">Ignore her</span>
 		</div>
 
   </main>
@@ -29,7 +29,7 @@
   <script src="https://legendofikaros.me/assets/howler.min.js"></script>
   <script src="../assets/typeit.min.js"></script>
 <script>
-/*global Howl $ TypeIt*/
+/* global Howl $ TypeIt */
 var music = new Howl({
   volume: 0.5,
   src: ['https://legendofikaros.me/assets/Breathly.ogg'],
@@ -45,35 +45,79 @@ var beep = new Howl({
 })
 $('.inner').hide()
 $('.btns').hide()
-$('body').css('transition','4s').css('background', 'white').css('color', 'black')
+$('body').css('transition', '4s').css('background', 'white').css('color', 'black')
 $('.inner').delay(2000).fadeIn('slow/400/fast')
 music.play()
-var speaker = 0
-  var x = 0
-  var y = 1
+var x = 0
+var y = 1
 function speaking (e, t, o) {
 
   console.log(e)
-  if((e[2] === 'first-of-string' && (x = 1, y += 1)) || (e[2] == 'last-of-string' && (x = 2)) || x) {
+  if ((e[2] === 'first-of-string' && (x = 1, y += 1)) || (e[2] === 'last-of-string' && (x = 2)) || x) {
     y = 0
     x = 1
     beep.play('femaleVoice')
-    if(e[2] == 'last-of-string') { x = 0 }
+    if (e[2] === 'last-of-string') { x = 0 }
   }
 }
-
+var ranButton = 0
 var Typer = new TypeIt('.typer', {
   speed: 90,
-  afterComplete: function( e, t, o ) {
-    $('.btns').fadeIn()
+  afterComplete: function (e, t, o) {
+    if (ranButton === 0) {
+      $('.btns').fadeIn()
+      ranButton = 1
+    }
   },
-  afterStep: function(e, t, o) {
-  	speaking(e,t,o)
+  afterStep: function (e, t, o) {
+    speaking(e, t, o)
   }
-}).pause(3000).type('A wounded angel crosses your path.').pause(2000).type(' She looks like she\'s in immense pain.').pause(2000).break()
-speaker = 1
-Typer.type('"Please..."')
-speaker = 0
-Typer.type(', she whispers.').pause(2000).type(' She looks to you, her eyes pleading for mercy.').pause(2000).break().type('Pleading for a merciful release.')
+})
+Typer.pause(3000).type('An angel crosses your path.').pause(2000).type(' She looks like she\'s in immense pain from marks all over her body.').pause(2000).break().type('"Please..."').type(', she whispers.').pause(2000).type(' She looks to you, her eyes pleading for mercy.').pause(2000).break().type('Pleading for a merciful release.')
+
+function kill () {
+  $('.btns').fadeOut()
+  Typer.empty().type('The angel watches you, as you walk towards her.')
+}
+
+function heal () {
+  $('.btns').fadeOut()
+  $('.typer').fadeOut()
+  Typer.pause(2000).empty()
+  $('.typer').delay(2000).fadeIn()
+  Typer.type('The angel looks up at you, while you grab a canteen, and empty the contents.')
+    .pause(2000)
+    .break()
+    .type('You push it into the fountain, and fill it, before walking to her.')
+    .pause(2000)
+    .break()
+    .type('"What\'s that...?" She queries.')
+    .pause(2000)
+    .break()
+    .type('"Drink," you respond.')
+    .pause(2000)
+    .break()
+    .type('She complies.')
+    .pause(2000)
+    .empty()
+    .type('After letting her recover, you ask why she\'s here.')
+    .pause(2000)
+    .break()
+    .type('"I guess you can say, NAME..."')
+    .pause(2000)
+    .break()
+    .type('"My mistress demanded that I kill you."')
+    .pause(2000)
+    .break()
+    .type('"I can see now that she\'s insane."')
+    .pause(2000)
+    .break()
+    .type('"...You have my blessing, my hero. Please, have a safe travel."')
+    .pause(3000)
+}
+
+function ignore () {
+  $('.btns').fadeOut()
+}
 </script>
 </body>
