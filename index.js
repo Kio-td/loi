@@ -102,15 +102,15 @@ anon.on('connection', function (ws, req) {
           let credentials = jsonData.data
           credentials.username = credentials.username.toLowerCase() // Change the username to lowercase for compat reasons.
           connection.query('select ce, password, token from users where username = ?', [credentials.username], function (errorData, results) {
-            if (errorData) { logToSQL(errorData, ip); return } else if (results.length === 0) { try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA' })) } catch (errorData) { logToSQL(errorData, ip); return } }
+            if (errorData) { logToSQL(errorData, ip); return } else if (results.length === 0) { try { ws.send(json.stringify({ ok: false, code: -3, msg: 'INC_DATA' })) } catch (errorData) { logToSQL(errorData, ip); return } }
             var userData = results[0]
             if (userData.ce !== '0') { // If the email needs to be confirmed.
               try { ws.send(json.stringify({ ok: false, code: -4, msg: 'CONF_EMAIL' })) } catch (errorData) { logToSQL(errorData, ip) }
             } else if (password.verify(credentials.password, userData.password) === false) { // If the password does not match.
-              try { ws.send(json.stringify({ ok: false, code: -4, msg: 'INC_PASS' })) } catch (errorData) { logToSQL(errorData, ip) }
+              try { ws.send(json.stringify({ ok: false, code: -4, msg: 'INC_DATA' })) } catch (errorData) { logToSQL(errorData, ip) }
             } else {
               try {
-                ws.send(json.stringify({ ok: true, code: 4, data: Buffer.from(userData.token).toString('base64') }))
+                ws.send(json.stringify({ ok: true, code: 4, data: Buffer.from(userData.token).toString('base64') })) // Send the user's authentication token in a base64 Format.
               } catch (errorData) { logToSQL(errorData, ip) }
             }
           })
