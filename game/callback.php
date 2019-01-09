@@ -44,7 +44,7 @@ if(isset($_GET["data"])) {
 </div>
 </main>
     <script>
-      s = new WebSocket("wss://ws.legendofikaros.me/anon");
+      s = new WebSocket(websocket + "/anon");
       function auth() {
         s.onmessage = function(evt) {
           data = json.parse(evt.data);
