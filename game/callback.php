@@ -40,7 +40,7 @@ if(isset($_GET["data"])) {
     <button onclick="auth()" class="btn btn-secondary">Link</button><br>
 <div class="small">
     <p>The person requesting your LOI Account be linked is responsible for any misuse.<br>
-      If you need to register, then click <u><a href="https://loi.legendofikaros.me/login?reg">here</a></u>, and login here when you're finished.</p>
+      If you need to register, then click <u><a href="/login?reg">here</a></u>, and login here when you're finished.</p>
 </div>
 </main>
     <script>
