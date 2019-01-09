@@ -3,6 +3,7 @@ header("X-Frame-Options: Deny");
 header("X-XSS-Protection: 1; mode=block");
 header("X-Content-Type-Options: nosniff");
 $auth = false;
+$websocket = "wss://ws.legendofikaros.me"; //The websocket of the backend server. Must be prefixed with either ws:// or wss://.
 if (isset($_COOKIE["token"])) {
   require("/var/www/no-access/loi/config.php");
   $n = $conn->escape_string(base64_decode($_COOKIE["token"]));
@@ -28,7 +29,7 @@ $x = false;
     <script src="/assets/json5.min.js"></script>
     <script src="/assets/pop.min.js"></script>
     <script src="/assets/bootstrap-material-design.min.js"></script>
-    <script>json = JSON5;</script>
+    <script>json = JSON5; websocket = <?php echo $websocket; ?></script>
     <title>Legend of Ikaros</title>
     <link rel="stylesheet" href="/assets/bootstrap-material-design.min.css">
     <link href="/assets/cover.min.css" rel="stylesheet">
