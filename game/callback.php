@@ -1,6 +1,6 @@
 <?php
 if(isset($_GET["data"])) {
-  require('/var/www/no-access/loi/config.php');
+  require '/var/www/no-access/loi/config.php');
   $x = $conn->query("SELECT username, email, bal from users where uid in (SELECT uid from oauthtokens where authid = '".$_GET["data"]."')");
   if(!$x->num_rows == 1) die ('{"error":"data incorrect"}');
   $r = $x->fetch_assoc();
@@ -15,7 +15,7 @@ if(isset($_GET["data"])) {
 
 } else {
     echo "<style>input{color: white !important;}.small{font-size:.5rem}</style>";
-    require('../base/head.php');
+    require '../base/head.php';
 //    if(0) {
    if(!isset($_GET["return"])) {
       ?>
@@ -24,7 +24,7 @@ if(isset($_GET["data"])) {
       <p class="lead">Please go back and try again. If this issue persists, please contact the webmaster of the site who brought you here.</p>
     </main>
       <?php
-      require('../base/feet.php');
+      require '../base/feet.php';
       die();
     }
 ?>
@@ -49,17 +49,25 @@ if(isset($_GET["data"])) {
         s.onmessage = function(evt) {
           data = json.parse(evt.data);
           if(data.ok == false) {
-            if(data.msg == "CONF_EMAIL") {err("Please look in your inbox for the confirmation email.")}
-            else if (data.msg == "INC_PASS") {err("Your username or password is incorrect.")}
-            else if (data.msg == "NOBODY_FOUND") {err("Your username or password is incorrect.")}
-          } else {
-            window.location = "<?php echo htmlspecialchars($_GET["return"]); ?>" + "?token="+data.data.token+"&username="+data.data.username;
-          }
+            switch (data.msg) {
+              case "CONF_EMAIL":
+                err("Please look in your inbox for the confirmation email.")
+              break;
+              case "INC_PASS":
+                err("Your username or password is incorrect.")
+              break;
+              case "NOBODY_FOUND":
+                err("Your username or password is incorrect.")
+              break;
+              default:
+                window.location = "<?php echo htmlspecialchars($_GET["return"]); ?>" + "?token="+data.data.token+"&username="+data.data.username;
+              break;
+            }
         }
         s.send(json.stringify({cmd:'authcallback', data:{un:document.getElementById('un').value, pw:document.getElementById('pw').value}}))
       }
     </script>
     <?php
-    require('../base/feet.php');
+    require '../base/feet.php';
   }
 ?>

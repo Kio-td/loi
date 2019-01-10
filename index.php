@@ -1,4 +1,4 @@
-<?php require('./base/head.php'); $x = 1; ?>
+<?php require './base/head.php'; $x = 1; ?>
             <a class="nav-link active" href="#">Home</a>
             <a class="nav-link" href="game/">Play</a>
             <a class="nav-link" href="https://discord.gg/loi">Discord</a>
@@ -18,4 +18,4 @@
         </footer>
         </div>
 
-<?php require('./base/feet.php'); ?>
+<?php require './base/feet.php'; ?>

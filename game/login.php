@@ -6,7 +6,7 @@ if (isset($_GET["confirm"])) {
     header("location: login");
     die();
   } else {
-    require('/var/www/no-access/loi/config.php');
+    require '/var/www/no-access/loi/config.php';
     $un = $conn->escape_string($_GET["username"]);
     $token = $conn->escape_string($_GET["confirm"]);
     $x = $conn->query("SELECT ce FROM users where username = '".$un."' and ce = '".$token."'");
@@ -23,7 +23,7 @@ if (isset($_GET["confirm"])) {
   }
 }
 elseif (isset($_GET["reset"])) {
-    require('../base/head.php');
+    require '../base/head.php';
     echo "<span class='nav-link'>&emsp;</span>";
     ?>
   </nav>
@@ -43,7 +43,7 @@ elseif (isset($_GET["lo"])) {
   header("Location: index");
 } else {
     echo "<style>input{color: white !important;}</style>";
-    require('../base/head.php');
+    require '../base/head.php';
     if (isset($_GET["reg"])) {
 ?>
    <a class="nav-link" href="login">Login</a>
@@ -82,6 +82,6 @@ elseif (isset($_GET["lo"])) {
 
     }
 
-    require('../base/feet.php');
+    require '../base/feet.php';
 }
 ?>

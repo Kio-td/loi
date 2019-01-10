@@ -1,4 +1,4 @@
-<?php require('../base/head.php');
+<?php require '../base/head.php';
 //Set the price of making a guild
 $mg = 5250;
 ?>
@@ -39,7 +39,7 @@ if($p["guild"] == 0 ) {
           }
           </script>
       <?php
-    require('../base/feet.php');
+    require '../base/feet.php';
     die();
   }
 }elseif (isset($_GET["j"])) {
@@ -62,4 +62,4 @@ Welcome home,
 <?php
   }
 
-  require('../base/feet.php');
+  require '../base/feet.php';

@@ -10,14 +10,14 @@ This is the front-end of LOI. If you are looking for the backend, please choose 
 
 ----
 
-## Copyright
+## Copyrighth
 (c) 2018-2019, KTD Software.
 
 ## Boiler Template
 
 All new pages should start as such:
   ```PHP
-  <?php require("../base/head.php");
+  <?php  require "../base/head.php";
   ?>
               <a class="nav-link" href="/">Home</a>
           </nav>
@@ -27,5 +27,5 @@ All new pages should start as such:
         <h1 class="cover-heading">BIG Head</h1>
         <p class="lead">Following text</p>
   
-  <?php require("../base/feet.php");
+  <?php  require "../base/feet.php";
   ```

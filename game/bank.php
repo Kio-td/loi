@@ -2,7 +2,7 @@
 ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
 error_reporting(-1);
-require("../base/head.php");
+require "../base/head.php";
  ?>
  <a class="nav-link" href="index">Home</a>
  <a class="nav-link" href="login?lo">Logout</a>
@@ -105,5 +105,5 @@ if (isset($_GET["transfer"])) {
 
 <?php
 }
-require("../base/feet.php");
+require "../base/feet.php";
 ?>

@@ -1,5 +1,5 @@
 <?php
-require('../base/head.php');
+require '../base/head.php';
 if($auth) {
   ?>
   <a class="nav-link active" href="index">Home</a>
@@ -25,4 +25,4 @@ if($auth) {
   <input class="form-control" name="eml" type="email" required><br>
   <input type="submit" class="btn btn-secondary" value="Reset">
 </form>
-<?php } require('../base/feet.php');?>
+<?php } require '../base/feet.php';?>
