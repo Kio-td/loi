@@ -43,17 +43,6 @@ function sendemail (to, template, data) {
   sendgrid.send(msg) // Send the message.
 }
 
-// Function to check whether or not the user is authenticated.
-// TODO: Full makeover of auth system from 1AUTH to Auth every request
-
-function isconnected (req, ws) { // OUTDATED - NEED TO CONVERT TO checkToken().
-  let ip = req.headers['x-forwarded-for'] // Get the NGINX "True IP".
-  let uid = ip.replace(/\./g, '') // Create a UID by removing the dots of an IP.
-  if (config.get('user.' + uid + '.token') === undefined) {
-    ws.close(1013) //
-  }
-}
-
 let connection = mysql.createPool(config.get('int.mysql')) // Create a MySQL2 Connection Pool.
 console.log('Pool created - Server is running.')
 // Writes errors to the logger.
@@ -232,25 +221,11 @@ anon.on('connection', function (ws, req) {
 main.on('connection', function (ws, req) {
   let ip = req.headers['x-forwarded-for']
   let uid = ip.replace(/\./g, '')
-
   console.log(ip + ' has connected.')
-  if (config.get('user.' + uid + '.dontdecon')) {
-    console.log(ip + ' has been recognized.')
-    config.remove('user.' + uid + '.dontdecon')
-  }
-  ws.on('close', function dc (code, reason) {
-    console.log(ip + ' has disconnected.')
-    if (!config.get('user.' + uid + '.dontdecon')) {
-      config.remove('user.' + uid)
-    }
-  })
-  if (config.get('user.' + uid) === undefined) {
-    try { ws.send('{code:1, msg:"ALREADY_AUTHENTICATED"}') } catch (errorData) { logToSQL(errorData, ip) }
+  ws.send(json.send({ok: true, code:1, msg:"WHAZAP"}))
     ws.on('message', function incoming (data) {
-      // user is authenticated
-      if (typeof config.get('user.' + uid) !== 'undefined') {
         let jsonData = json.parse(data)
-
+        checkToken(jsonData.token, req, ws)
         // Main commands for the main server.
         switch (jsonData.cmd) {
           case undefined:
@@ -258,40 +233,24 @@ main.on('connection', function (ws, req) {
             return
           case 'ping':
             try { ws.send('pong') } catch (e) { logToSQL(e, ip) }
-          case 'dontdecon':
-            config.put('user.' + uid + '.dontdecon', true)
-            try { ws.send(json.stringify({ ok: true, msg: 'SO_REMEMBER_ME_AND_I_WILL_REMEMBER_YOU', code: 2152 })) } catch (errorData) { logToSQL(errorData, ip) }
-            break
+          break;
           case 'charge':
           // Todo - Charge fee and return ticket, which will be used to later process in the client.
+          break;
         }
-      } else {
-        let jsonData = json.parse(data)
-        if (jsonData.atoken === undefined) ws.close(1013)
-        else {
-          connection.query('SELECT username, bal from users where token = ?', [jsonData.atoken], function asdf (a, b) {
-            if (b.length === 1) {
-              config.put('user.' + uid + '.token', jsonData.atoken)
-              config.put('user.' + uid + '.un', b[0].username)
-              console.log(ip + ' identified as ' + b[0].username + '.')
-              try { ws.send(json.stringify({ ok: true, msg: 'I_THOUGHT_I_REMEMBERED_YOU_OWO', code: 5 })) } catch (errorData) { logToSQL(errorData, ip) }
-            } else ws.close(1013)
-          })
-        }
-      }
     })
-  } else {
-    try { ws.send('{"code":2}') } catch (errorData) { logToSQL(errorData, ip) }
-  }
 })
 
 // Chat websocket, for.. chatting.
 chat.on('connection', function connection (ws, req) {
-  isconnected(req, ws)
-  ws.on('message', function msg (chatData) {
+  ws.on('message', function msg (data) {\
+    jsonData = json.parse(data)
+    checkToken(jsonData.token, req, ws)
+    chatData = jsonData.message
+    var map = {'&': '&amp;','<': '&lt;','>': '&gt;','"': '&quot;',"'": '&#039;'}
     let ip = req.headers['x-forwarded-for']
     let uid = ip.replace(/\./g, '')
-    chatData = chatData.split(/\r?\n|\r/g)[0].replace(/</g, '&lt;').replace(/>/g, '&gt;').trim() // Make sure no true HTMl is passed into the server.
+    chatData = chatData.replace(/[&<>"']/g, function(m) { return map[m]; }).trim() // Make sure no true HTMl is passed into the server.
     if (chatData.length >= 80) { // If the message is over 80 characters, whisper to the character that the message has been voided.
       try { ws.send(json.stringify({ ok: false, display: '*Your voice falls on deaf ears. (Too many characters.)', color: 'red' })) } catch (errorData) { logToSQL(errorData, ip) }
       return
@@ -366,24 +325,7 @@ chat.on('connection', function connection (ws, req) {
 
 // Battlesocket, for processing battling sequences
 battle.on('connection', function (ws, req) {
-  let pppp = false
-  let ip = req.headers['x-forwarded-for']
-  let uid = ip.replace(/\./g, '')
-  if (config.get('user.' + uid + 'battleid')) { try { ws.send(json.stringify({ ok: true, code: 2, bid: config.get('user.' + uid + '.battleid'), msg: 'YOU_ARE_STILL_IN_A_FIGHT' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
-    let r = uuid(7)
-    connection.query('select uid from users where token = ?', [config.get('user.' + uid + '.token')], function (errorData, b) {
-      try { pppp = b[0].uid } catch (e) { }
-    })
-    console.log(config.get('user.' + uid + '.token'))
-    connection.query("SELECT * from monster where towns LIKE CONCAT('%', (select citid from users where token = ? ), '%') order by RAND() limit 1;", [config.get('user.' + uid + '.token')], function (errorData, b) {
-      if (errorData) logToSQL(errorData, ip)
-      connection.query('INSERT INTO currentbattles (battleid, uid, mid, phealth, mhealth) VALUES (?, ?, ?, ?, ?)', [r, pppp, b[0].uid, 0, b[0].hp])
-      try {
-        ws.send(
-          json.stringify({ battleid: r, story: 'STORY FOR BATTLEBOX', mobdata: { name: b[0].name, health: 5, ttlhealth: b[0].hp }, playerdata: { name: 'PLAYERNAME', health: 5, ttlhealth: 10, inventory: [], effects: [], canfight: true, istripped: false, isproceed: false, isabletoflee: true } }))
-      } catch (errorData) { logToSQL(errorData, ip) }
-    })
-  }
+  //TODO: Work on this. lol
 })
 
 // Main server module. change anything here and I will kill you.
