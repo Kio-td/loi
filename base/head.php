@@ -29,7 +29,7 @@ $x = false;
     <script src="/assets/json5.min.js"></script>
     <script src="/assets/pop.min.js"></script>
     <script src="/assets/bootstrap-material-design.min.js"></script>
-    <script>json = JSON5; websocket = "<?php echo $websocket; ?>"</script>
+    <script>json = JSON5; websocket = "<?php echo htmlspecialchars($websocket); ?>"</script>
     <title>Legend of Ikaros</title>
     <link rel="stylesheet" href="/assets/bootstrap-material-design.min.css">
     <link href="/assets/cover.min.css" rel="stylesheet">

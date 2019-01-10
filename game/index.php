@@ -9,7 +9,7 @@ if($auth) {
   </header>
 
   <main role="main" class="inner cover">
-    <h1 class="cover-heading">Welcome home, <?php echo ucfirst($username); ?>.</h1>
+    <h1 class="cover-heading">Welcome home, <?php echo ucfirst(htmlspecialchars($username)); ?>.</h1>
     <p class="lead">Please choose an option.</p>
     <p class="lead"><a href="bank">Bank</a>&emsp;<a href="battle" id="tala">Battle</a>&emsp;Ipsum</p>
     <script>

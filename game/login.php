@@ -34,7 +34,7 @@ elseif (isset($_GET["reset"])) {
   <p class="lead">Reset your password, to gain entry.</p>
   <input class="form-control" id="pw" placeholder="Password" required=""><br>
   <input class="form-control" id="cpw" placeholder="Confirm" required=""><br>
-  <input type="hidden" id="token" value="<?php echo $_GET['code'];?>"><br>
+  <input type="hidden" id="token" value="<?php echo htmlspecialchars($_GET['code']);?>"><br>
   <button onclick="zen()" class="btn btn-secondary">Reset</button>
     <?php
 }

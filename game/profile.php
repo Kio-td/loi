@@ -17,7 +17,7 @@ require('../base/head.php');
 
  ?>
 
- <h1 class="cover-heading">Welcome home, <?php echo ucfirst($username); ?>.</h1>
+ <h1 class="cover-heading">Welcome home, <?php echo ucfirst(htmlspecialchars($username)); ?>.</h1>
  <p class="lead">Please choose an option.</p>
  <?php
  require('feet');

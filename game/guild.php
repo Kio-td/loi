@@ -19,10 +19,10 @@ if($p["guild"] == 0 ) {
       ?>
         <main role="main" class="inner cover">
           <h1 class="cover-heading">Create a Guild</h1>
-          <p class="lead">Creating a guild will cost <?php echo ucwords($mg); ?>Tn.</p>
+          <p class="lead">Creating a guild will cost <?php echo ucwords(intval($mg)); ?>Tn.</p>
           <form method="post" action="?c">
             <input type="text" name="gid" class="form-control" placeholder="Guild Name"><br>
-            <input type="text" name="gtag" id="tag1" maxlength="4" class="form-control" oninput="tr()" placeholder="Guild tag (Max 4 Characters)"><span class="vg">Your Guild tag will look like this:<br><span id="tag"></span><?php echo $username; ?></span><br><br>
+            <input type="text" name="gtag" id="tag1" maxlength="4" class="form-control" oninput="tr()" placeholder="Guild tag (Max 4 Characters)"><span class="vg">Your Guild tag will look like this:<br><span id="tag"></span><?php echo htmlspecialchars($username); ?></span><br><br>
             <input type="submit" value="Create Guild" class="btn btn-secondary">
           </form>
 
@@ -48,7 +48,7 @@ if($p["guild"] == 0 ) {
   ?>
   <main role="main" class="inner cover">
 
-    <?php if (isset($_GET["c"])) {  echo "<div class='alert alert-danger'>You need " . ($mg - $bal) . "Tn. more to create a guild.</div>";}?>
+    <?php if (isset($_GET["c"])) {  echo "<div class='alert alert-danger'>You need " . (intval($mg) - intval($bal)) . "Tn. more to create a guild.</div>";}?>
     <h1 class="cover-heading">Guildmaster's home</h1>
     <p class="lead">Please choose an option.</p>
     <p class="lead"><a href="?c">Register a Guild</a>&emsp;<a href="?j">Join a Guild</a></p>

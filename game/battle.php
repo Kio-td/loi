@@ -119,7 +119,7 @@ var back = "451 Char MAX.";
   var r = new WebSocket(websocket+"/main");
   r.onmessage = function(s){console.log(s);
   if (!p) {
-    if(!json.parse(s).code) r.send(json.stringify({atoken: "<?php echo $_COOKIE["token"]; ?>" }));
+    if(!json.parse(s).code) r.send(json.stringify({atoken: "<?php echo htmlspecialchars($_COOKIE["token"]); ?>" }));
     else {json.stringify({cmd: "ping"})}
       p = 1
 }
