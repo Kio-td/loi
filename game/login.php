@@ -37,6 +37,7 @@ elseif (isset($_GET["reset"])) {
   <input type="hidden" id="token" value="<?php echo htmlspecialchars($_GET['code']);?>"><br>
   <button onclick="zen()" class="btn btn-secondary">Reset</button>
     <?php
+    require '../base/feet.php';
 }
 elseif (isset($_GET["lo"])) {
   setcookie("token", '' , time() - 3600);
