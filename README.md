@@ -16,7 +16,7 @@ This is the front-end of LOI. If you are looking for the backend, please choose 
 ## Boiler Template
 
 All new pages should start as such:
-  ```
+  ```PHP
   <?php require("../base/head.php");
   ?>
               <a class="nav-link" href="/">Home</a>
