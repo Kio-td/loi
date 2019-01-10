@@ -3,17 +3,17 @@
 This is the front-end of LOI. If you are looking for the backend, please choose "server" from the branches.
 
 ----
-#### Table of Contents
+## Table of Contents
 <ul>
   <li><a href="#boiler">Boiler Template</a></li>
 </ul>
 
 ----
 
-# Copyright
+## Copyright
 (c) 2018-2019, KTD Software.
 
-# Boiler Template
+## Boiler Template
 
 All new pages should start as such:
   ```
