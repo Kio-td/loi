@@ -4,7 +4,7 @@ header("X-XSS-Protection: 1; mode=block");
 header("X-Content-Type-Options: nosniff");
 $auth = false;
 $websocket = "wss://ws.legendofikaros.me"; //The websocket of the backend server. Must be prefixed with either ws:// or wss://.
-if (isset(filter_input(INPUT_COOKIE,"token"))) {
+if (filter_input(INPUT_COOKIE,"token") !== false) {
   require "/var/www/no-access/loi/config.php";
   $n = $conn->escape_string(base64_decode(filter_input(INPUT_COOKIE,"token")));
   $c = $conn->query("SELECT bal, token, username from users where token = '".$n."'");
