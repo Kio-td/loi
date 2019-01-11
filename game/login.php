@@ -45,7 +45,7 @@ elseif (filter_input(INPUT_GET,"lo")) {
 } else {
     echo "<style>input{color: white !important;}</style>";
     require '../base/head.php';
-    if (filter_input(INPUT_GET,"reg")) {
+    if (isset($_GET["reg"])) {
 ?>
    <a class="nav-link" href="login">Login</a>
     <a class="nav-link active" href="#">Register</a>
