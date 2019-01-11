@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 if (filter_input(INPUT_GET,"confirm")) {
-  if(!isset(filter_input(INPUT_GET,"username")) || !isset(filter_input(INPUT_GET,"confirm"))) {
+  if(filter_input(INPUT_GET,"username") == false || filter_input(INPUT_GET,"confirm") == false) {
     header("location: login");
     die();
   } else {
@@ -22,7 +22,7 @@ if (filter_input(INPUT_GET,"confirm")) {
     }
   }
 }
-elseif (isset(filter_input(INPUT_GET,"reset"))) {
+elseif (filter_input(INPUT_GET,"reset") !== false) {
     require '../base/head.php';
     echo "<span class='nav-link'>&emsp;</span>";
     ?>
@@ -39,7 +39,7 @@ elseif (isset(filter_input(INPUT_GET,"reset"))) {
     <?php
     require '../base/feet.php';
 }
-elseif (isset(filter_input(INPUT_GET,"lo"))) {
+elseif (filter_input(INPUT_GET,"lo")) {
   setcookie("token", '' , time() - 3600);
   header("Location: index");
 } else {
