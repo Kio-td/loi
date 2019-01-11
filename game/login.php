@@ -22,7 +22,7 @@ if (filter_input(INPUT_GET,"confirm")) {
     }
   }
 }
-elseif (filter_input(INPUT_GET,"reset") !== false) {
+elseif (filter_input(INPUT_GET,"reset")) {
     require '../base/head.php';
     echo "<span class='nav-link'>&emsp;</span>";
     ?>
