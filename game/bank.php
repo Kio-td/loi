@@ -24,12 +24,12 @@ if (isset($_GET["transfer"])) {
         <p class="lead">Give some money to another user on our system.</p>
         <form method="post">
           <input type="text" required class="form-control" name="un" placeholder="Username"><br>
-          <input type="number" required class="form-control" name="amnt" min="1" max="<?php echo $bal; ?>" placeholder="Amount"><br>
+          <input type="number" required class="form-control" name="amnt" min="1" max="<?php echo (int) $bal; ?>" placeholder="Amount"><br>
           <input type="submit" class="btn btn-secondary" value="Send">
         </form>
       <?php
     }
-    elseif($no + ceil($no * 0.15) > $bal || $no < 0) {
+    elseif($no + ceil($no * 0.15) > (int) $bal || $no < 0) {
       ?>
       <main role="main" class="inner cover">
         <div class="alert alert-danger" role="alert">You're too poor to afford that.</div>
@@ -37,7 +37,7 @@ if (isset($_GET["transfer"])) {
         <p class="lead">Give some money to another user on our system.</p>
         <form method="post">
           <input type="text" required class="form-control" name="un" placeholder="Username"><br>
-          <input type="number" required class="form-control" name="amnt" min="1" max="<?php echo $bal; ?>" placeholder="Amount"><br>
+          <input type="number" required class="form-control" name="amnt" min="1" max="<?php echo (int) $bal; ?>" placeholder="Amount"><br>
           <input type="submit" class="btn btn-secondary" value="Send">
         </form>
 
@@ -51,7 +51,7 @@ if (isset($_GET["transfer"])) {
         <p class="lead">Give some money to another user on our system.</p>
         <form method="post">
           <input type="text" required class="form-control" name="un" placeholder="Username"><br>
-          <input type="number" required class="form-control" name="amnt" min="1" max="<?php echo $bal; ?>" placeholder="Amount"><br>
+          <input type="number" required class="form-control" name="amnt" min="1" max="<?php echo (int) $bal; ?>" placeholder="Amount"><br>
           <input type="submit" class="btn btn-secondary" value="Send">
         </form>
 
@@ -89,7 +89,7 @@ if (isset($_GET["transfer"])) {
    <p class="lead">Give some money to another user on our system.</p>
    <form method="post">
      <input type="text" required class="form-control" name="un" placeholder="Username"><br>
-     <input type="number" required class="form-control" name="amnt" min="1" max="<?php echo htmlspecialchars($bal); ?>" placeholder="Amount"><br>
+     <input type="number" required class="form-control" name="amnt" min="1" max="<?php echo (int) bal; ?>" placeholder="Amount"><br>
      <input type="submit" class="btn btn-secondary" value="Send">
    </form>
 <?php
