@@ -1,10 +1,10 @@
 <?php
-if(!isset($_GET["pid"])) {
+if(!isset(filter_input(INPUT_GET,"pid"))) {
   header("Location: index");
   die();
 }
 require '/var/www/no-access/loi/config.php' ;
-$x = (int) $_GET["pid"];
+$x = (int) filter_input(INPUT_GET,"pid");
 $p = $conn->query("SELECT username, bal, pfp from users where uid = ". $x);
 if($p->num_rows == 0) {
   header("Location: index");

@@ -1,14 +1,14 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-if (isset($_GET["confirm"])) {
-  if(!isset($_GET["username"]) || !isset($_GET["confirm"])) {
+if (isset(filter_input(INPUT_GET,"confirm"))) {
+  if(!isset(filter_input(INPUT_GET,"username")) || !isset(filter_input(INPUT_GET,"confirm"))) {
     header("location: login");
     die();
   } else {
     require '/var/www/no-access/loi/config.php';
-    $un = $conn->escape_string($_GET["username"]);
-    $token = $conn->escape_string($_GET["confirm"]);
+    $un = $conn->escape_string(filter_input(INPUT_GET,"username"));
+    $token = $conn->escape_string(filter_input(INPUT_GET,"confirm"));
     $x = $conn->query("SELECT ce FROM users where username = '".$un."' and ce = '".$token."'");
     if($x->num_rows) {
       //if exists
@@ -22,7 +22,7 @@ if (isset($_GET["confirm"])) {
     }
   }
 }
-elseif (isset($_GET["reset"])) {
+elseif (isset(filter_input(INPUT_GET,"reset"))) {
     require '../base/head.php';
     echo "<span class='nav-link'>&emsp;</span>";
     ?>
@@ -34,18 +34,18 @@ elseif (isset($_GET["reset"])) {
   <p class="lead">Reset your password, to gain entry.</p>
   <input class="form-control" id="pw" placeholder="Password" required=""><br>
   <input class="form-control" id="cpw" placeholder="Confirm" required=""><br>
-  <input type="hidden" id="token" value="<?php echo htmlspecialchars($_GET['code']);?>"><br>
+  <input type="hidden" id="token" value="<?php echo htmlspecialchars(filter_input(INPUT_GET,'code'));?>"><br>
   <button onclick="zen()" class="btn btn-secondary">Reset</button>
     <?php
     require '../base/feet.php';
 }
-elseif (isset($_GET["lo"])) {
+elseif (isset(filter_input(INPUT_GET,"lo"))) {
   setcookie("token", '' , time() - 3600);
   header("Location: index");
 } else {
     echo "<style>input{color: white !important;}</style>";
     require '../base/head.php';
-    if (isset($_GET["reg"])) {
+    if (isset(filter_input(INPUT_GET,"reg"))) {
 ?>
    <a class="nav-link" href="login">Login</a>
     <a class="nav-link active" href="#">Register</a>

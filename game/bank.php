@@ -11,10 +11,10 @@ require "../base/head.php";
  </header>
 
 <?php
-if (isset($_GET["transfer"])) {
-  if(isset($_POST["amnt"]) && isset($_POST["un"])) {
-    $no = (int) $_POST["amnt"];
-    $l = $conn->escape_string(strtolower($_POST["un"]));
+if (isset(filter_input(INPUT_GET, "transfer"))) {
+  if(isset(filter_input(INPUT_POST,"amnt")) && isset(filter_input(INPUT_POST,"un"))) {
+    $no = (int) filter_input(INPUT_POST,"amnt");
+    $l = $conn->escape_string(strtolower(filter_input(INPUT_POST,"un")));
     $n = $conn->query("Select username from users where username = '".$l."'");
     if($username === $l) {
       ?>
@@ -57,7 +57,7 @@ if (isset($_GET["transfer"])) {
 
       <?php
     } else {
-      if(isset($_POST["confirm"])) {
+      if(isset(filter_input(INPUT_POST,"confirm"))) {
         $ticket = uniqid("tfr_");
         $conn->query("UPDATE `users` SET `bal`=`bal` - ".($no + ceil($no * 0.15))." WHERE `username` = '".$username."'");
         $conn->query("UPDATE `users` SET `bal`=`bal` + ".$no." WHERE `username` = '".$l."'");
@@ -72,7 +72,7 @@ if (isset($_GET["transfer"])) {
         ?>
         <main role="main" class="inner cover">
           <h1 class="cover-heading">Confirm</h1>
-          <p class="lead">Are you sre you would like to send <?php echo htmlspecialchars($no) . "Tn. to " . htmlspecialchars($l) . "?";?></p>
+          <p class="lead">Are you sre you would like to send <?php echo (int) $no . "Tn. to " . htmlspecialchars($l) . "?";?></p>
           <p class="lead">Service charge: <?php echo ceil((int) $no * 0.15); ?>Tn.</p>
           <form method="post">
             <input type="hidden" name="un" value="<?php echo htmlspecialchars($l); ?>"><input type="hidden" name="amnt" value="<?php echo htmlspecialchars($no); ?>"><input class="btn btn-info" type="submit" name="confirm" value="Charge"><a href="bank" class="btn btn-success">Cancel</a>

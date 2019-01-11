@@ -10,10 +10,10 @@ $mg = 5250;
 $p = $conn->query("select guild from users where username = '".$username."'");
 $p = $p->fetch_assoc();
 if($p["guild"] == 0 ) {
-  if(isset($_GET["c"])) {
-    if(isset($_POST["gid"])) {
-      $conn->query("UPDATE users SET bal = bal - $mg where username = '".$username."'; INSERT INTO guild (gname, gtag, gbal) VALUES ('".$_POST["gid"]."', '".$_POST["gtag"]."', 1000);");
-      $x = $conn->query("SELECT gid FROM guild where gtag = '".$_POST["gtag"]."'");
+  if(isset(filter_input(INPUT_GET,"c"))) {
+    if(isset(filter_input(INPUT_POST,"gid"))) {
+      $conn->query("UPDATE users SET bal = bal - $mg where username = '".$username."'; INSERT INTO guild (gname, gtag, gbal) VALUES ('".filter_input(INPUT_POST,"gid")."', '".filter_input(INPUT_POST,"gtag")."', 1000);");
+      $x = $conn->query("SELECT gid FROM guild where gtag = '".filter_input(INPUT_POST,"gtag")."'");
       $conn->query("UPDATE users SET guild = " . $x->fetch_assoc()["gid"] . " WHERE username = '".$username."'");
     } elseif ($bal >= $mg) {
       ?>
@@ -42,13 +42,13 @@ if($p["guild"] == 0 ) {
     require '../base/feet.php';
     die();
   }
-}elseif (isset($_GET["j"])) {
+}elseif (isset(filter_input(INPUT_GET,"j"))) {
 
 }
   ?>
   <main role="main" class="inner cover">
 
-    <?php if (isset($_GET["c"])) {  echo "<div class='alert alert-danger'>You need " . ((int) $mg - (int) $bal) . "Tn. more to create a guild.</div>";}?>
+    <?php if (isset(filter_input(INPUT_GET,"c"))) {  echo "<div class='alert alert-danger'>You need " . ((int) $mg - (int) $bal) . "Tn. more to create a guild.</div>";}?>
     <h1 class="cover-heading">Guildmaster's home</h1>
     <p class="lead">Please choose an option.</p>
     <p class="lead"><a href="?c">Register a Guild</a>&emsp;<a href="?j">Join a Guild</a></p>

@@ -1,7 +1,7 @@
 <?php
-if(isset($_GET["data"])) {
+if(isset(filter_input(INPUT_GET,"data"))) {
   require '/var/www/no-access/loi/config.php');
-  $x = $conn->query("SELECT username, email, bal from users where uid in (SELECT uid from oauthtokens where authid = '".$_GET["data"]."')");
+  $x = $conn->query("SELECT username, email, bal from users where uid in (SELECT uid from oauthtokens where authid = '".filter_input(INPUT_GET,"data")."')");
   if(!$x->num_rows == 1) die ('{"error":"data incorrect"}');
   $r = $x->fetch_assoc();
   echo json_encode(array(
@@ -17,7 +17,7 @@ if(isset($_GET["data"])) {
     echo "<style>input{color: white !important;}.small{font-size:.5rem}</style>";
     require '../base/head.php';
 //    if(0) {
-   if(!isset($_GET["return"])) {
+   if(!isset(filter_input(INPUT_GET,"return"))) {
       ?>
     </nav></div></header><main role="main" class="inner cover">
       <h1 class="cover-heading">Something went wrong.</h1>
@@ -60,7 +60,7 @@ if(isset($_GET["data"])) {
                 err("Your username or password is incorrect.")
               break;
               default:
-                window.location = "<?php echo htmlspecialchars($_GET["return"]); ?>" + "?token="+data.data.token+"&username="+data.data.username;
+                window.location = "<?php echo htmlspecialchars(filter_input(INPUT_GET,"return")); ?>" + "?token="+data.data.token+"&username="+data.data.username;
               break;
             }
         }
