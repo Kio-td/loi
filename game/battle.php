@@ -1,8 +1,8 @@
 <?php
 $auth = false;
-if (isset($_COOKIE["token"])) {
+if (isset(filter_input(INPUT_COOKIE,"token"))) {
   require "/var/www/no-access/loi/config.php";
-  $n = $conn->escape_string(base64_decode($_COOKIE["token"]));
+  $n = $conn->escape_string(base64_decode(filter_input(INPUT_COOKIE,"token")));
   $c = $conn->query("SELECT bal, token, username from users where token = '".$n."'");
   if (!$c->num_rows) {
     $na = array("index.php", "login.php", "index", "login", "login-");
@@ -119,7 +119,7 @@ var back = "451 Char MAX.";
   var r = new WebSocket(websocket+"/main");
   r.onmessage = function(s){console.log(s);
   if (!p) {
-    if(!json.parse(s).code) r.send(json.stringify({atoken: "<?php echo htmlspecialchars($_COOKIE["token"]); ?>" }));
+    if(!json.parse(s).code) r.send(json.stringify({atoken: "<?php echo htmlspecialchars(filter_input(INPUT_COOKIE,"token")); ?>" }));
     else {json.stringify({cmd: "ping"})}
       p = 1
 }
