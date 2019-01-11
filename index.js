@@ -225,7 +225,7 @@ main.on('connection', function (ws, req) {
   ws.send(json.send({ok: true, code:1, msg:"WHAZAP"}))
     ws.on('message', function incoming (data) {
         let jsonData = json.parse(data)
-        checkToken(jsonData.token, req, ws)
+        let userData = checkToken(jsonData.token, req, ws)
         // Main commands for the main server.
         switch (jsonData.cmd) {
           case undefined:
@@ -234,6 +234,12 @@ main.on('connection', function (ws, req) {
           case 'ping':
             try { ws.send('pong') } catch (e) { logToSQL(e, ip) }
           break;
+          case 'info':
+            switch (jsonData.data) {
+              case 'balance':
+                try { ws.send(json.stringify({ok: true, code:4, data:userData.balance}))}
+              break;
+            }
           case 'charge':
           // Todo - Charge fee and return ticket, which will be used to later process in the client.
           break;
