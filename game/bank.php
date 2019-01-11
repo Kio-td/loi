@@ -73,7 +73,7 @@ if (isset($_GET["transfer"])) {
         <main role="main" class="inner cover">
           <h1 class="cover-heading">Confirm</h1>
           <p class="lead">Are you sre you would like to send <?php echo htmlspecialchars($no) . "Tn. to " . htmlspecialchars($l) . "?";?></p>
-          <p class="lead">Service charge: <?php echo ceil(intval($no) * 0.15); ?>Tn.</p>
+          <p class="lead">Service charge: <?php echo ceil((int) $no * 0.15); ?>Tn.</p>
           <form method="post">
             <input type="hidden" name="un" value="<?php echo htmlspecialchars($l); ?>"><input type="hidden" name="amnt" value="<?php echo htmlspecialchars($no); ?>"><input class="btn btn-info" type="submit" name="confirm" value="Charge"><a href="bank" class="btn btn-success">Cancel</a>
           </form>
@@ -100,7 +100,7 @@ if (isset($_GET["transfer"])) {
 ?>
  <main role="main" class="inner cover">
    <h1 class="cover-heading">Good day, <?php echo ucfirst(htmlspecialchars($username)); ?>.</h1>
-   <p class="lead">Welcome to the bank. Your current account balance: <?php echo intval($bal); ?>Tn.</p>
+   <p class="lead">Welcome to the bank. Your current account balance: <?php echo (int) $bal; ?>Tn.</p>
    <p class="lead">Options: <a href="?transfer">Transfer</a></p>
 
 <?php
