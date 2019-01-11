@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-if (filter_input(INPUT_GET,"confirm")) {
+if (isset($_GET["confirm"])) {
   if(filter_input(INPUT_GET,"username") == false || filter_input(INPUT_GET,"confirm") == false) {
     header("location: login");
     die();
