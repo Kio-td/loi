@@ -1,5 +1,4 @@
 <?php
-error_reporting(-1);
 require "../base/head.php";
  ?>
  <a class="nav-link" href="index">Home</a>
