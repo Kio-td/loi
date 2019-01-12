@@ -171,9 +171,9 @@ anon.on('connection', function (ws, req) {
         break
       case 'checkUsername':
         if (jsonData.data === undefined) {
-          try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) } catch (errorData) logToSQL(errorData, ip)
+          try ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) catch (errorData) logToSQL(errorData, ip)
         } else if (blacklist.includes(jsonData.data.toLowerCase())) {
-          try { ws.send(json.stringify({ ok: false, code: -4, data: 'BL' })) } catch (errorData) logToSQL(errorData, ip)
+          try ws.send(json.stringify({ ok: false, code: -4, data: 'BL' })) catch (errorData) logToSQL(errorData, ip)
         } else {
           connection.query('select username from users where username = ?', [jsonData.data.toLowerCase()], function (errorData, results) {
             if (errorData) { logToSQL(errorData, ip) } else if (results.length > 0) { try ws.send(json.stringify({ ok: true, code: 4, data: 'F' })) catch (errorData) logToSQL(errorData, ip) } else { try ws.send(json.stringify({ ok: true, code: 4, data: 'NF' })) catch (errorData) logToSQL(errorData, ip) }
