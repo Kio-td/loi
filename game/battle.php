@@ -1,6 +1,6 @@
 <?php
 $auth = false;
-if (isset(filter_input(INPUT_COOKIE,"token"))) {
+if (filter_has_var(INPUT_COOKIE,"token")) {
   require "/var/www/no-access/loi/config.php";
   $n = $conn->escape_string(base64_decode(filter_input(INPUT_COOKIE,"token")));
   $c = $conn->query("SELECT bal, token, username from users where token = '".$n."'");
