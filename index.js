@@ -68,60 +68,61 @@ function checkToken (token, req, ws) {// eslint-disable-line
 anon.on('connection', function (ws, req) {
   let ip = req.headers['x-forwarded-for']
 
-  try { ws.send(json.stringify({ ok: true, code: 3, msg: 'HI_ANON' })) } catch (errorData) { logToSQL(errorData, ip) } // Send the user a welcome message, log if there is an error.
+  try ws.send(json.stringify({ ok: true, code: 3, msg: 'HI_ANON' })) catch (errorData) logToSQL(errorData, ip) // Send the user a welcome message, log if there is an error.
 
   ws.on('message', function (messageData) { // When the client sends a message, run this.
     try {
       var jsonData = json.parse(messageData) // Try to parse JSON5 data if it's available.
-    } catch (errorData) { try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NOT_JSON5' })) } catch (errorData) { logToSQL(errorData, ip); return } return }
+    } catch (errorData) { try ws.send(json.stringify({ ok: false, code: -3, msg: 'NOT_JSON5' })) catch (errorData) { logToSQL(errorData, ip); return } return }
     switch (jsonData.cmd) {
       case undefined: // If there is no cmd variable, tell them there was an issue.
-        try { ws.send(json.stringify({ ok: false, code: -1, msg: 'NO_COMMAND' })) } catch (errorData) { logToSQL(errorData, ip) }
+        try ws.send(json.stringify({ ok: false, code: -1, msg: 'NO_COMMAND' })) catch (errorData) logToSQL(errorData, ip)
         break
       case 'species': // Prints all the available species (Mainly for the signup list.)
         connection.query('select * from spec', function (errorData, results) {
           if (errorData) { logToSQL(errorData, ip); return }
-          try { ws.send(json.stringify({ ok: true, code: 4, data: results })) } catch (errorData) { logToSQL(errorData, ip) }
+          try ws.send(json.stringify({ ok: true, code: 4, data: results })) catch (errorData) logToSQL(errorData, ip)
         })
         break
       case 'authenticate': // Retrieve the token from the MySQL Server.
         if (jsonData.data === undefined) { // If there is no data field, throw a fit and end the process.
-          try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA' })) } catch (errorData) { logToSQL(errorData, ip); return }
+          try ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA' })) catch (errorData) { logToSQL(errorData, ip); return }
         } else {
           let credentials = jsonData.data
           credentials.username = credentials.username.toLowerCase() // Change the username to lowercase for compat reasons.
           connection.query('select ce, password, token from users where username = ?', [credentials.username], function (errorData, results) {
-            if (errorData) { logToSQL(errorData, ip); return } else if (results.length === 0) { try { ws.send(json.stringify({ ok: false, code: -3, msg: 'INC_DATA' })) } catch (errorData) { logToSQL(errorData, ip); return } }
+            if (errorData) { logToSQL(errorData, ip); return } 
+            else if (results.length === 0) { try ws.send(json.stringify({ ok: false, code: -3, msg: 'INC_DATA' })) catch (errorData) { logToSQL(errorData, ip); return } }
             var userData = results[0]
             if (userData.ce !== '0') { // If the email needs to be confirmed.
-              try { ws.send(json.stringify({ ok: false, code: -4, msg: 'CONF_EMAIL' })) } catch (errorData) { logToSQL(errorData, ip) }
+              try ws.send(json.stringify({ ok: false, code: -4, msg: 'CONF_EMAIL' })) catch (errorData) logToSQL(errorData, ip)
             } else if (password.verify(credentials.password, userData.password) === false) { // If the password does not match.
-              try { ws.send(json.stringify({ ok: false, code: -4, msg: 'INC_DATA' })) } catch (errorData) { logToSQL(errorData, ip) }
+              try ws.send(json.stringify({ ok: false, code: -4, msg: 'INC_DATA' })) catch (errorData) logToSQL(errorData, ip)
             } else {
-              try {
+              try
                 ws.send(json.stringify({ ok: true, code: 4, data: Buffer.from(userData.token).toString('base64') })) // Send the user's authentication token in a base64 Format.
-              } catch (errorData) { logToSQL(errorData, ip) }
+               catch (errorData) logToSQL(errorData, ip)
             }
           })
         }
         return
       case 'authcallback': // Authentication for the callback service. Possibly will delete if it's not useful enough to me.
         if (jsonData.data === undefined) {
-          try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) } catch (errorData) { logToSQL(errorData, ip); return }
+          try ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) catch (errorData) { logToSQL(errorData, ip); return }
         } else {
           var credentials = jsonData.data
           credentials.username = jsonData.un.toLowerCase()
           credentials.password = jsonData.pw
           connection.query('select uid, ce, password from users where username = ?', [credentials.username], function (errorData, results) {
             if (errorData) { logToSQL(errorData, ip); return }
-            if (results.length === 0) { try { ws.send(json.stringify({ ok: false, code: -4, msg: 'NOBODY_FOUND' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
+            if (results.length === 0) { try ws.send(json.stringify({ ok: false, code: -4, msg: 'NOBODY_FOUND' })) catch (errorData) logToSQL(errorData, ip) } else {
               let userData = results[0]
-              if (userData.ce !== '0') { try { ws.send(json.stringify({ ok: false, code: -4, msg: 'CONF_EMAIL' })) } catch (errorData) { logToSQL(errorData, ip) } } else if (password.verify(credentials.password, userData.password) === false) {
-                try { ws.send(json.stringify({ ok: false, code: -4, msg: 'INC_PASS' })) } catch (errorData) { logToSQL(errorData, ip) }
+              if (userData.ce !== '0') { try ws.send(json.stringify({ ok: false, code: -4, msg: 'CONF_EMAIL' })) catch (errorData) logToSQL(errorData, ip) } else if (password.verify(credentials.password, userData.password) === false) {
+                try ws.send(json.stringify({ ok: false, code: -4, msg: 'INC_PASS' })) catch (errorData) logToSQL(errorData, ip)
               } else {
                 let token = uuid(30)
                 connection.query('INSERT INTO `oauthtokens`(`authid`, `uid`) VALUES (?,?)', [token, credentials.uid])
-                try { ws.send(json.stringify({ ok: true, code: 4, data: { token: token, username: credentials.username } })) } catch (errorData) { logToSQL(errorData, ip) }
+                try ws.send(json.stringify({ ok: true, code: 4, data: { token: token, username: credentials.username } })) catch (errorData) logToSQL(errorData, ip)
               }
             }
           })
@@ -130,23 +131,23 @@ anon.on('connection', function (ws, req) {
 
       case 'ress2':
         if (jsonData.data === undefined) {
-          try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) } catch (errorData) { logToSQL(errorData, ip); return }
+          try ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) catch (errorData) { logToSQL(errorData, ip); return }
         } else {
           let parsedData = jsonData.data
           if (parsedData.code === undefined || parsedData.password === undefined || parsedData.conpass === undefined) {
-            try { ws.send(json.stringify({ ok: false, code: -3, msg: 'MISSING_DATA' })) } catch (errorData) { logToSQL(errorData, ip); return }
+            try ws.send(json.stringify({ ok: false, code: -3, msg: 'MISSING_DATA' })) catch (errorData) { logToSQL(errorData, ip); return }
             return
           } else {
             connection.query('select uid from users where rs = ?', [parsedData.code], function (errorData, results) {
               if (errorData) { logToSQL(errorData, ip) } else if (results.length !== 1) {
                 console.log(ip + " tried to access a code that doesn't exist.") // eslint ignore-line
-                try { ws.send(json.stringify({ ok: false, code: -4, msg: 'FRAUD' })); return } catch (errorData) { logToSQL(errorData, ip) }
+                try { ws.send(json.stringify({ ok: false, code: -4, msg: 'FRAUD' })); return } catch (errorData) logToSQL(errorData, ip)
               } else if (parsedData.password !== parsedData.conpass) {
-                try { ws.send(json.stringify({ ok: false, code: -4, msg: 'DIFFERENT' })); return } catch (errorData) { logToSQL(errorData, ip) }
+                try { ws.send(json.stringify({ ok: false, code: -4, msg: 'DIFFERENT' })); return } catch (errorData) logToSQL(errorData, ip)
               } else {
                 connection.query('UPDATE users set password = ?, token = ?, rs = 0 where rs = ?', [password.hash(parsedData.password), uuid(30), parsedData.code], function (errorData) {
                   if (errorData) logToSQL(errorData, ip)
-                  try { ws.send(json.stringify({ ok: true, code: 4, data: 'LOGIN_AGAIN' })) } catch (errorData) { logToSQL(errorData, ip) }
+                  try ws.send(json.stringify({ ok: true, code: 4, data: 'LOGIN_AGAIN' })) catch (errorData) logToSQL(errorData, ip)
                 })
               }
             })
@@ -155,55 +156,55 @@ anon.on('connection', function (ws, req) {
         return
       case 'reset':
         if (jsonData.data === undefined) {
-          try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) } catch (errorData) { logToSQL(errorData, ip) }
+          try ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) catch (errorData) logToSQL(errorData, ip)
         } else {
           connection.query('select email from users where username = ?', [jsonData.data.toLowerCase()], function (errorData, results) {
             if (errorData) logToSQL(errorData, ip)
-            else if (results.length !== 1) { try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_USR' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
+            else if (results.length !== 1) { try ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_USR' })) catch (errorData) logToSQL(errorData, ip) } else {
               let token = uuid(30)
               connection.query('update users set rs=? where username=?', [token, jsonData.data], function (errorData) { if (errorData) logToSQL(errorData, ip) })
               sendemail(results['0'].email, 'd-3fcf2355b269462cb8941330ce44175f', { username: jsonData.data, url: 'https://legendofikaros.me/game/login?reset&code=' + token })
-              try { ws.send(json.stringify({ ok: true, code: 4, msg: 'SENT_EMAIL' })) } catch (errorData) { logToSQL(errorData, ip) }
+              try ws.send(json.stringify({ ok: true, code: 4, msg: 'SENT_EMAIL' })) catch (errorData) logToSQL(errorData, ip)
             }
           })
         }
         break
       case 'checkUsername':
         if (jsonData.data === undefined) {
-          try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) } catch (errorData) { logToSQL(errorData, ip) }
+          try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) } catch (errorData) logToSQL(errorData, ip)
         } else if (blacklist.includes(jsonData.data.toLowerCase())) {
-          try { ws.send(json.stringify({ ok: false, code: -4, data: 'BL' })) } catch (errorData) { logToSQL(errorData, ip) }
+          try { ws.send(json.stringify({ ok: false, code: -4, data: 'BL' })) } catch (errorData) logToSQL(errorData, ip)
         } else {
           connection.query('select username from users where username = ?', [jsonData.data.toLowerCase()], function (errorData, results) {
-            if (errorData) { logToSQL(errorData, ip) } else if (results.length > 0) { try { ws.send(json.stringify({ ok: true, code: 4, data: 'F' })) } catch (errorData) { logToSQL(errorData, ip) } } else { try { ws.send(json.stringify({ ok: true, code: 4, data: 'NF' })) } catch (errorData) { logToSQL(errorData, ip) } }
+            if (errorData) { logToSQL(errorData, ip) } else if (results.length > 0) { try ws.send(json.stringify({ ok: true, code: 4, data: 'F' })) catch (errorData) logToSQL(errorData, ip) } else { try ws.send(json.stringify({ ok: true, code: 4, data: 'NF' })) catch (errorData) logToSQL(errorData, ip) }
           })
         }
         break
       case 'checkEmail':
         if (jsonData.data === undefined) {
-          try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) } catch (errorData) { logToSQL(errorData, ip) }
+          try ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) catch (errorData) logToSQL(errorData, ip)
         } else {
           connection.query('select username from users where email = ?', [jsonData.data], function (errorData, results) {
             if (errorData) logToSQL(errorData, ip)
-            else if (results.length > 0) { try { ws.send(json.stringify({ ok: true, code: 4, data: false })) } catch (errorData) { logToSQL(errorData, ip) } } else { try { ws.send(json.stringify({ ok: true, code: 4, data: true })) } catch (errorData) { logToSQL(errorData, ip) } }
+            else if (results.length > 0) { try ws.send(json.stringify({ ok: true, code: 4, data: false })) catch (errorData) logToSQL(errorData, ip) } else { try ws.send(json.stringify({ ok: true, code: 4, data: true })) catch (errorData) logToSQL(errorData, ip) }
           })
         }
         break
       case 'register':
         if (jsonData.data === undefined) {
-          try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) } catch (errorData) { logToSQL(errorData, ip) }
+          try ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) catch (errorData) logToSQL(errorData, ip)
         } else {
           let userInfo = jsonData.data
           userInfo.username = userInfo.username.toLowerCase()
           userInfo.email = userInfo.email.toLowerCase()
           connection.query('select username from users where username = ? or email = ?', [userInfo.username, userInfo.email], function (a, b) {
-            if (b.length > 0) { try { ws.send(json.stringify({ ok: false, code: 6, msg: 'ACCT_EXISTS' })) } catch (errorData) { logToSQL(errorData, ip) } } else if (blacklist.includes(userInfo.username)) { try { ws.send(json.stringify({ ok: false, code: 6, msg: 'ACCT_BLACKLIST' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
+            if (b.length > 0) { try ws.send(json.stringify({ ok: false, code: 6, msg: 'ACCT_EXISTS' })) catch (errorData) logToSQL(errorData, ip) } else if (blacklist.includes(userInfo.username)) { try ws.send(json.stringify({ ok: false, code: 6, msg: 'ACCT_BLACKLIST' })) catch (errorData) logToSQL(errorData, ip) } else {
               let token = uuid(30)
               let confirmEmail = uuid(30)
               connection.query('INSERT INTO `users`(`username`, `password`, `email`, `token`, `ce`, `spid`) VALUES (?,?,?,?,?,?);', [userInfo.username, password.hash(userInfo.password), userInfo.email, token, confirmEmail, userInfo.sp], function (errorData) {
                 if (errorData) logToSQL(errorData, ip)
                 sendemail(userInfo.email, 'd-01419621eb244bd29bb43c34fcd6b5dd', { username: userInfo.username, url: 'https://legendofikaros.me/game/login?confirm=' + confirmEmail + '&username=' + userInfo.username })
-                try { ws.send(json.stringify({ ok: true, code: 4, msg: 'CHECK_EMAIL' })) } catch (errorData) { logToSQL(errorData, ip) }
+                try ws.send(json.stringify({ ok: true, code: 4, msg: 'CHECK_EMAIL' })) catch (errorData) logToSQL(errorData, ip)
                 console.log(ip + ' has registered user ' + userInfo.username + '. Species: ' + userInfo.sp)
               })
             }
@@ -211,7 +212,7 @@ anon.on('connection', function (ws, req) {
         }
         break
       default:
-        try { ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) } catch (errorData) { logToSQL(errorData, ip) }
+        try ws.send(json.stringify({ ok: false, code: -3, msg: 'NO_DATA_FOUND' })) catch (errorData) logToSQL(errorData, ip)
         break
     }
   })
@@ -229,15 +230,15 @@ main.on('connection', function (ws, req) {
         // Main commands for the main server.
         switch (jsonData.cmd) {
           case undefined:
-            try { ws.send(json.stringify({ ok: false, msg: 'cmd_not_found', code: -1 })) } catch (errorData) { logToSQL(errorData, ip) }
+            try ws.send(json.stringify({ ok: false, msg: 'cmd_not_found', code: -1 })) catch (errorData) logToSQL(errorData, ip)
             return
           case 'ping':
-            try { ws.send('pong') } catch (e) { logToSQL(e, ip) }
+            try ws.send('pong') catch (e) { logToSQL(e, ip) }
           break;
           case 'info':
             switch (jsonData.data) {
               case 'balance':
-                try { ws.send(json.stringify({ok: true, code:4, data:userData.balance}))}
+                try ws.send(json.stringify({ok: true, code:4, data:userData.balance})) catch (errorData) logToSQL(errorData, ip)
               break;
             }
           case 'charge':
@@ -258,17 +259,17 @@ chat.on('connection', function connection (ws, req) {
     let uid = ip.replace(/\./g, '')
     chatData = chatData.replace(/[&<>"']/g, function(m) { return map[m]; }).trim() // Make sure no true HTMl is passed into the server.
     if (chatData.length >= 80) { // If the message is over 80 characters, whisper to the character that the message has been voided.
-      try { ws.send(json.stringify({ ok: false, display: '*Your voice falls on deaf ears. (Too many characters.)', color: 'red' })) } catch (errorData) { logToSQL(errorData, ip) }
+      try ws.send(json.stringify({ ok: false, display: '*Your voice falls on deaf ears. (Too many characters.)', color: 'red' })) catch (errorData) logToSQL(errorData, ip)
       return
     }
 
     switch (chatData.split(' ')[0]) {
       case '!s':
-        try { ws.send(json.stringify({ ok: false, display: '*Shouts are not setup yet.', color: 'red' })) } catch (errorData) { logToSQL(errorData, ip) }
+        try ws.send(json.stringify({ ok: false, display: '*Shouts are not setup yet.', color: 'red' })) catch (errorData) logToSQL(errorData, ip)
         return
 
       case '!g':
-        try { ws.send(json.stringify({ ok: false, display: '*Guilds are not setup yet.', color: 'red' })) } catch (errorData) { logToSQL(errorData, ip) }
+        try ws.send(json.stringify({ ok: false, display: '*Guilds are not setup yet.', color: 'red' })) catch (errorData) logToSQL(errorData, ip)
         return
 
       case '!f':
@@ -281,26 +282,26 @@ chat.on('connection', function connection (ws, req) {
                   connection.query('SELECT citid from users where token = ?', [config.get('user.' + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + '.token')], function a (e, f) {
                     uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '')
                     if (errorData) logToSQL(errorData, ip)
-                    if (f.length === 1) { try { client.send(json.stringify({ ok: true, display: config.get('user.' + uid + '.un') + '>> ' + chatData.replace('!f all ', ''), color: 'pink' })) } catch (errorData) { logToSQL(errorData, ip) } }
+                    if (f.length === 1) { try client.send(json.stringify({ ok: true, display: config.get('user.' + uid + '.un') + '>> ' + chatData.replace('!f all ', ''), color: 'pink' })) catch (errorData) logToSQL(errorData, ip) }
                   })
                 }
               })
             })
-            try { ws.send(json.stringify({ ok: true, display: config.get('user.' + uid + '.un') + '>> ' + chatData.replace('!f all ', ''), color: 'pink' })) } catch (errorData) { logToSQL(errorData, ip) }
+            try ws.send(json.stringify({ ok: true, display: config.get('user.' + uid + '.un') + '>> ' + chatData.replace('!f all ', ''), color: 'pink' })) catch (errorData) logToSQL(errorData, ip)
           })
         } else {
           let friendUsername = chatData.split(' ')[1].toLowerCase()
-          if (friendUsername === config.get('user.' + uid + '.un')) { try { ws.send(json.stringify({ ok: false, display: 'You cannot send a message to yourself.' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
+          if (friendUsername === config.get('user.' + uid + '.un')) { try ws.send(json.stringify({ ok: false, display: 'You cannot send a message to yourself.' })) catch (errorData) logToSQL(errorData, ip) } else {
             connection.query('select token from users where username = ? and uid in ( select ut from friends where uf in (select uid from users where token = ?) ) or uid in ( select uf from friends where ut in (select uid from users where token = ?) )', [friendUsername, config.get('user.' + uid + '.token'), config.get('user.' + uid + '.token')], function (a, b) {
-              if (b.length === 0) { try { ws.send(json.stringify({ ok: false, display: friendUsername + ' is not a friend of yours. Are you sure you typed their name correctly?' })) } catch (errorData) { logToSQL(errorData, ip) } } else {
+              if (b.length === 0) { try ws.send(json.stringify({ ok: false, display: friendUsername + ' is not a friend of yours. Are you sure you typed their name correctly?' })) catch (errorData) logToSQL(errorData, ip) } else {
                 chat.clients.forEach(function each (client) {
                   if (client.readyState === WebSocket.OPEN) {
                     connection.query('SELECT citid from users where token = ?', [config.get('user.' + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + '.token')], function a (a, e) {
                       uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '')
                       if (errorData) logToSQL(errorData, ip)
                       if (b.length === 1) {
-                        try { client.send(json.stringify({ ok: true, display: config.get('user.' + uid + '.un') + '>> ' + chatData.replace('!f ' + friendUsername + ' ', ''), color: 'pink' })) } catch (errorData) { logToSQL(errorData, ip) }
-                        try { ws.send(json.stringify({ ok: true, display: config.get('user.' + uid + '.un') + '>> ' + chatData.replace('!f ' + friendUsername + ' ', ''), color: 'pink' })) } catch (errorData) { logToSQL(errorData, ip) }
+                        try client.send(json.stringify({ ok: true, display: config.get('user.' + uid + '.un') + '>> ' + chatData.replace('!f ' + friendUsername + ' ', ''), color: 'pink' }))  catch (errorData) logToSQL(errorData, ip)
+                        try ws.send(json.stringify({ ok: true, display: config.get('user.' + uid + '.un') + '>> ' + chatData.replace('!f ' + friendUsername + ' ', ''), color: 'pink' })) catch (errorData) logToSQL(errorData, ip)
                       }
                     })
                   }
@@ -312,7 +313,7 @@ chat.on('connection', function connection (ws, req) {
         return
 
       case '!p':
-        try { ws.send(json.stringify({ ok: false, display: '*Party Talking is not setup yet.', color: 'red' })) } catch (errorData) { logToSQL(errorData, ip) }
+        try  ws.send(json.stringify({ ok: false, display: '*Party Talking is not setup yet.', color: 'red' })) catch (errorData) logToSQL(errorData, ip)
         return
 
       default:
@@ -321,7 +322,7 @@ chat.on('connection', function connection (ws, req) {
             connection.query('SELECT citid from users where token = ?', [config.get('user.' + client._socket.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '') + '.token')], function a (a, b) {
               uid = req.connection.remoteAddress.replace(/::ffff:/g, '').replace(/\./g, '')
               if (errorData) logToSQL(errorData, ip)
-              if (b.length === 1) { try { client.send(json.stringify({ ok: true, display: config.get('user.' + uid + '.un') + '>> ' + chatData })) } catch (errorData) { logToSQL(errorData, ip) } }
+              if (b.length === 1) { try client.send(json.stringify({ ok: true, display: config.get('user.' + uid + '.un') + '>> ' + chatData })) catch (errorData) logToSQL(errorData, ip) }
             })
           }
         })
