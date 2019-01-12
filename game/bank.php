@@ -8,8 +8,8 @@ require "../base/head.php";
  </header>
 
 <?php
-if (filter_has_var(INPUT_GET, "transfer"))) {
-  if(filter_has_var(INPUT_POST,"amnt")) && filter_has_var(INPUT_POST,"un"))) {
+if (filter_has_var(INPUT_GET, "transfer")) {
+  if(filter_has_var(INPUT_POST,"amnt") && filter_has_var(INPUT_POST,"un")) {
     $no = (int) filter_input(INPUT_POST,"amnt");
     $l = $conn->escape_string(strtolower(filter_input(INPUT_POST,"un")));
     $n = $conn->query("Select username from users where username = '".$l."'");
@@ -54,7 +54,7 @@ if (filter_has_var(INPUT_GET, "transfer"))) {
 
       <?php
     } else {
-      if(filter_has_var(INPUT_POST,"confirm"))) {
+      if(filter_has_var(INPUT_POST,"confirm")) {
         $ticket = uniqid("tfr_");
         $conn->query("UPDATE `users` SET `bal`=`bal` - ".($no + ceil($no * 0.15))." WHERE `username` = '".$username."'");
         $conn->query("UPDATE `users` SET `bal`=`bal` + ".$no." WHERE `username` = '".$l."'");
