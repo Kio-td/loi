@@ -1,8 +1,8 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-if (isset($_GET["confirm"])) {
-  if(filter_input(INPUT_GET,"username") == false || filter_input(INPUT_GET,"confirm") == false) {
+if (filter_has_var(INPUT_GET,"confirm")) {
+  if(!filter_has_var(INPUT_GET,"username") || !filter_input(INPUT_GET,"confirm")) {
     header("location: login");
     die();
   } else {
@@ -22,7 +22,7 @@ if (isset($_GET["confirm"])) {
     }
   }
 }
-elseif (filter_input(INPUT_GET,"reset")) {
+elseif (filter_has_var(INPUT_GET,"reset")) {
     require '../base/head.php';
     echo "<span class='nav-link'>&emsp;</span>";
     ?>
@@ -39,13 +39,13 @@ elseif (filter_input(INPUT_GET,"reset")) {
     <?php
     require '../base/feet.php';
 }
-elseif (filter_input(INPUT_GET,"lo")) {
+elseif (filter_has_var(INPUT_GET,"lo")) {
   setcookie("token", '' , time() - 3600);
   header("Location: index");
 } else {
     echo "<style>input{color: white !important;}</style>";
     require '../base/head.php';
-    if (isset($_GET["reg"])) {
+    if (filter_has_var(INPUT_GET,"reg")) {
 ?>
    <a class="nav-link" href="login">Login</a>
     <a class="nav-link active" href="#">Register</a>
