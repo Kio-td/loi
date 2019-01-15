@@ -21,11 +21,10 @@ if (filter_has_var(INPUT_COOKIE,"token")) {
   <link href="/assets/battle.min.css" rel="stylesheet">
   <script src="/assets/jquery.slim.min.js"></script>
   <script src="/assets/jdetects.min.js"></script>
-  <script src="/assets/json5.min.js"></script>
+  <script src="/assets/JSON5.min.js"></script>
   <script src="/assets/pop.min.js"></script>
   <script src="/assets/bootstrap-material-design.min.js"></script>
   <script src="/assets/typeit.min.js"></script>
-  <script>json = JSON5;</script>
   <title>Legend of Ikaros</title>
 </head>
 <body>
@@ -81,7 +80,7 @@ if (filter_has_var(INPUT_COOKIE,"token")) {
   enemy.name = "Xavier";
   enemy.health = "120";
   enemy.total = "120";
-  enemy.effects = json.parse("[]");
+  enemy.effects = JSON.parse("[]");
 
 var back = "451 Char MAX.";
   var story = new TypeIt('.story')
@@ -119,14 +118,14 @@ var back = "451 Char MAX.";
   var r = new WebSocket(websocket+"/main");
   r.onmessage = function(s){console.log(s);
   if (!p) {
-    if(!json.parse(s).code) r.send(json.stringify({atoken: "<?php echo htmlspecialchars(filter_input(INPUT_COOKIE,"token")); ?>" }));
-    else {json.stringify({cmd: "ping"})}
+    if(!JSON.parse(s).code) r.send(JSON.stringify({atoken: "<?php echo htmlspecialchars(filter_input(INPUT_COOKIE,"token")); ?>" }));
+    else {JSON.stringify({cmd: "ping"})}
       p = 1
 }
   var s = new WebSocket(websocket+"/btl");
   s.onmessage = function (data) {
     console.log(data);
-    var dt = json.parse(data);
+    var dt = JSON.parse(data);
     if(dt.msg != undefined && dt.msg == "YOU_ARE_STILL_IN_A_FIGHT") {
       s.send("{ok:true}");
     }

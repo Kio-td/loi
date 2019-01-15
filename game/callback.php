@@ -47,7 +47,7 @@ if(isset(filter_input(INPUT_GET,"data"))) {
       s = new WebSocket(websocket + "/anon");
       function auth() {
         s.onmessage = function(evt) {
-          data = json.parse(evt.data);
+          data = JSON.parse(evt.data);
           if(data.ok == false) {
             switch (data.msg) {
               case "CONF_EMAIL":
@@ -64,7 +64,7 @@ if(isset(filter_input(INPUT_GET,"data"))) {
               break;
             }
         }
-        s.send(json.stringify({cmd:'authcallback', data:{un:document.getElementById('un').value, pw:document.getElementById('pw').value}}))
+        s.send(JSON.stringify({cmd:'authcallback', data:{un:document.getElementById('un').value, pw:document.getElementById('pw').value}}))
       }
     </script>
     <?php
