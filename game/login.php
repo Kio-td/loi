@@ -35,7 +35,8 @@ elseif (filter_has_var(INPUT_GET,"reset")) {
   <input class="form-control" id="pw" placeholder="Password" required=""><br>
   <input class="form-control" id="cpw" placeholder="Confirm" required=""><br>
   <input type="hidden" id="token" value="<?php echo htmlspecialchars(filter_input(INPUT_GET,'code'));?>"><br>
-  <button onclick="zen()" class="btn btn-secondary">Reset</button>
+  <button onclick="reset()" class="btn btn-secondary">Reset</button>
+  <script src="/assets/reset.min.js"></script>
     <?php
     require '../base/feet.php';
 }
