@@ -28,12 +28,19 @@ $x = false;
     <script src="/assets/jdetects.min.js"></script>
     <script src="/assets/json5.min.js"></script>
     <script src="/assets/pop.min.js"></script>
-    <script src="/assets/warningDialog.js"></script>
+    <script src="/assets/toaster.min.js"></script>
+    <script>function err (info) { toastr.error(info); } function suc (info) { toastr.success(info) } function inf (info) { toastr.info(info) } toastr.options = {
+  "newestOnTop": true,
+  "progressBar": true,
+  "positionClass": "toast-top-right",
+  "preventDuplicates": true
+} </script>
     <script src="/assets/bootstrap-material-design.min.js"></script>
     <script>JSON = JSON5; websocket = "<?php echo htmlspecialchars($websocket); ?>"</script>
     <title>Legend of Ikaros</title>
     <link rel="stylesheet" href="/assets/bootstrap-material-design.min.css">
-    <link href="/assets/cover.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/toaster.min.css">
+    <link rel="stylesheet" href="/assets/cover.min.css">
   <style>#content > #right > .dose > .dosesingle,
 #content > #center > .dose > .dosesingle
 {display:none !important;}</style></head>
