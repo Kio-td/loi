@@ -23,6 +23,12 @@ onchange: function(status) {
 console.error("!!!GAME MAYBE TAMPERED WITH NOW!!!\nI have closed all connections. Please close DevConsole and restart the game.");
 }
 });
+function err (info) { toastr.error(info); } function suc (info) { toastr.success(info) } function inf (info) { toastr.info(info) } toastr.options = {
+  "newestOnTop": true,
+  "progressBar": true,
+  "positionClass": "toast-top-right",
+  "preventDuplicates": true
+}
 </script>
 
 </body></html>
